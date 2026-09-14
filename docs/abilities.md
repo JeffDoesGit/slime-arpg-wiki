@@ -8,7 +8,7 @@ You can press a key and your monster performs a move: it turns to face the curso
 
 ## What you can do today
 
-- **Four keys.** Q, W, E and R each hold one move. Click a slot on the [HUD](hud.md) to pick which of your soul's moves sits there.
+- **Four keys.** 1, 2, 3 and 4 each hold one move. Click a slot on the [HUD](hud.md) to pick which of your soul's moves sits there.
 - **Aim with the mouse.** The move goes toward the cursor. Your monster turns to face it before the animation starts, on your machine as well as on the server's.
 - **One move at a time.** A move runs to the end of its animation. Pressing another key during it does nothing; there is no queue and no cancel.
 - **Attack standing still.** Hold Left Shift with a move key and your monster stops moving first, then attacks.

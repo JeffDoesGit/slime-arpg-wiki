@@ -4,12 +4,12 @@
 
 ## What you see
 
-Two orbs at the bottom of the screen, red for health and blue for mana, that fill and drain as your numbers change. Between them, a bar of six ability slots labelled Q, W, E, R, LMB and RMB, and above that a thin gold experience bar with your level number at its left (see [Progression](progression.md)). When you die the whole screen dims and shows "You died", the experience lost, and a countdown until you are back. Each slot shows the icon of the move assigned to it, drawn edge to edge under the key label, or the move's name when its soul has no icon for it, or nothing (since E-2.60). While a move is on cooldown the slot goes dark and counts down the seconds; while you cannot afford it the slot goes dark and says "mana".
+Two orbs at the bottom of the screen, red for health and blue for mana, that fill and drain as your numbers change. Between them, a bar of six ability slots labelled 1, 2, 3, 4, LMB and RMB, and above that a thin gold experience bar with your level number at its left (see [Progression](progression.md)). When you die the whole screen dims and shows "You died", the experience lost, and a countdown until you are back. Each slot shows the icon of the move assigned to it, drawn edge to edge under the key label, or the move's name when its soul has no icon for it, or nothing (since E-2.60). While a move is on cooldown the slot goes dark and counts down the seconds; while you cannot afford it the slot goes dark and says "mana".
 
 ## Using it
 
 - **Click a slot** to open a list of the moves your equipped soul knows, each with its icon beside the name, and pick one. Pick the same move on another slot and it moves there.
-- **Press the slot's key** to perform the move (see [Abilities](abilities.md)). Only Q, W, E and R are bound today; the two mouse-button slots are drawn but do nothing.
+- **Press the slot's key** to perform the move (see [Abilities](abilities.md)). Only 1, 2, 3 and 4 are bound today; the two mouse-button slots are drawn but do nothing.
 - **Unequip your soul** and every slot clears. Equip a soul and its first move lands in the first empty slot on its own (since E-2.44), so you can fight before touching the picker; the picker still moves it wherever you like.
 
 Slot assignments are a menu choice on your machine. They are never sent to the server and never saved, so two players in the same game can arrange their bars differently and nothing needs to agree.

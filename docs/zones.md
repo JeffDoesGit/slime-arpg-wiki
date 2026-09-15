@@ -6,7 +6,7 @@
 
 Outside the town stands a gate that will not let you through until you wear the soul lying on the ground nearby (the human soul, in the Worn slot of the inventory; a flag on the gate can relax this to owning it). Take it, wear it, touch the gate, and the door goes away for everyone on the server for the rest of the session.
 
-Inside the town, or any place marked as safe, nothing can hurt you and you can hurt nothing. Press an ability key and nothing happens; a monster's swing does not land; a projectile that reaches you pops harmlessly. Monsters outside stop caring about you the moment you step in, and pick you up again when you step out.
+Inside the town, or any place marked as safe, nothing can hurt you and you can hurt nothing. Press an ability key and nothing happens; a monster's swing does not land; a projectile that reaches you pops harmlessly. Monsters outside stop caring about you the moment you step in, and pick you up again when you step out. If you wear a soul (the human), you show its body while you are inside and your primary's body again once you step out (see [Souls](soul-model.md)).
 
 ## How it works, in plain words
 

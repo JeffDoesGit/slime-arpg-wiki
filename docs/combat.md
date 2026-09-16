@@ -43,6 +43,7 @@ Being hit plays a flinch animation, and only that: it never interrupts what you 
 - **Accuracy, evasion, crit and reduction lines** from accessories: fixed at their base values until the affix system applies them.
 - **Damage numbers and miss text on screen**: allowed, not built.
 - **The Creepy's death**: it has no death clip in its pack, so it holds its pose.
+- **Hit stop** (E-2.72): a landed hit freezes the attacker and the victim for the move's `HitStopSeconds` (a few hundredths of a second, capped at 0.12) and shakes the attacker's own camera. A victim mid-swing keeps its swing and only freezes; one outside a swing plays its hit-react clip and freezes on it. Cosmetic, after the server's hit, off with `Slime.AttackFeel 0`.
 
 ## For testers
 

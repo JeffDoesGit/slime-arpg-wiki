@@ -1,6 +1,6 @@
 # Abilities
 
-*Framework decided in D-1.2 (GAS-lite). The moves became playable, cosmetically, in roadmap items E-2.14a and E-2.20 to E-2.23 (pull requests #42 to #48); hits and damage arrived with combat (E-2.6, #56) and the numbers moved to a table (E-2.26, #59); mana costs, cooldowns and timed self-buffs are E-2.14; the Corpse's kit, the first with a charge, a planted mark and a cone at the cursor, is E-2.48. Costs, cooldowns and both kits are marked provisional: no design rule names them yet.*
+*Framework decided in D-1.2 (GAS-lite). The moves became playable, cosmetically, in roadmap items E-2.14a and E-2.20 to E-2.23 (pull requests #42 to #48); hits and damage arrived with combat (E-2.6, #56) and the numbers moved to a table (E-2.26, #59); mana costs, cooldowns and timed self-buffs are E-2.14; the Corpse's kit, the first with a charge, a planted mark and a cone at the cursor, is E-2.48; standing still for a move is E-2.71. Costs, cooldowns, both kits and the stand-still rule are marked provisional: no design rule names them yet.*
 
 ## Where this stands
 
@@ -10,8 +10,9 @@ You can press a key and your monster performs a move: it turns to face the curso
 
 - **Four keys.** 1, 2, 3 and 4 each hold one move. Click a slot on the [HUD](hud.md) to pick which of your soul's moves sits there.
 - **Aim with the mouse.** The move goes toward the cursor. Your monster turns to face it before the animation starts, on your machine as well as on the server's.
-- **One move at a time.** A move runs to the end of its animation. Pressing another key during it does nothing; there is no queue and no cancel.
-- **Attack standing still.** Hold Left Shift with a move key and your monster stops moving first, then attacks.
+- **One move at a time.** A move runs to the end of its animation. Pressing another key during it does nothing; there is no queue and no cancel. A buff's animation is the exception: another key cuts it short and fires.
+- **You stand still for a move.** Since E-2.71 a move stops your monster where it is and keeps it there until the animation ends; no more sliding through an attack. A click during the animation does nothing until it ends; a mouse button you keep holding moves you again the moment it does. Two exceptions: charges (Marrow Rush) carry you, and buffs (Festering Shroud, Bone Ward, any move with a buff duration) never stop you at all: their animation plays while you stand, and walking or pressing another move cuts it short while the buff itself stays on. `Slime.RootDuringMove 0` brings the old behaviour back for a session.
+- **Attack standing still.** Holding Left Shift with a move key still works and now changes nothing, since every move stops you first.
 - **Effects and projectiles.** A move can carry any number of visual effects, each placed on your body, at the cursor or on the target, and timed to the button press or to a marked frame of the animation. The Creepy's Acid Spit fires a projectile that flies toward the cursor and bursts on the first monster it meets.
 - **Mana and cooldowns.** Some moves cost mana; pressing one you cannot afford does nothing, and the server logs why. Some moves have a cooldown; pressing one too soon does nothing. The [HUD](hud.md) slot shows the seconds left and greys the move you cannot afford.
 - **Self-buffs.** A move can strengthen you for a fixed time. Festering Shroud gives Defense +15 for 6 seconds; Bone Ward gives Defense +15 and 4 health a second for 8 seconds. Both end by themselves.

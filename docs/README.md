@@ -2,7 +2,7 @@
 
 What exists in the game right now, one page per system, in plain language. Each page says what the thing does, what you see when you play, what is settled and what is still waiting on a design call. Pages are updated whenever the system changes, in the same change that touched it (ROADMAP §1.11). Adding a page to the table below adds it to the wiki's navigation.
 
-This is the wiki the team browses: https://randy-lahey.github.io/slime-arpg-wiki/ (offline since the repository went private on 2026-09-10; these pages are the source, and roadmap item E-0.11 restores the site)
+This is the wiki the team browses: https://jeffdoesgit.github.io/slime-arpg-wiki/docs/ (a public copy of this folder, republished on every merge to `main` by the S-0.6 workflow; these pages are the source, the copy is overwritten on the next publish)
 
 Playing together from the editor, host and join by console, the Sunday run sheet: [docs/playtest.md](../playtest.md).
 

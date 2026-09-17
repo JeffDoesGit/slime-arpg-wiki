@@ -8,17 +8,17 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 
 | System | What it is | State |
 |---|---|---|
-| [The monster you play](player-pawn.md) | Your character in the world: how it moves, what it looks like before and after wearing a soul | playable, placeholder look |
+| [The monster you play](player-pawn.md) | Your character in the world: how it moves, what it looks like before and after wearing a soul | playable, placeholder look; click, keys and pad; cursor lands on the floor only; occluders fade; sphere colour per player |
 | [Stats](attribute-set.md) | Health, mana, defense, speed: the numbers on your monster | health and mana derived from level and souls; defense and speed still zero |
 | [Level and growth](progression.md) | Your character level, experience, regeneration, and the skill tree you spend points in | level, XP and regen in place; tree screen and allocation in place, numeric nodes work, verb nodes display only; all provisional on the stats and progression decisions |
 | [Souls](soul-model.md) | A monster's soul as an item: what it holds, how you equip it, the bag you carry them in, souls placed in the world | playable with two souls; placed pickups |
 | [Inventory screen](inventory-shell.md) | The screen you open with `I`: soul slots, gem slots, the bag | playable for souls; gems drawn only |
 | [Abilities](abilities.md) | The moves a soul gives you | playable: keys, animations, effects, a projectile, damage through combat, mana costs and cooldowns; ailments and trees still design |
-| [The HUD](hud.md) | Health and mana orbs and the ability bar with cooldown and mana state | playable, placeholder layout |
+| [The HUD](hud.md) | Health and mana orbs and the ability bar with cooldown and mana state | playable, placeholder layout; name plates, pickup toast, Skills button on P, debug menu on F1 |
 | [Affix table](affix-table.md) | The 107 stat lines an accessory can roll, as data | table exists; gems read it; no items roll yet |
 | [Gems](gems.md) | The equipment item: colour, rarity, rolled lines; nine typed slots; lines applied to your stats | in place by console, no screen; provisional on the slot decision |
 | [Zones](zones.md) | The town gate that opens for a soul's owner, and the safe zone where no combat happens | gate provisional on the human-soul memo; safe zone in place, GDD 6.1 |
-| [Field monsters](field-monsters.md) | The monsters in the field: what they are, how they think, where they come from | two types as data; server-only brain; placed spawners read a table and the host's Mob density rule |
+| [Field monsters](field-monsters.md) | The monsters in the field: what they are, how they think, where they come from | two types as data; server-only brain; placed spawners read a table and the host's Mob density rule; death clip or ragdoll, bodies sink; dead players never targeted |
 | [Server rules](server-rules.md) | The twelve rules a host sets for their server, where they live, and what happens when one is typed wrong | in place; values are placeholders until tuned |
 | [Replication](replication.md) | Which networking driver the game uses, the one-line fallback, and the test that proved both work | in place; per-player filtering owed (S-2.3) |
 

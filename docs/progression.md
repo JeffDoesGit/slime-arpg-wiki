@@ -61,7 +61,7 @@ What a node does today: a node with numbers on it (Chitin's armour and poison re
 
 The Creepy has the first tree: four skill nodes and ten passive nodes, the ones in the design memo. No other soul has one yet; its tab says so.
 
-Not built: soul rank as a gate on tiers (there is no rank yet), respec, the aura budget, and whether points should be held back while a slot is empty. All of it is provisional on the progression decision (D-8.2).
+Respec exists for testing (since E-2.90): a Respec button in the bottom-right corner of the orb puts the screen in return mode; click the taken nodes you want back (the root and the free first node stay; a node that another taken node still needs is refused until that one is marked too), then Confirm. The server checks the whole list and gives the nodes back at no cost; points return by themselves because they are counted from your level minus what is spent. Cancel drops the marks. It is on by a config flag and is not the game's respec rule, which is undecided. Not built: soul rank as a gate on tiers (there is no rank yet), the aura budget, and whether points should be held back while a slot is empty. All of it is provisional on the progression decision (D-8.2).
 
 ## Regeneration
 

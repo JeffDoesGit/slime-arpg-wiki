@@ -48,6 +48,14 @@ A new biome is one more instance with its own two texture sets (CT-2.18, waiting
 
 For testers: a floor that shows the grey grid material means an instance failed to compile; the log line starts `Failed to compile Material Instance with Base M_GroundTile`. A texture with sRGB on cannot feed the AORM slot (`Sampler type is Linear Color, should be Color`).
 
+## Exit markers
+
+Every exit box now shows where it is and where it goes (CT-2.12). The `ZoneExit` actor carries two cosmetic components beside its trigger: a looping Niagara effect on the ground, picked per placed exit in the editor (the three slice exits use `NS_TeleportZone` from the RPGEnvironmentVFX pack, a ring of fire), and a floating text label that reads the exit's `DestinationZone` unless a `LabelText` override is typed in. The label's height, size, colour and rotation are properties on the exit; the rotation defaults to face the ARPG camera (pitch 55, yaw 135 against the camera's -55, -45), so the text reads upright from the play view. Nothing here replicates or ticks: the actor is placed in the map, so every machine has the components, and the effect loops on its own.
+
+The three exits marked today: forest to town (`ZoneExit_ToTown_0`, label StartingTown), town to the first field (`ZoneExit_ToZone1_0`, label Zone1), first field back to town (`ZoneExit_1`, label StartingTown). In the two gates the walls hide most of the ring from the camera and the label does the work; in the open field both show.
+
+This is a placeholder so testers find the doors. What an exit looks like in the game (a lit doorway, a signpost, a glowing gate, a banner on entry) is a design decision not taken; the label shows the internal zone name until zones have display names.
+
 ## For testers
 
 - Place a `SafeZoneVolume` and size its Extent to cover the area. It never blocks movement.
@@ -55,6 +63,7 @@ For testers: a floor that shows the grey grid material means an instance failed 
 - A monster losing you logs `<monster>: target lost`; a hit refused logs `Hit: <attacker> on <target> not applied (safe zone)`.
 - `Slime.SetAttribute Health 0 <pawn>` still kills inside: it is a dev command, not damage.
 - The gate logs `SoulGate <name>: opened by <pawn> (wears <soul>)` and `... does not wear ...; stays shut` (or owns / own with `bRequireWorn` off).
+- An exit with no ring has no Niagara system set on its `Marker` component; an exit with no label has an empty `DestinationZone` and no `LabelText`. Both are set on the placed actor, under lock.
 
 ## For engineers
 

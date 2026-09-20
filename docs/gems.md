@@ -22,7 +22,7 @@ Lines whose target stat does not exist yet (most of the table until damage and r
 
 ## What you see
 
-Your gems sit in the bag on the [inventory screen](inventory-shell.md) as colour swatches; hover for the lines. Drag one onto a slot of its colour, or an any slot, to equip it; drag it back to the bag to take it off. The health orb moves when the lines land. Since E-3.5.
+Your gems sit in the bag on the [inventory screen](inventory-shell.md) as colour swatches; hover for the lines. Drag one onto a slot of its colour to equip it (an iridescent gem, a fifth colour with no lines decided yet, goes only in the two iridescent slots, and the other four colours never do, since E-3.6); drag it back to the bag to take it off. The health orb moves when the lines land. Since E-3.5.
 
 ## Drops
 

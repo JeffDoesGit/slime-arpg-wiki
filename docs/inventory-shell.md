@@ -23,6 +23,8 @@ Every widget on the screen is built in code, not in the Unreal widget designer. 
 
 Dragging a soul never changes anything by itself. The drop sends a request to the server, the server decides, and the screen redraws from the answer.
 
+A right-click on a bag cell sends the same request its drag would (E-2.86): a soul goes to the primary slot, a cosmetic soul to the worn slot, a gem to the first empty slot that takes its colour, coloured slots before the two any-colour ones so those are not spent on a gem that has its own colour. With no fitting slot free the click logs `no free slot for a <colour> gem` and nothing is sent. The server checks a right-click exactly as it checks a drop; the cell only picks the target. Right-click on a slot does nothing; drag a slotted item back to the bag to take it off.
+
 ## What is waiting on design
 
 - **Gem slots and colours** (D-3.2): count is provisional, meaning open.

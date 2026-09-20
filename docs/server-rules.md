@@ -12,7 +12,7 @@ Whoever hosts a server sets the rules for it. Twelve of them exist today, matchi
 | Drop all loot on death | Everything you carry drops when you die | on / off |
 | Equipment breaks | Gear can wear out | on / off, inert until the durability design lands |
 | Crafting forgiveness | How forgiving crafting is; 1.0 is baseline | scale |
-| PvP | Whether players can hurt each other | on / off |
+| PvP | Whether players can hurt each other | on / off — see [below](#getting-a-rule-to-a-client-the-pvp-flag-on-the-gamestate-s-32a) for how a client learns it |
 | Boss difficulty | Scales bosses; 1.0 is baseline | scale |
 | Boss moveset | Which set of moves bosses use | choice |
 | Field monster difficulty | Scales everything else; 1.0 is baseline | scale |
@@ -38,6 +38,28 @@ Every request a player's machine can send the server — activate a move, equip 
 Through one door: `USandboxServerRules::Get()`. The spawner asks it for mob density, the loot roll asks it for drop rates, damage asks it whether PvP is on. Nothing in gameplay code reads a rule from anywhere else, so there is exactly one place a rule can be wrong. Server-side only — a client that needs to display a rule gets it through replicated game state, never from its own copy of the file.
 
 `Slime.ShowServerRules` prints every rule as the server currently holds it.
+
+## Getting a rule to a client: the PvP flag on the GameState (S-3.2a)
+
+The rules above live in `USandboxServerRules`, which is server-side only — a client's own copy of `Config/DefaultGame.ini` is not authority. The PvP rule is the first one a client needs to see (for name-plate colour and, later, hostility), so it gets its own carrier: `AMonsterGameState`, a small `AGameStateBase` subclass that holds nothing but that mirror.
+
+`AMonsterGameState` replicates one property, `bPvP`, push-model (`ReplicatedUsing = OnRep_PvP`, `FDoRepLifetimeParams.bIsPushBased = true`, `DOREPLIFETIME_WITH_PARAMS_FAST`), the same convention other push-model flags in the project use (`bInSafeZone`, per the STATUS notes). `SetPvP(bool bEnabled)` is authority-only — it returns at once if `!HasAuthority()` — and marks the property dirty with `MARK_PROPERTY_DIRTY_FROM_NAME` after setting it. Because the engine gives the authority machine no `OnRep` call of its own, `SetPvP` calls `OnRep_PvP()` directly so the host's log line matches every other machine's. `OnRep_PvP` logs:
+
+```
+MonsterGameState: PvP %d
+```
+
+(`1` or `0`), at `LogSandboxARPG`, `Log`. `IsPvP() const` is the public accessor everything else should read.
+
+`AMonsterGameMode` installs the class in its constructor (`GameStateClass = AMonsterGameState::StaticClass();`, beside its existing `DefaultPawnClass`/`HUDClass` lines) and fills it once, in a new `InitGameState()` override: after `Super::InitGameState()`, it fetches the game state as `AMonsterGameState` and calls `SetPvP(USandboxServerRules::Get().bPvP)`. If the game state is not an `AMonsterGameState` — which should not happen outside a misconfigured project — it logs instead of setting anything:
+
+```
+MonsterGameMode: GameState is not AMonsterGameState; PvP flag not set
+```
+
+The ini row this reads is unchanged and unremarkable: `Config/DefaultGame.ini`, `[/Script/SandboxARPG.SandboxServerRules]`, `bPvP=False`.
+
+**What reads it today: nothing.** The flag exists and replicates, but no gameplay code calls `IsPvP()` yet. `AMonsterCharacter::IsHostileTo` still hardcodes another player as never hostile, regardless of the flag, and the name-plate colour path (`NamePlateWidget`) inherits that gap — both are Jon's side of this item. A joining client actually receiving the replicated value has not been tested; only a Standalone host toggling its own config and reading its own log has (`bPvP=True` logs `PvP 1`, `bPvP=False` logs `PvP 0`). S-3.2a stays open until that two-player check runs and the pawn side lands.
 
 ## What is settled and what is waiting
 

@@ -18,6 +18,8 @@ In multiplayer every machine now paints every player's sphere the same colour (s
 
 A new character starts with an empty bag. The first soul lies on the ground outside the town gate of the starting forest; walk over it and it is yours to equip (see [Souls](soul-model.md)). A config list can still seed the bag for testing, and whether the slime ever starts with a soul is a design decision still open.
 
+Everyone sees the same brightness (since E-2.88). The camera pins its exposure to one value instead of letting the engine adapt it per view, because a joiner's window adapted differently from the host's and washed the Creepy from orange to olive. The value is the one the free auto exposure had settled on in the host's window, tuned against a joiner's window; it lives in config, and `Slime.Exposure <EV100>` tries another for the session (`auto` frees it again). One cost: no adaptation between a bright field and a dark interior, so a dark place later needs its own value.
+
 ## How it works, in plain terms
 
 Your monster is one Unreal character that carries three things:

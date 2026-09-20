@@ -37,6 +37,17 @@ Since E-2.39 the world is one persistent level with each zone as a sublevel stre
 - **Whether the town heals you, and what else it offers** (GDD 6.3).
 - **Where the zone boundaries fall** once the town is its own level (D-8.6, E-2.39).
 
+## Ground materials
+
+Every floor in the slice wears one of two instances of a game-owned master material, `M_GroundTile` (`Content/Art/Materials/Ground/`). The master tiles in world space, through the pack's `MF_WorldCoords-XY`, so the forest landscape and a scaled floor cube show the same texture size without any UV work. It holds two texture sets, each one call of the material function `MF_GroundSet` (base colour, normal, an optional AORM map), and mixes them by a world-space noise. The parameters are `TileSize`, `TileScaleB` (set B tiles at a multiple of set A), `BlendThreshold`, `BlendContrast`, `BlendStrength`, `NoiseScale`, `Roughness` and `Tint`.
+
+- `MI_Ground_Grass`: grass over dirt, dirt only in the noise peaks (threshold 0.68, contrast 6). On `Landscape_0` in StartingForest and the floor cube in Zone1.
+- `MI_Ground_Cobble`: the same stone in both sets, set B at 1.6 times the size, blended softly, so no two tiles line up. On the floor cube in StartingTown.
+
+A new biome is one more instance with its own two texture sets (CT-2.18, waiting on the biome list). The painted-layer landscape material for the one map calls the same `MF_GroundSet` per layer (CT-2.17). Every number is an eye placeholder; there is no design rule for the ground look.
+
+For testers: a floor that shows the grey grid material means an instance failed to compile; the log line starts `Failed to compile Material Instance with Base M_GroundTile`. A texture with sRGB on cannot feed the AORM slot (`Sampler type is Linear Color, should be Color`).
+
 ## For testers
 
 - Place a `SafeZoneVolume` and size its Extent to cover the area. It never blocks movement.

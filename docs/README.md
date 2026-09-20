@@ -17,7 +17,7 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 | [The HUD](hud.md) | Health and mana orbs and the ability bar with cooldown and mana state | playable, placeholder layout; name plates, pickup toast, Skills button on P, debug menu on F1 |
 | [Affix table](affix-table.md) | The 107 stat lines an accessory can roll, as data | table exists; gems read it; no items roll yet |
 | [Gems](gems.md) | The equipment item: colour, rarity, rolled lines; nine typed slots; lines applied to your stats | in place by console, no screen; provisional on the slot decision |
-| [Zones](zones.md) | The town gate that opens for a soul's owner, and the safe zone where no combat happens | gate provisional on the human-soul memo; safe zone in place, GDD 6.1 |
+| [Zones](zones.md) | The town gate that opens for a soul's owner, the safe zone where no combat happens, and the ground materials every floor wears | gate provisional on the human-soul memo; safe zone in place, GDD 6.1 |
 | [Field monsters](field-monsters.md) | The monsters in the field: what they are, how they think, where they come from | two types as data; server-only brain; placed spawners read a table and the host's Mob density rule; death clip or ragdoll, bodies sink; dead players never targeted |
 | [Server rules](server-rules.md) | The twelve rules a host sets for their server, where they live, and what happens when one is typed wrong | in place; values are placeholders until tuned |
 | [Replication](replication.md) | Which networking driver the game uses, the one-line fallback, and the test that proved both work | in place; per-player filtering owed (S-2.3) |

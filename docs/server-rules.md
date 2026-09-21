@@ -23,7 +23,7 @@ Whoever hosts a server sets the rules for it. Twelve of them exist today, matchi
 
 ## Where they live
 
-In a text file the host edits, not in the game's code. The project ships baseline values in `Config/DefaultGame.ini`; a host overrides any of them in the server's own config layer. Scales run from 0.1 to 10 (density and drops from 0), so a host cannot accidentally make a monster hit a thousand times harder.
+In a text file the host edits, not in the game's code. The project ships baseline values in `Config/DefaultGame.ini`; a host overrides any of them in the server's own config layer. Scales run from 0.1 to 10 (density and drops from 0), so a host cannot accidentally make a monster hit a thousand times harder. For the copy-pasteable ini block, the full key table with ranges and readers, and the override-file path for each way of hosting, see [`../server-config.md`](../server-config.md).
 
 ## What happens if the host types something wrong
 
@@ -94,4 +94,4 @@ FailureKick: %s is the listen host; %d failure(s) in %.0f s (last: %s) not kicke
 - **Settled:** the list of rules and the way they are read (S-1.1, contract C-2).
 - **Provisional:** every default value. GDD 8.1 says defaults are open until tuned; the ones shipped are baseline placeholders, registered under DS-1.1.
 - **Open:** whether guild size caps a party, a guild, or both — nothing reads it until that is decided. Which combinations of rules are locked together (GDD 8.2). What "equipment breaks" means.
-- **Owed:** the warning currently fires the first time something reads a rule, not at startup. A host with a typo learns about it late. Roadmap item S-1.3 moves the check to server start.
+- **Settled, corrected 2026-09-21:** validation is still lazy — it runs the first time anything calls `USandboxServerRules::Get()` — but S-1.3 (PR #202, `a9d6bbb`) made `AMonsterGameMode::InitGame` call `Get()` itself, before the first player can connect. On every launch path that runs through `AMonsterGameMode::InitGame`, a typo is now caught and logged at server start, not whenever some unrelated system first happened to read a rule. What has actually shown this so far: PIE and the editor-hosted `-game` listen host — the only paths tested. Whether that same call fires on a packaged, non-editor dedicated-server launch path is untested — there is no dedicated server target in this project yet (`ROADMAP-SERVER.md` §3 STATUS).

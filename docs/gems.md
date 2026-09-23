@@ -18,7 +18,7 @@ The server moves the gem from your bag into the slot and applies every line to y
 
 Unequip and the lines come off. Modifiers sit on top of your base stats, so [level and soul growth](progression.md) keep working underneath: a level-up changes the base, the gem's percentage still applies to the new number.
 
-Lines whose target stat does not exist yet (most of the table until damage and resistance attributes land) are logged and skipped, never applied. Nothing is persisted; contract C-4 carries gems later.
+Lines whose target stat does not exist yet are logged and skipped, never applied. Since E-3.9 the offense lines with a step in the damage function act (flat, increased and more damage, typed or not, critical chance and damage, accuracy, penetration); ailment, mark, enemy-state, skill-type, minion, conversion, extra-as and double-damage lines still wait for their mechanics. Nothing is persisted; contract C-4 carries gems later.
 
 ## What you see
 

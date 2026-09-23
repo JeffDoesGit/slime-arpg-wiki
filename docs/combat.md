@@ -12,10 +12,10 @@ Players cannot hurt each other. Monsters do not hurt monsters.
 
 Every hit goes through one function on the server, the same one whether a player hits a monster or a monster hits a player. In order:
 
-1. **Roll.** A chance to hit, 95% to begin with, clamped between a floor and a cap. A miss does nothing.
-2. **Crit.** A chance to crit, 5% to begin with, for 150% damage.
-3. **Type.** Every hit has exactly one type: physical, fire, cold, lightning or poison.
-4. **Mitigate.** Physical damage is reduced by defense on a ratio that never reaches zero (defense 100 halves it). Elemental damage is reduced by that element's resistance, capped at 75%.
+1. **Roll.** A chance to hit, 95% to begin with, times one plus the attacker's accuracy lines, clamped between a floor and a cap. A miss does nothing.
+2. **Crit.** A chance to crit, 5% plus the attacker's critical-chance lines, for 150% damage plus its critical-damage lines.
+3. **Type.** Every hit has exactly one type: physical, fire, cold, lightning or poison. The number is the move's damage plus the attacker's flat lines (untyped, and of the hit's type), times its increased lines summed, times its more lines compounded (since E-3.9; every red gem was inert before it).
+4. **Mitigate.** Physical damage is reduced by defense on a ratio that never reaches zero (defense 100 halves it). Elemental damage is reduced by that element's resistance, capped at 75%, less the attacker's penetration of that type, never below zero.
 5. **Apply.** Health goes down. At zero, the pawn dies.
 
 Before any of that, one check: a hit on or from a pawn standing in a safe zone is not applied at all, no roll and no flinch (GDD 6.1; see [Zones](zones.md)). Moves cannot even be pressed there.

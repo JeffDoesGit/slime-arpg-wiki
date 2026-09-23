@@ -8,6 +8,8 @@ A sword-carrying skeleton (the Corpse, from the City of Brass pack) standing in 
 
 A monster never picks a dead player as its target, and drops one that dies (since E-2.75); before this a Corpse spawned beside a fallen player stood over the body attacking nothing while a live player walked past. When a monster has a target it cannot reach and stands still for three seconds, it logs once what the navigation mesh says about itself and its target, so a stalled chase names its cause instead of being a mystery. The first such line, on 2026-09-17, said neither end was on any navmesh at all, which is E-2.83.
 
+Until fix/corpse-alert-stall (2026-09-23), a Corpse could settle just outside its own swing's real reach and stay there: the monster definition's `AttackRange` (how close counts as "arrived," read by both the chase and the attack states) was wider than the attack move's own `HitRange` (how close the swing actually needs to land, checked only when the swing resolves), so a Corpse would walk up, decide it had arrived, swing on a loop forever, and never once land a hit or take another step closer — indistinguishable from a stall, since nothing about it looked wrong except that the fight never ended. Both states now share the tighter of the two, so "arrived" always means "can land."
+
 Other players in the same game see the same monster doing the same things.
 
 ## How it works, in plain words

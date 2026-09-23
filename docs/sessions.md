@@ -96,7 +96,42 @@ The memo's §5.2 spelled these `Slime.Session.Host` / `.Join` / `.Leave`; they a
 match every other `Slime.*` command on the page. The three API names the memo fixes for C-5 are
 unchanged.
 
+## Admin: kicking a player (S-5.1)
+
+A host removes a connected player by name from their own console: `Slime.Kick <PlayerName>
+[Reason...]`, compiled out of Shipping like every other `Slime.*` command on this page. It looks
+up the player by `APlayerState::GetPlayerName()` (case-insensitive), refuses and logs rather than
+acting when the world has no authority, the name does not resolve to a connected controller, or
+the name resolves to the host's own local controller (there is nowhere for a listen host's own
+controller to go). A resolved kick runs through `AGameSession::KickPlayer` (the engine's own
+disconnect path, `GameFramework/GameSession.h:155`) and logs
+`Kick: <name> kicked by host (<reason>)` before returning. The implementation is
+`AdminKick::KickByName` in `Source/SandboxARPG/Server/AdminKick.h`.
+
+Whitelist, ban list and RCON — the rest of S-5.1's "admin minimum" — are not built. A whitelist or
+ban needs a durable identity to key entries on, which is contract C-7 (validated Steam ID),
+still `open`, and somewhere to keep the list across a restart, which is S-2.4 (persistence),
+still `todo`. `CLAUDE.md` 1.9 rules out writing anything provisional that a later session reads,
+so neither is built provisionally against a placeholder identity or an in-memory list that a
+restart would silently lose. A kick has neither problem: it is a one-shot action against a
+connection that is live right now, nothing about it needs to survive the process.
+
+**Log location.** Every `Kick:` line, like every other `Slime.*` and `LogSandboxARPG` line, goes
+to the running process's own log file, not to a separate admin log:
+
+- **An editor-hosted session** (PIE, or `UnrealEditor.exe <uproject> <map>?listen -game`):
+  `<Project>/Saved/Logs/<ProjectName>.log` (this repository:
+  `Saved/Logs/SandboxARPG.log`), or the file named by an explicit `-abslog=<path>` / `-log=<name>`
+  argument on the command line.
+- **A packaged Windows client hosting as a listen server**: `<Build>/SandboxARPG/Saved/Logs/`.
+- **A dedicated server**, once one exists (`S-2.1`, blocked on `DS-0.10`):
+  `<Build>/SandboxARPG/Saved/Logs/` under that binary's own working directory.
+
+There is no rotation or separate admin-log stream today; a host tailing for `Kick:` reads the
+same file every other server log line lands in.
+
 ## What is not built here
 
 No menu UI (Jon's `E-6.5`), no Steam identity or discovery (`S-0.3`, `DS-0.4`), no replication
-filtering or scale numbers (`S-2.3`, `S-2.6`) — those are separate rows this one does not touch.
+filtering or scale numbers (`S-2.3`, `S-2.6`), no whitelist, ban list or RCON (`S-5.1`, above) —
+those are separate rows this one does not touch.

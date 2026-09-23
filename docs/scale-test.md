@@ -54,15 +54,54 @@ counts.
 - **Bandwidth per joiner connection** grew from ~18 to ~33 KB/s outbound as bot count went 50 to
   100 — closer to linear-with-N than flat, which is the expected shape before any relevancy or
   prioritisation work narrows what a distant player is told about (S-2.3's filter pass, `S-2.3a`/`S-2.3b`, is already on `main`; this run did not disable it to compare, so these numbers already include that filtering, not a naive broadcast-everything baseline).
-- **Iris object headroom.** No `MaxReplicatedObjectCount` override was found in this repository's
-  tracked config (`Config/DefaultEngine.ini`, `docs/decisions/DS-0.2.md` names Jeff as owner of
-  that setting but no PR on `main` sets it away from the engine's built-in default, which Iris
-  documents as 16384). 100 bots, each contributing on the order of half a dozen replicated
+- **Iris object headroom.** Corrected 2026-09-23 (this page had it backwards): `Config/DefaultEngine.ini`
+  *does* carry a `MaxReplicatedObjectCount` override, set to 16384 on both `ReplicationSystemConfigServer`
+  and `ReplicationSystemConfigClient` under `[/Script/OnlineSubsystemUtils.IpNetDriver]` (S-2.3a,
+  `docs/systems/replication.md`'s Object pool note, `PROVISIONAL(DS-2.3)`), same as the engine's own
+  built-in default — the config line pins that default in the tracked file rather than leaving it
+  implicit, it does not raise or lower it. 100 bots, each contributing on the order of half a dozen replicated
   objects (the pawn, its `UMonsterAbilitySystemComponent`, `UMonsterAttributeSet`,
   `USoulComponent`, `UGemEquipmentComponent`, the `AScaleBotController` and its `APlayerState`),
   is on the order of 700 to 800 objects at N=100 — comfortably inside a 16384 ceiling, alongside
   the level's own actors (336 at N=100). This is an estimate from the class list, not a counted
   read of Iris's own object table; no console command in this codebase prints that count today.
+
+## Legacy driver rerun (2026-09-23, `docs/s26-legacy-driver`)
+
+Driver-agnostic check per `docs/systems/replication.md`'s row (C-3 rule: "PIE tests run with
+`net.Iris.UseIrisReplication` at both values") and the S-2.6 row's own ask: the same method at
+50 and 100 bots with the legacy driver instead of Iris. The cvar was set in the user config
+layer (`Saved/Config/WindowsEditor/Engine.ini`, `[ConsoleVariables]` section,
+`net.Iris.UseIrisReplication=0`), not on the command line — an `-ExecCmds` argument runs after
+the `?listen` URL has already created the net driver on this map, too late to change which
+model it picks, while the `[ConsoleVariables]` ini section is read at engine start before any
+world loads. The log confirms it took: `LogNet: InitBase GameNetDriver (NetDriverDefinition
+GameNetDriver) using replication model Generic`, against `using replication model Iris` on the
+default config. One real joiner this time, not two (`UnrealEditor.exe SandboxARPG.uproject
+127.0.0.1:7779 -game -nullrhi -nosound -unattended`, `Welcomed by server` in its own log), so
+`connections=1` in every `ScaleStats` line below rather than the Iris run's two — the per-
+connection averages are not directly comparable row for row against the Iris table above on
+that account, only the shape (frame time and per-connection bandwidth growth from 50 to 100).
+Bots raised 50 then +50 to 100 in the same host process, six `ScaleStats` samples per level.
+
+| Bots (N) | Level actors | Mean last-frame ms | Approx. host FPS (1000/ms) | Mean per-connection in (KB/s) | Mean per-connection out (KB/s) | Ensures/crashes |
+|---|---|---|---|---|---|---|
+| 50 | ~181 | 8.47 | ~118 | 4.06 | 23.56 | 0 |
+| 100 | 331 | 10.11 | ~99 | 3.82 | 42.68 | 0 |
+
+No `Ensure condition failed`, `Assertion failed` or `Fatal error` line in the run (`grep -ci` on
+the raw log: 0). Frame time rose from ~8.5 ms to ~10.1 ms mean, 50 to 100 bots — about 19% over
+double the load, close to the Iris run's ~14% over the same range and within the noise of a
+single-joiner, one-host comparison; nothing here says one driver is faster than the other, only
+that neither falls over or diverges wildly from the Iris shape at this scale. Per-connection
+outbound bandwidth is higher in absolute terms than the Iris table (23.6 -> 42.7 KB/s here
+against 18.3 -> 32.7 KB/s there), which is expected and not a driver verdict: this run's one
+joiner is the only connection the average is taken over, while the Iris run averaged across two,
+and Iris's own relevancy/priority machinery (S-2.3a/S-2.3b) is not identical to the legacy
+driver's replication graph defaults on this project (no custom Replication Graph, `CLAUDE.md`
+6.7 keeps GAS types out of gameplay code but says nothing about the driver's own filtering).
+Raw log at `C:/Users/jeffr/.claude/scratch/live-evidence/s26_host.log` (not in the repository,
+per CLAUDE.md 7.13).
 
 ## What a dedicated-server run must repeat
 

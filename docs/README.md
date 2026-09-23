@@ -21,6 +21,7 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 | [Field monsters](field-monsters.md) | The monsters in the field: what they are, how they think, where they come from | two types as data; server-only brain; placed spawners read a table and the host's Mob density rule; death clip or ragdoll, bodies sink; dead players never targeted |
 | [Server rules](server-rules.md) | The twelve rules a host sets for their server, where they live, and what happens when one is typed wrong | in place; values are placeholders until tuned |
 | [Replication](replication.md) | Which networking driver the game uses, the one-line fallback, and the test that proved both work | in place; per-player filtering owed (S-2.3) |
+| [Steam identity](steam-identity.md) | The validated Steam ID of a connection, checked by the engine's own session-ticket handshake | partial, off by default; App ID 480 only, one account not yet proven to refuse a bad ticket (C-7 open) |
 
 ## Things that are true everywhere
 

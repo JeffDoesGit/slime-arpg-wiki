@@ -9,9 +9,9 @@ Press `I`. The screen has three parts:
 1. **Three soul slots** at the top, primary, secondary and worn. The worn slot takes only a cosmetic soul (the human); dragging it there changes your body and nothing else, dragging it back takes it off.
    Primary and secondary: Drag a soul from the bag onto the primary slot to become that monster; drag it back to the bag to take it off. The secondary slot shows a name but refuses drops for now.
 2. **A row of nine gem slots**: two red, two green, two blue, two iridescent (only an iridescent gem, since E-3.6; they took any colour before), one for special gems. Drag a [gem](gems.md) from the bag onto a slot to equip it; the slot shows the gem's stone (a ruby for red, an emerald for green, a sapphire for blue, an onyx for the special class) and, on hover, its lines. Drag it back to the bag to take it off. A gem dropped on a slot of the wrong colour stays in the bag; the server refuses it.
-3. **A bag grid**, 4 rows by 10, showing the souls you own with their icons, then the souls still being assembled as dimmed icons with their fragment count (E-2.7), then your gems as their stones with a tooltip of their lines (since E-2.61; a colour with no icon configured falls back to a flat colour swatch).
+3. **A bag grid**, 4 rows by 10, showing the souls you own with their icons, then the souls still being assembled as dimmed icons with their fragment count (E-2.7), then your gems as their stones with a tooltip of their lines (since E-2.61; a colour with no icon configured falls back to a flat colour swatch). Since E-3.8 a gem cell's frame, and an equipped gem's slot frame, is the colour of the gem's rarity, and the tooltip shows each line's value in its own format with the line's tier and roll band beside it (see [Gems](gems.md)).
 
-That is the whole screen. No stash yet (it needs a city), no rarity display, no sorting.
+That is the whole screen. No stash yet (it needs a city), no sorting.
 
 ## Where the layout comes from
 

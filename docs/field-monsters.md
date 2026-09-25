@@ -67,7 +67,7 @@ Since E-2.9a a level carries **spawners**: an invisible actor placed in the fiel
 
 ## For testers
 
-Place a `MonsterSpawner` in a level, set its Spawn Row to `Forest_Corpse` or `Forest_Creepy` (4 Corpses or 2 Creepies, refill 30 s), Build Paths, play as a listen server. The Output Log line `MonsterSpawner ...: spawned N of M` says what happened; `refill in 30.0 s` follows a kill and `refilled` the return. Change `MobDensity` under `[/Script/SandboxARPG.SandboxServerRules]` in `Saved/Config/WindowsEditor/Game.ini` to see the count scale.
+Place a `MonsterSpawner` in a level, set its Spawn Row to `Forest_Corpse` or `Forest_Creepy` (4 Corpses or 2 Creepies, refill 30 s), or one of the ten `Beach_*` rows of the beach blockout (CT-2.27: 2 to 4 each, the Corpse standing in for the beach's signature monster until it exists), Build Paths, play as a listen server. The Output Log line `MonsterSpawner ...: spawned N of M` says what happened; `refill in 30.0 s` follows a kill and `refilled` the return. Change `MobDensity` under `[/Script/SandboxARPG.SandboxServerRules]` in `Saved/Config/WindowsEditor/Game.ini` to see the count scale.
 
 `Slime.SpawnMonster DA_Monster_Corpse` or `Slime.SpawnMonster DA_Monster_Creepy` (optionally a count) spawns in front of you, host only. `Slime.SetAttribute Health 0 FieldMonster_0` kills the first one. `Slime.Monster.Brain 0` before spawning leaves monsters standing.
 

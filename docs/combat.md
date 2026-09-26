@@ -28,6 +28,10 @@ A melee move lands its hit a fixed fraction of a second into its animation, on e
 
 Being hit plays a flinch animation, and only that: it never interrupts what you were doing. Dying plays the death animation and holds it. A monster despawns after a delay; a player respawns at the level's PlayerStart with full vitals, on the same character, so nothing in the bag or the slots is lost.
 
+## Control ailments
+
+Since the tree-verbs pass of 2026-09-27 (E-2.123, E-2.124) a landed hit can also leave a **control ailment** on its target: a slow, a stun, a knockback or a weaken. A move's row names which one and how often (Grave Hands slows every enemy it hits), and the tree can apply one too (Reeking Shroud weakens everyone standing in the shroud). Each kind is one instance per target: a second application refreshes the clock to the full duration and keeps the stronger of the two magnitudes, so nothing stacks; different kinds coexist. A **slow** cuts the walk speed and the swing speed by its percentage. A **stun** stops the pawn: it cannot move, cannot act, and the move it was in the middle of is cut short, its unlanded claws dropped; it is the one thing that interrupts a move. A **knockback** shoves the target a fixed distance away from the attacker in one hop; it has no duration. A **weaken** cuts the damage the target deals by its percentage. A Boss-tier monster ignores stun and knockback and takes slow and weaken at half strength. Your own tree can push back: Sure Footed and Heavy Bones reject a knockback and halve a slow or a stun; Molt clears every control on you when it triggers. The name plate shows what is on a pawn and how long it has left, read from the server. Freeze, shock, blind and crowd-control resistance are not built (E-2.127). Every number is a `DT_CombatRules` row and every rule is the D-3.7 memo's, which Duilio has not decided.
+
 ## Settled
 
 - The server resolves every hit; your machine shows the result after the fact (GDD 7.7, 9.8).
@@ -37,7 +41,7 @@ Being hit plays a flinch animation, and only that: it never interrupts what you 
 ## Waiting on design
 
 - **All of it, formally.** The four memos are recommendations; Duilio has not decided. If a decision changes the function, the code changes and the data does not.
-- **Ailments and poison** (D-3.5): not built; the Creepy kit's poison arrives with its real abilities.
+- **Poison** (D-3.5): built as stacking instances since E-2.109; see [Progression](progression.md). **Control ailments** (D-3.7): the four the trees need since E-2.123, provisional on the memo; freeze, shock, blind and crowd-control resistance wait (E-2.127).
 - **The XP penalty on death** (D-2.3): in since E-2.31 as a 10% placeholder of your progress toward the next level; see [Progression](progression.md).
 - **The city as the respawn point**: the level's PlayerStart stands in until the city exists.
 - **Accuracy, evasion, crit and reduction lines** from accessories: fixed at their base values until the affix system applies them.
@@ -47,7 +51,7 @@ Being hit plays a flinch animation, and only that: it never interrupts what you 
 
 ## For testers
 
-Host only: `Slime.SetAttribute Defense 100 FieldMonster_0` halves the next physical hit on it. Damage lines print in the server log as `Hit: <attacker> hit <target> for <n> <type>`. `Slime.SetAttribute Health 0 <pawn>` still kills outright.
+Host only: `Slime.SetAttribute Defense 100 FieldMonster_0` halves the next physical hit on it. Damage lines print in the server log as `Hit: <attacker> hit <target> for <n> <type>`. `Slime.SetAttribute Health 0 <pawn>` still kills outright. `Slime.ApplyControl stun` (or `slow`, `knockback`, `weaken`, with an optional magnitude, duration and pawn name) lands one on a pawn through the same path a hit takes; `Slime.ShowControls` and `Slime.ClearControls` read and end them; the log says `Control: <pawn> gained <kind> ...`.
 
 ## For engineers
 

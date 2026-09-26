@@ -15,6 +15,7 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 | [Inventory screen](inventory-shell.md) | The screen you open with `I`: soul slots, gem slots, the bag | playable for souls; gems drawn only |
 | [Abilities](abilities.md) | The moves a soul gives you | playable: keys, animations, effects, a projectile, damage through combat, mana costs and cooldowns; ailments and trees still design |
 | [The HUD](hud.md) | Health and mana orbs and the ability bar with cooldown and mana state | playable, placeholder layout; name plates, pickup toast, Skills button on P, debug menu on F1 |
+| [Flasks](flasks.md) | Two charge flasks, health and mana, on Q and E: kills near you refill them, wells and towns fill them | first pass, provisional on D-2.11; numbers are placeholders |
 | [Affix table](affix-table.md) | The 107 stat lines an accessory can roll, as data | table exists; gems read it; no items roll yet |
 | [Gems](gems.md) | The equipment item: colour, rarity, rolled lines; nine typed slots; lines applied to your stats | in place by console, no screen; provisional on the slot decision |
 | [Zones](zones.md) | The town gate that opens for a soul's owner, the safe zone where no combat happens, and the ground materials every floor wears | gate provisional on the human-soul memo; safe zone in place, GDD 6.1 |

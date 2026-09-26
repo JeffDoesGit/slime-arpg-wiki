@@ -22,7 +22,7 @@ You can press a key and your monster performs a move: it turns to face the curso
 - **Mana and cooldowns.** Some moves cost mana; pressing one you cannot afford does nothing, and the server logs why. Some moves have a cooldown; pressing one too soon does nothing. The [HUD](hud.md) slot shows the seconds left and greys the move you cannot afford.
 - **Self-buffs.** A move can strengthen you for a fixed time. Festering Shroud gives Defense +15 for 6 seconds; Bone Ward gives Defense +15 and 4 health a second for 8 seconds. Both end by themselves.
 - **Charges.** A move can carry you a set distance toward the cursor and hit everything you pass through, once each. Walls stop you. Marrow Rush is the first: 500 units in a quarter of a second. The developer command `Slime.Dash` tries it without a soul.
-- **Marks.** Marrow Rush leaves a Splinter in every enemy it passes through. Charge through an enemy that already carries one and it shatters: everything within 250 units of that enemy takes a burst of damage, and the Splinter is spent. A Splinter fades after 6 seconds on its own.
+- **Marks.** Marrow Rush leaves a Splinter in every enemy it passes through. Charge through an enemy that already carries one and it shatters: everything within 250 units of that enemy takes a burst of damage, and the Splinter is spent. A Splinter fades after 6 seconds on its own. With Brittle Bone a Splinter that fades unspent shatters by itself for half the burst, and that shatter seeds nothing: no Shrapnel on the neighbours and no Bone Choir, because a shatter that seeds would feed the next fade and run on its own with nobody pressing anything (found and closed 2026-09-26). Only a shatter from a move, the rush crossing or Tear's claw, plants and sings.
 - **Two hits from one press.** Grave Clutch claws twice, a moment apart, each a hit of its own.
 - **Hits at the cursor.** Grave Hands lands on everything within 200 units of the point you aim at, instead of in the cone in front of your body, and reaches no farther than 400 units from you: aim beyond that and it lands at the edge.
 
@@ -54,6 +54,10 @@ Memos on `main` propose the rules the first moves need:
 - Mana climbs back at 2 a second (E-2.45), so a kit with costs is slow rather than dry between fights; `Slime.SetAttribute Mana 50` still refills it at once.
 - Pressing Shift with a move key also triggers an engine debug shortcut in the editor. Harmless, being looked at.
 - The Acid Spit projectile is still the placeholder dark colour; the poison-green recolour is content item CT-2.2.
+
+## The tree's verbs (2026-09-26)
+
+Since the passive-trees pass a move's numbers are resolved through the tree at activation (`USoulTreeComponent::ResolveMove`: the `DT_MoveStats` row plus the asset's hit shape with every allocated node's overrides on top), the ability class hears every landed melee hit with its claw index (`OnMeleeHitLanded`) beside the dash crossing, a placed area (`AMoveArea`) can wait in the ground, a projectile can burst in a radius, and the Corpse's Splinter logic is one routine (`FCorpseSplinters`) that the rush, the claws, the hands, an expiry and the choir all call. The Creepy's moves carry poison stacks on their rows. See docs/systems/progression.md for what each node does.
 
 ## What comes next, in order
 

@@ -28,7 +28,7 @@ You can press a key and your monster performs a move: it turns to face the curso
 
 The Creepy has four moves, named after its designed kit: **Venom Rake** (free, no cooldown), **Acid Spit** (10 mana, 4 s), **Bifurcating Rend** (15 mana, 6 s), **Festering Shroud** (25 mana, 12 s, the buff above). Their poison rules are still design.
 
-The Corpse has four of its own since E-2.48: **Grave Clutch** (free, no cooldown, two claws of 8), **Marrow Rush** (10 mana, 3 s, the charge and the Splinter), **Grave Hands** (15 mana, 6 s, 12 damage in a cone at the cursor; its slow waits for the ailment rules), **Bone Ward** (25 mana, 12 s, the buff above). The field Corpse attacks you with Grave Clutch. Every one of those numbers is a placeholder in a table.
+Every soul also has a basic attack apart from its kit since E-2.111, always granted and never in the tree: the Creepy's **Bite** (10 Physical) and the Corpse's **Claw** (6 Physical), on the left button. The Corpse has four of its own since E-2.48: **Grave Clutch** (free, no cooldown, two claws of 8), **Marrow Rush** (10 mana, 3 s, the charge and the Splinter), **Grave Hands** (15 mana, 6 s, 12 damage in a cone at the cursor; its slow waits for the ailment rules), **Bone Ward** (25 mana, 12 s, the buff above). The field Corpse attacks you with Grave Clutch. Every one of those numbers is a placeholder in a table.
 
 ## How it works, in plain terms
 

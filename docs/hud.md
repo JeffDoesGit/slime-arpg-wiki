@@ -57,6 +57,10 @@ The key rows show a pad button by a short name ("Face Bottom" for the engine's "
 
 A name plate's state line, under the health bar, starts with `Poisoned xN` while its owner carries poison stacks (E-2.135), before any control ailment (`Slowed 30% 2.4s`, E-2.123).
 
+## Session section of the options screen (E-6.5)
+
+There is no title screen yet, so starting, hosting and joining a game live on the options screen, under Session. The first line says what this game is: playing alone, hosting (others can join you), or joined to a host. **Play alone** reopens this map with nobody able to join; **Host a game** reopens it listening for others, up to the host's `ListenHostMaxPlayers` rule; type the host's address in the field and **Join** to connect to them (the address the host reads from `tailscale ip -4`, or their LAN address, as in `docs/playtest.md`); **Leave** takes you back to the start map alone. Hosting or playing alone reopens the map from the start, so what you carry is lost: nothing is saved yet. The line under the buttons says what the last press is doing, or why it failed. These are Jeff's session calls (`USessionSubsystem`, contract C-5, provisional on DS-2.2); `bSessionSection=False` hides the section, and `Slime.Host`, `Slime.Join` and `Slime.Leave` still work from the console.
+
 ## PvP section of the options screen (E-2.116, moved by E-2.118)
 
 The arena queue lives on the options screen, under the heading PvP, between the ground ring switches and the keys. Open the options with O, with the cog on the bar, or with the crossed swords beside it: since E-2.118 the Arena disc opens the options screen, and the small Arena panel of E-2.116 is gone. The section shows four things:

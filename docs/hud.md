@@ -53,6 +53,15 @@ A square in the top-right corner shows the ground around you from above with you
 
 The toast card at the top of the screen, which the soul pickup already used, now also shows the name of the region the local pawn just entered (`AMonsterHUD::ShowRegionName`, `UPlayerHud::ShowToast`), for `RegionToastSeconds` (3 s, `UHudLayoutSettings`). Both lines share the one card; the newer replaces the older.
 
-## Arena screen (E-2.116)
+## PvP section of the options screen (E-2.116, moved by E-2.118)
 
-An "Arena" disc after Options on the bar opens a small panel: a status line (not queued, in the queue, matched) read from your pawn's replicated arena state, and one button that queues you for a duel or takes you out of the queue. The click is an intent sent to the server; the server's arena queue (`UArenaQueueSubsystem`) matches the first two in line and teleports them to the two spots inside the ring outside the town's south gate. Whether your hits land there is the server's PvP rule, as anywhere outside a safe zone; the arena's own rules are D-2.14, undecided.
+The arena queue lives on the options screen, under the heading PvP, between the ground ring switches and the keys. Open the options with O, with the cog on the bar, or with the crossed swords beside it: since E-2.118 the Arena disc opens the options screen, and the small Arena panel of E-2.116 is gone. The section shows four things:
+
+- **Your state**: not queued, in the queue, or matched, read from your pawn's replicated arena state.
+- **Who is waiting**: the names of the players in the queue, or "Nobody is waiting". With a queue of two this is one name at most, because the second player to queue is matched at once.
+- **The server's PvP rule**: on, and hits land in the ring, or off, and the two duelists cannot hurt each other. The ring follows the server's rule like any ground outside a safe zone; whether it should fight regardless is D-2.14, undecided.
+- **One button**: queue for a duel, or leave the queue. It is greyed while you are matched.
+
+The click is an intent sent to the server; the server's arena queue (`UArenaQueueSubsystem`) matches the first two in line and teleports them to the two spots inside the ring outside the town's south gate. A queued player who leaves the session leaves the queue. `bPvpSection=False` in `Config/DefaultGame.ini` removes the section and the disc; the queue is then reached by the dev command `Slime.ArenaQueue` only.
+
+For engineers: the waiting names are `AMonsterCharacter::ArenaWaiting`, replicated to the owner only and written by the queue on every change (`UArenaQueueSubsystem::PushWaiting`) and at possession, so a player who joins while someone waits sees the name at once. A pawn's own state cannot carry the list, because distant pawns are not replicated to a client. The section is `UOptionsScreen::MakePvpSection` and `RefreshPvp`, bound to the pawn's `OnArenaStateChanged`. The server half (the queue on a dedicated server, where the queue state should replicate, the rule inside the ring) is Jeff's and unfiled.

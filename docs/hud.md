@@ -53,6 +53,10 @@ A square in the top-right corner shows the ground around you from above with you
 
 The toast card at the top of the screen, which the soul pickup already used, now also shows the name of the region the local pawn just entered (`AMonsterHUD::ShowRegionName`, `UPlayerHud::ShowToast`), for `RegionToastSeconds` (3 s, `UHudLayoutSettings`). Both lines share the one card; the newer replaces the older.
 
+The key rows show a pad button by a short name ("Face Bottom" for the engine's "Gamepad Face Button Bottom") so it fits its button; a name that is still too wide ends in an ellipsis inside the button (E-2.130).
+
+A name plate's state line, under the health bar, starts with `Poisoned xN` while its owner carries poison stacks (E-2.135), before any control ailment (`Slowed 30% 2.4s`, E-2.123).
+
 ## PvP section of the options screen (E-2.116, moved by E-2.118)
 
 The arena queue lives on the options screen, under the heading PvP, between the ground ring switches and the keys. Open the options with O, with the cog on the bar, or with the crossed swords beside it: since E-2.118 the Arena disc opens the options screen, and the small Arena panel of E-2.116 is gone. The section shows four things:

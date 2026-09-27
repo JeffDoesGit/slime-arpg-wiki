@@ -34,7 +34,7 @@ The health and mana orbs on the [HUD](hud.md) show your current and maximum valu
 Two host-only console commands:
 
 - `Slime.SetAttribute Health 50` sets a stat on your monster. Add a pawn name at the end to set it on someone else's.
-- `Slime.ShowAttributes` prints every monster's stats and whether that monster is the host's or a client's copy. Handy for telling two test windows apart.
+- `Slime.ShowAttributes` prints the players' pawns' stats and whether each is the host's or a client's copy. Handy for telling two test windows apart. `Slime.ShowAttributes <PawnName>` prints one pawn (a monster by its name) and `Slime.ShowAttributes all` every pawn in the world, which on the one map is about 130 of them (E-2.131).
 
 ## What is waiting on design
 

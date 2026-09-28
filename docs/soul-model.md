@@ -11,7 +11,7 @@ A soul is a monster in item form. Equip it and you become that monster: its body
 Each soul is one data asset a designer edits in the Unreal editor, no code involved:
 
 - the monster's name and an icon for the inventory;
-- its skeletal mesh, how it sits inside the collision capsule, and the capsule's size;
+- its skeletal mesh, how it sits inside the collision capsule, and the capsule's size (a mesh whose feet are at its own origin needs a location of Z = minus the capsule half-height, less about 2 uu for the gap walking keeps above the floor: the Corpse sits at (0, 0, -92) in a half-height 90 capsule since 2026-09-28, having stood 90 uu in the air at (0, 0, 0) since it was made);
 - three animation clips, idle, walk and run, with the speeds at which the game switches between them;
 - the list of moves it grants (empty for now; see [Abilities](abilities.md)).
 

@@ -73,9 +73,8 @@ function so it is testable with no world. It counts the host's own local player 
 joiner: a host who sets it to 1 cannot be joined by anyone, because the host already occupies the
 one seat the engine's own `AGameSession::MaxPlayers` check allows (`AGameSession::AtCapacity`
 compares `AGameModeBase::GetNumPlayers()`, which counts every player controller with a player state,
-the host's included, `GameSession.cpp:322-340`). PROVISIONAL(DS-2.2): 8 is the memo's placeholder
-(`docs/decisions/DS-2.2.md` §5.1, "a number, not a measurement") until `DS-2.3`'s scale-spike numbers
-or `DS-1.1`'s 8.1 defaults replace it. See [`../server-config.md`](../server-config.md) for the ini key.
+the host's included, `GameSession.cpp:322-340`). DS-2.2 §5.1 (decided 2026-09-28). See
+[`../server-config.md`](../server-config.md) for the ini key.
 
 The rule reaches the engine only through the `?MaxPlayers=` option `HostSession` builds. A host
 started the old way, with the console's `open Lvl_Slice?listen` (`docs/playtest.md` sections 0

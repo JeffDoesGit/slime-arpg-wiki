@@ -57,7 +57,7 @@ counts.
 - **Iris object headroom.** Corrected 2026-09-23 (this page had it backwards): `Config/DefaultEngine.ini`
   *does* carry a `MaxReplicatedObjectCount` override, set to 16384 on both `ReplicationSystemConfigServer`
   and `ReplicationSystemConfigClient` under `[/Script/OnlineSubsystemUtils.IpNetDriver]` (S-2.3a,
-  `docs/systems/replication.md`'s Object pool note, `PROVISIONAL(DS-2.3)`), same as the engine's own
+  `docs/systems/replication.md`'s Object pool note, S-2.3a sizing re-measured by S-2.5), same as the engine's own
   built-in default — the config line pins that default in the tracked file rather than leaving it
   implicit, it does not raise or lower it. 100 bots, each contributing on the order of half a dozen replicated
   objects (the pawn, its `UMonsterAbilitySystemComponent`, `UMonsterAttributeSet`,

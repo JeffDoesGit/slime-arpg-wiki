@@ -41,6 +41,10 @@ The place you last arrived at is your checkpoint. Since E-2.132 the death screen
 
 Since E-2.115 (2026-09-25) each region of the map carries an `ARegionZone`, a box with a display name. When your own pawn walks into one, its name shows on the toast card at the top of the screen for a few seconds ("Zone 1: The Beach"), the area banner Diablo and Path of Exile show; the log says `RegionZone <name>: <pawn> entered '<name>'`. It is cosmetic and local: nothing replicates and the server never reads it. The names are the remake plan's placeholders until the board is transcribed (D-0.2). The town's three shut gates (west, north, south) are open for now (CT-2.34); the forest's soul gate still opens for the worn human soul from the gazebo corpse, and the Creepy soul lies on a dead Creepy in the town square; the quest locks come later on the soul gate's shape.
 
+## The arena ring
+
+Outside the town's south gate stands the arena ring. Since E-2.145 (2026-09-28) any players standing inside it can hurt each other, whatever the server's PvP setting: two, three or four at once, anyone who walks in, not only the pair the queue sends there. Step out and the server's setting applies again: a player outside the ring cannot hit one inside it on a PvP-off server, and the other way round. Name plates turn red for another player while both of you are inside. Monsters are unaffected, and dying in the ring costs what dying anywhere costs. The ring's bounds are a box (`PvPArenaVolume`, labelled `PvPArena_South` in the `Town/Arena` folder of the Outliner) drawn as a red outline in the editor and moved or resized by hand (`Extent`). The host log says `Arena <box>: <pawn> entered` and `left`. This is Jon's rule taken provisionally until Duilio answers D-2.14 (memo section 8), behind `bArenaPvP` in `Config/DefaultGame.ini`; what a match is, whether anything is won or lost, and whether the ring moves inside the walls are still design's.
+
 ## Settled
 
 - GDD 6.1: cities are safe zones, no combat, no loss. The zone is the rule's whole implementation for now.

@@ -71,6 +71,8 @@ Since E-2.9a a level carries **spawners**: an invisible actor placed in the fiel
 
 No monster spawns where players arrive. Every teleport destination (a gate's landing spot, a respawn point, a checkpoint well) is an arrival spot, and a spawn or a refill keeps the monster's aggro range plus a 300 uu margin away from all of them, so a player who teleports in is never seen by a monster standing there. The spot is not safe ground: a monster chasing you can still follow you to a well. If a spawner sits so close to a destination that no point in its radius is far enough, it takes the furthest point it found and warns once in the log, naming itself; move that spawner. The margin and the number of tries are `ArrivalKeepOutMargin` and `ArrivalKeepOutTries` under `[/Script/SandboxARPG.MonsterSpawner]` in `DefaultGame.ini`.
 
+A part of the map that streams out of the world and back in keeps its monsters (E-2.165): the spawner counts the ones still standing and only fills the gaps, where it used to spawn a whole new batch beside them. The host log says `kept N from before the cell left the world`.
+
 ## For testers
 
 Place a `MonsterSpawner` in a level, set its Spawn Row to `Forest_Corpse` or `Forest_Creepy` (4 Corpses or 2 Creepies, refill 30 s), or one of the ten `Beach_*` rows of the beach blockout (CT-2.27: 2 to 4 each, the Corpse standing in for the beach's signature monster until it exists), Build Paths, play as a listen server. The Output Log line `MonsterSpawner ...: spawned N of M` says what happened; `refill in 30.0 s` follows a kill and `refilled` the return. Change `MobDensity` under `[/Script/SandboxARPG.SandboxServerRules]` in `Saved/Config/WindowsEditor/Game.ini` to see the count scale.

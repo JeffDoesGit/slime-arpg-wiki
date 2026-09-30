@@ -30,6 +30,8 @@ A monster is tied to where it spawned by a **leash** (E-2.110). If a chase carri
 
 A monster has two distances of its own (E-2.156, from the 2026-09-28 playtest). **Detection** (the asset's aggro range, nine hundred units since 2026-09-29, fifteen hundred before) is how close you must come before an idle monster notices you; at the default camera that is inside the screen's side edge, where fifteen hundred was past it, so monsters used to wake before you could see them. **Chase** (the lose-target distance, four thousand) is how far it follows once it has you, so stepping back and forth across the detection edge never breaks a chase. When a chase ends and nobody else is in detection, because you ran past the chase distance, died, left or stepped into a safe zone, the monster walks home the same way it does on the leash (`walks home (target lost; ...)`) instead of standing where it lost you. The leash is the outer bound from its spawn point, as above.
 
+A monster that dies in the air (thrown by a knockback, or off a ledge) falls to the ground before it settles, rather than hanging where it died (E-2.154).
+
 When a monster dies it may leave a gem on the ground (see [Gems](gems.md)); the killer also earns experience (see [Level and growth](progression.md)).
 
 ## Settled

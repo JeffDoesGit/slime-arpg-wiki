@@ -66,3 +66,33 @@ A move whose row sets no shape uses the reach and arc on the soul asset, as ever
 For testers: `Slime.ShowHitShapes 2` draws every melee hit's shape on the ground for two seconds, green when it touched an enemy and red when it touched nobody. It is drawn where the server tests the hit, so you see it when you host or play alone, not as a joiner.
 
 For engineers: `FHitShape` in `Abilities/HitShape.h` (`FromRow`, `Touches`, `EdgeReach`); the columns `HitShape`, `ShapeLength`, `ShapeRadius`, `ShapeAngle`, `ShapeOffset` on `FMoveStatRow`; `USoulComponent::ResolveMeleeHit` is the one caller of the test. Lengths count from the edge of the attacker's capsule, a circle's radius from its centre. The numbers are placeholders.
+
+## Chains of triggered effects (E-2.166)
+
+Some effects set off other effects: a hit plants a poison stack, a shatter throws Splinters onto neighbours, a kill by poison spreads the poison. Left alone, two of these can feed each other for ever. One rule stops that. Every hit, counted stack and placed area carries an **origin** and a **chain depth**.
+
+- **Direct**: what a player or monster did on purpose. A swing, a projectile, a dash crossing, a placed area, an aura, the shatter of Marrow Rush or Tear.
+- **Triggered**: what another effect set off. A poison tick, a Hive Heart debt payment, a Bone Choir shatter, the Splinters that Shrapnel and Ossuary plant.
+- **Expiry**: what happens when something runs out. Brittle Bone's shatter.
+
+A reaction that makes a further hit, stack or area fires only when its cause is Direct and the chain is shorter than the bound (3). So a retaliation answers a swing and never a poison tick, and a choir shatter does not plant Shrapnel that could set off another shatter. Three reactions are held to the bound only, because the plain rule would break what they are for: Carrion's spread when a poison tick kills, Brittle Bone on a Splinter that Shrapnel planted, and Hive Heart deferring a triggered hit. Kill credit, experience, fragments, flask charges and the heal or mana a kill gives are never asked.
+
+Two outcomes differ from before the rule: a Bone Choir shatter plants no Shrapnel, and Carrion's copies of copies stop at depth 3.
+
+For testers: `Slime.TriggerOriginRule 0` turns the rule off and the game behaves as it did before; `Slime.MaxHitChainDepth` sets the bound. A reaction refused by the bound warns once per source pawn in the server log; a reaction refused because its cause was not Direct says nothing.
+
+For engineers: `EHitOrigin`, `FHitSpec::Origin`, `ChainDepth` and `MarkTriggered` in `Abilities/DamageTypes.h`; the pure rules `UMonsterAbilitySystemComponent::EvaluateTriggerAllowed` and `EvaluateChainDepthAllowed`, asked through `IsTriggerAllowed` and `IsChainDepthAllowed` at every reaction site (`Progression/SoulTreeHooks.cpp`, `Abilities/Corpse/CorpseAbilities.cpp`, `Abilities/MoveArea.cpp`, `Souls/SoulComponent.cpp`). Tests `SandboxARPG.Combat.TriggerOrigin.*`. Provisional: register row `trigger origin`.
+
+## When a hit's reactions run (E-2.167)
+
+A hit can set three things off on its victim: the answer to the blow itself (the flinch, Caustic Blood, Ossuary), the answer to where the blow left its health (Rigor, Molt), and the death. These used to run wherever the code happened to reach them, two of them in the middle of writing the new health. Molt could heal while the hit was still being counted, and the hit then reported a negative number.
+
+Now the hit finishes first. It writes health, fills in its result and logs its `Hit:` line. Then its reactions run, always in the same order: the answer to the blow, then the answer to the health, then the death. The death still tells the killer's tree (Marrow Tithe, Grave Dust, Rot Feeder, Carrion) before the victim is paid out and cleared, as before. All of it happens before the hit hands its result back, so whoever dealt the hit sees a victim that is already dead when the hit killed.
+
+If a reaction makes another hit on the same pawn, that hit finishes completely, with its own reactions, before the first hit's remaining reactions go on. A change of health that no hit made (regeneration, a flask, a heal, a dev command) is told at once, as before. Unfinished and Hive Heart shape a hit before it lands and are not part of this.
+
+What differs from before: a hit that pushes a pawn under Molt's threshold reports its own damage, and the heal follows it; on a killing hit the answer to the blow runs before the death, where it ran after.
+
+For testers: `Slime.DeferHitReactions 0` puts every reaction back where it ran before.
+
+For engineers: `FHitReactionQueue` in `Abilities/HitReactionQueue.h` (`BeginHit`, `Push`, `EndHitAndDrain`, `DrainOrder`), held by `UMonsterAbilitySystemComponent`; `ApplyHit` opens a frame after its early refusals, `HandleHealthChanged` records while a frame is open, `FinishHit` is the one end of `ApplyHit` and runs the frame. One array reused for every frame, nothing allocated per hit once warm. Tests `SandboxARPG.Combat.HookQueue.*`. Provisional: register row `hook queue`; the order is this build's, the research note names none.

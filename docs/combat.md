@@ -56,3 +56,13 @@ Host only: `Slime.SetAttribute Defense 100 FieldMonster_0` halves the next physi
 ## For engineers
 
 `Source/SandboxARPG/Abilities/`: `DamageTypes.h` (`EDamageType`, `FHitSpec`, `FHitOutcome`), `CombatRules.*` (`DT_CombatRules` lookup, path in `DefaultGame.ini`), `MonsterAbilitySystemComponent::ApplyHit` (the function), the four resistance attributes on `MonsterAttributeSet`. `Souls/SoulComponent.*`: `ResolveMeleeHit` by timer, `ReactToHit`, `PlayDeath`, `Revive`, one `MulticastPlayReaction`. `Souls/SoulDefinition.h`: the hit shape rows on `FSoulMove` and the two reaction clips. `Abilities/MoveStats.*` (`DT_MoveStats` row per ability class: `FlatDamage`, `DamageType`) and `Monsters/MonsterStats.*` (`DT_MonsterStats` row per monster asset name), both with config paths in `DefaultGame.ini` (E-2.26). `Abilities/MoveProjectile.*` carries an `FHitSpec`. `Player/MonsterCharacter.*`: `IsHostileTo`, replicated `bDead`, `HandleHealthDepleted` and `Respawn`; `Monsters/FieldMonster.*` overrides both. Provisional markers: registry rows D-3.6, D-3.1, D-2.3, D-2.4 and "hit shape and per-move damage".
+
+## Hit shapes (E-2.148)
+
+A melee move hits whatever its shape on the ground touches. There are three shapes: a cone (a wedge in front of the attacker), a circle (a disc in front of or around the attacker) and a capsule (a straight band in front, round at its far end). Each move has its own shape and sizes in the move table, so a wide sweep, a short jab and a ground slam can each be tuned on their own row. A target is hit when its body touches the shape, not only when its centre is inside. Players and monsters use the same shapes through the same code, and both walk to the distance their own shape reaches before they swing.
+
+A move whose row sets no shape uses the reach and arc on the soul asset, as every move did before, so the moves in the game today land as they did.
+
+For testers: `Slime.ShowHitShapes 2` draws every melee hit's shape on the ground for two seconds, green when it touched an enemy and red when it touched nobody. It is drawn where the server tests the hit, so you see it when you host or play alone, not as a joiner.
+
+For engineers: `FHitShape` in `Abilities/HitShape.h` (`FromRow`, `Touches`, `EdgeReach`); the columns `HitShape`, `ShapeLength`, `ShapeRadius`, `ShapeAngle`, `ShapeOffset` on `FMoveStatRow`; `USoulComponent::ResolveMeleeHit` is the one caller of the test. Lengths count from the edge of the attacker's capsule, a circle's radius from its centre. The numbers are placeholders.

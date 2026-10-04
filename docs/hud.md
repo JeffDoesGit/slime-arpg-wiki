@@ -75,3 +75,27 @@ The click is an intent sent to the server; the server's arena queue (`UArenaQueu
 For engineers: since S-3.5 the waiting names are `AMonsterGameState::ArenaWaiting`, one server-wide value replicated to everyone (`COND_None`) and written only by `UArenaQueueSubsystem::PushWaiting` through `SetArenaWaiting`. The GameState is always relevant, so a player who joins while someone waits reads the field at once with no re-push (the pawn's owner-only copy, its OnRep and the possession re-push retired with it). Your own state is still `AMonsterCharacter::ArenaState`, replicated to everyone. The section is `UOptionsScreen::MakePvpSection` and `RefreshPvp`, bound to the pawn's `OnArenaStateChanged` for your state and to `AMonsterGameState::OnArenaWaitingChanged` for who waits. The server half still open: the queue on a dedicated server (S-3.7) and the rule inside the ring regardless of the PvP toggle (S-3.6), both Jeff's.
 
 **Move (E-2.142).** Every slot's pick list ends with **Move**, drawn as a light brown boot. A slot holding it walks you toward the cursor while its key is down (a quick tap walks to the point) and never attacks, picks up or opens anything; put on the LMB slot it makes the left button walk only, like Path of Exile's Move Only. It stays in its slot whatever soul you wear. It is never sent to the server: it is movement input, like the mouse walk. Icon: `MoveOnlyIcon` (`T_Icon_Ability_MoveOnly`).
+
+## The left button's slot (E-2.157)
+
+Every soul has a basic attack, and it lives on the left mouse button. When you put on a soul, and again when you respawn after a death, the game puts that basic attack back on the left button's slot. It leaves the slot alone if you picked something else for it from the slot's own list in this session; then the basic attack takes the first empty slot instead. Between soul changes the bar is yours to arrange. The game never places Move for you: only you can pick it.
+
+For engineers: `AMonsterHUD::PlaceBasicAttack` and the pure rule `EvaluateBasicAttackSlot`; the log line is `HUD: the left button takes <ability> (soul change|respawn|refill)`; `Slime.ShowBar` prints the bar.
+
+## Escape (E-2.150)
+
+Escape closes whatever is open on top: a screen, then the list above the bar, then the big map. With nothing open it opens the options screen. Play In Editor keeps Escape for itself, so this works in a Standalone or packaged game.
+
+For engineers: `AMonsterHUD::HandleCloseKey`; `Slime.CloseKey` presses it without a keyboard.
+
+## The big map (E-2.149)
+
+Tab or M shows the whole map over the play view, north up, and the same key hides it. It is the corner minimap drawn large: the same ground picture, the same fog (you only see where you have been), the same marks for wells, the arena and other players. Each region is named once you have stood in it. The game keeps running under it and it takes no clicks, like the automap in Diablo II. The Tab key can be changed on the options screen ("Map"); M is a second key that works while nothing else on your machine uses it.
+
+For engineers: `UBigMapWidget` draws through `UMinimapWidget::PaintMap`, which the minimap's own paint also calls; sizes are the `BigMap*` rows of `UHudLayoutSettings`; `Slime.ToggleBigMap` and the log line `HUD: big map open|closed`.
+
+## The host's two rules (E-2.158)
+
+The Session section has two check boxes above the address field: "PvP everywhere" and "Drop gems on death". Tick them before you press Host a game or Play alone and that game runs with those rules. They are greyed once you are hosting or have joined someone: the rules are chosen before a game starts. The choice lasts for that run of the game; a server's config file still sets its own rules.
+
+For engineers: `USandboxServerRules::SetHostChoices` writes the live rule set in memory and logs `ServerRules: the host chose pvp=N dropAll=N for this session`; `Slime.HostRules <pvp> <dropAll>` does the same without the screen.

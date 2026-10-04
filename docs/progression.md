@@ -2,6 +2,8 @@
 
 *Built in roadmap item E-2.8. Design rule: GDD 2.4 is still open; this follows the D-2.2 memo's recommendation and is marked provisional until the decision lands.*
 
+**Since the soul webs (2026-10-03):** the two-region skill tree this page describes is the legacy path. A soul with rows in `DT_KitAbilities` (all ten souls of the second kit schema, the Creepy and the Corpse included) plays by its webs instead, and this tree acts only with `Slime.SoulWebs 0`. Level, experience, dying and regeneration below are unchanged. See [Soul webs](soul-webs.md).
+
 ## The idea
 
 Your character has a level. Level 1 is the same for everyone: a fixed amount of health and mana. Each level above 1 adds a fixed amount from your character, plus a smaller amount from every soul you have slotted, primary or secondary. Souls do not change where you start; they change how fast you grow.

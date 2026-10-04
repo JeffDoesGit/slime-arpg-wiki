@@ -23,6 +23,13 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 | [Server rules](server-rules.md) | The twelve rules a host sets for their server, where they live, and what happens when one is typed wrong | in place; values are placeholders until tuned |
 | [Replication](replication.md) | Which networking driver the game uses, the one-line fallback, and the test that proved both work | in place; per-player filtering owed (S-2.3) |
 | [Steam identity](steam-identity.md) | The validated Steam ID of a connection, checked by the engine's own session-ticket handshake | partial, off by default; App ID 480 only, one account not yet proven to refuse a bad ticket (C-7 open) |
+| [Soul webs](soul-webs.md) | The two trees of a v2 soul: one ranked web per ability and a radial passive web, two point pools, how nodes change moves and what their verbs do | first pass, provisional on the `soul webs` register row; ten souls, 898 nodes of which 370 fully act, 383 partly and 145 not yet; allocations are session only; nothing seen on screen yet |
+| [Soul kit pipeline](soul-kit-pipeline.md) | How a soul goes from a design draft to tables and assets: the draft, the mapping sidecar, the generator, the lint, the commandlets | in place; the tables and assets change only when the commandlets are run under lock |
+| [Kit states and ailments](kit-states-and-ailments.md) | Counted states, meters and damaging ailments, the row of status discs on plates and the HUD, and the caps page | first pass, provisional; discs are placeholders, no icons |
+| [Kit move phases](kit-move-phases.md) | Wind-up and hold, Poise, charges, recast, leap, channel, toggle, kit projectiles, chain, repeat, contact aura | first pass, provisional; a repeat of a projectile or a dash is not built |
+| [Kit placed things](kit-placed-things.md) | Pools, lines, seeds and decoys left on the ground: one store, pulses, bursts, ripeness, budgets, ground marks | first pass, provisional; flat placeholder shapes |
+| [Kit minions and monsters](kit-minions.md) | Minions, taunt, lure and entrance, how a monster picks between moves, the ten souls as field monsters | first pass, provisional on the minions study; no stances, no revive |
+| [Kit mechanics](kit-mechanics.md) | The ten bespoke mechanics: Plague, Static arc, Stoke, Swallow, Faultlines, Seeds, Stone Time, the Riddle ledger, Remains, Bewitch | first pass, provisional; each reads its soul's draft |
 
 ## Things that are true everywhere
 

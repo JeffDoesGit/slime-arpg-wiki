@@ -79,6 +79,8 @@ No monster spawns where players arrive. Every teleport destination (a gate's lan
 
 **Detection needs a line of sight (E-2.177).** An idle monster takes a player inside its 900 uu detection only when a straight line between them is clear of the world's solid things. The line runs 250 uu above the ground at both ends (the `SightTraceHeight` row), so a wall taller than that hides you and a dune, a hedge or a 200 uu lair wall does not. Only things a pawn cannot walk through count; a trigger or a zone's box is looked past. A chase that has begun is not dropped by a wall (it ends by distance), and a monster that is hit, or whose pack is pulled, needs no line. `Slime.Monster.SightCheck 0` makes detection a plain distance again. Provisional on the D-2.19 memo.
 
+**Attack tokens (E-2.172, E-2.176; off by default).** With `Slime.AttackTokens 1` at most three monsters (the `PlayerAttackTokens` row) are mid-swing in melee on one player; the others hold at reach until a token is free. A token goes back when the swing's clip ends. If another monster was refused a token within the last second, the one that has just swung rests for a second (`AttackTokenRestSeconds`) before it may ask again, so a pack of six takes turns rather than the same three attacking for ever. Projectiles, leaps, placed things and moves that land at their aim need no token. The log reads `takes a token`, `holds at reach ... no token free` and `gives its token ... up to a waiting monster and rests`. Provisional on the D-2.18 and D-2.19 memos.
+
 **Who lives where.** Levels rise by about two a zone, and each lair holds one Elite:
 
 | Place | Monsters (level) | Lair |

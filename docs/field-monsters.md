@@ -71,6 +71,8 @@ Since E-2.9a a level carries **spawners**: an invisible actor placed in the fiel
 
 No monster spawns where players arrive. Every teleport destination (a gate's landing spot, a respawn point, a checkpoint well) is an arrival spot, and a spawn or a refill keeps the monster's aggro range plus a 300 uu margin away from all of them, so a player who teleports in is never seen by a monster standing there. The spot is not safe ground: a monster chasing you can still follow you to a well. If a spawner sits so close to a destination that no point in its radius is far enough, it takes the furthest point it found and warns once in the log, naming itself; move that spawner. The margin and the number of tries are `ArrivalKeepOutMargin` and `ArrivalKeepOutTries` under `[/Script/SandboxARPG.MonsterSpawner]` in `DefaultGame.ini`.
 
+**No refill under a player (E-2.173).** A spawner brings nothing back while any player stands within 3,000 uu of it (the `RefillPlayerClearRange` row of `DT_CombatRules`). The refill time on its spawn row counts only while nobody is that near; when it has run out, every missing monster of the spawner returns together. So a pack you have killed stays dead while you fight on past it, and a zone a group has left is whole again for the next. The spawner looks every two seconds, and only while it has losses. The host log says `the pack returns N s after the last player leaves` at a death and `refilled N ... together` at the return. `Slime.SpawnerRefillGate 0` puts back the old rule, each slot on its own timer whoever is standing there. Provisional on the D-2.19 memo.
+
 **Who lives where.** Levels rise by about two a zone, and each lair holds one Elite:
 
 | Place | Monsters (level) | Lair |

@@ -71,6 +71,18 @@ Since E-2.9a a level carries **spawners**: an invisible actor placed in the fiel
 
 No monster spawns where players arrive. Every teleport destination (a gate's landing spot, a respawn point, a checkpoint well) is an arrival spot, and a spawn or a refill keeps the monster's aggro range plus a 300 uu margin away from all of them, so a player who teleports in is never seen by a monster standing there. The spot is not safe ground: a monster chasing you can still follow you to a well. If a spawner sits so close to a destination that no point in its radius is far enough, it takes the furthest point it found and warns once in the log, naming itself; move that spawner. The margin and the number of tries are `ArrivalKeepOutMargin` and `ArrivalKeepOutTries` under `[/Script/SandboxARPG.MonsterSpawner]` in `DefaultGame.ini`.
 
+**Who lives where.** Levels rise by about two a zone, and each lair holds one Elite:
+
+| Place | Monsters (level) | Lair |
+|---|---|---|
+| Starting forest | Corpse, the lone one (1) and the pack (2) | none |
+| Zone 1, the Beach | Creepy (2), Corpse (3) | Corpse Elite (4) |
+| Zone 2, the Fields | Gargoyle (4), Vampire (5), Ogre (5) | Vampire Elite (6) |
+| Zone 3, the Jungle | Eloko (6), Treant (7) | Treant Elite (8) |
+| Zone 4, the Pass | Vetala (8), Golem (9), Oni (9) | Golem Elite (10) |
+
+The list of who stands in which field is the `"fields"` block of `Data/Authoring/Souls/monsters.json`: per zone a first and a second monster, in some a third with the spots it takes, and for each of a spawner's two slots (A and B) the monsters that may fill it. `scripts/editor/soul_monsters.py`, run by the pythonscript commandlet with the editor closed, re-points the placed spawners by slot from that block, so a field is repopulated by editing the JSON and running the script, not by moving spawners by hand. Placements and counts are stand-ins until the fields are designed.
+
 A part of the map that streams out of the world and back in keeps its monsters (E-2.165): the spawner counts the ones still standing and only fills the gaps, where it used to spawn a whole new batch beside them. The host log says `kept N from before the cell left the world`.
 
 ## For testers
@@ -87,7 +99,7 @@ Place a `MonsterSpawner` in a level, set its Spawn Row to `Forest_Corpse` or `Fo
 
 A monster's level can set its numbers. One table, `DT_MonsterLevels`, says what each level from 1 to 60 multiplies: life grows 10% a level up to level 20 and 7% after, damage grows 5% a level, and a kill pays 10 + 5 x level experience. Two more rows say what an Elite and a Boss multiply on top (an Elite has three times the life, 1.3 times the damage and pays three times the experience).
 
-A monster type opts in by giving its row a life and a damage scale for level 1. The game then works out its real numbers from its level. A row without those two numbers is used exactly as typed. Today the monsters of Zones 2 to 4 (the Fields, the Jungle, the Pass) are on the curve; the forest and the Beach monsters keep the hand-tuned numbers the playtests used.
+A monster type opts in by giving its row a life and a damage scale for level 1. The game then works out its real numbers from its level. A row without those two numbers is used exactly as typed. Every monster type that stands in Zones 1 to 4 is on the curve: its life, damage and experience come from its level-1 base and its `Level` in `DT_MonsterStats` through `DT_MonsterLevels`, with the Elite row on top for a lair's Elite (a Golem has a base of 120 life, so 257 at level 9, and its Elite 849 at level 10). The two forest Corpses and the plain `DA_Monster_Corpse` have no base and keep the numbers typed on their rows.
 
 For testers: `python scripts/monster_ttk.py` prints, for every monster row, how many hits an on-level player needs to kill it and how many of its swings kill the player. `Slime.MonsterLevelCurve 0` takes every row as typed. A monster on the curve logs `level N on the curve: life ..., damage scale ..., ... XP` when it spawns.
 

@@ -14,7 +14,7 @@ A state is a row of `DT_KitStates` (71 rows today: Sunder, Splinter, Static, Tem
 - **Cap.** `Cap` stacks or units; for a meter with `CapFractionOfMaxHealth` above 0, that fraction of the holder's maximum health instead. A gain never passes the cap. A meter that absorbs hits is also held to the `HealthPoolCap` rule row.
 - **How it runs out** (`DecayMode`): `AllAtOnce` (every stack goes when `Life` ends), `PerStack` (each stack has its own `Life`; at the cap the oldest gives way), `OnePerInterval` (one stack every `Life` seconds), `Drain` (a meter: after `DecayDelay` without a gain, `DecayPerSecond` leaves each second, or that fraction of maximum health with `DecayFractionOfMaxHealth`), `Never`. With `bRefreshAll` a new stack restarts the life of every stack.
 - **What it does by itself.** `PerStackModifiers` are attribute changes on the holder, applied as one set scaled by the stack count and rebuilt when the count changes: five stacks of -6 % More are -30 %, not 0.94 to the fifth. `BossScale` multiplies them on a Boss-tier holder. A meter with `bAbsorbsHits` takes incoming damage before Health does.
-- **Events.** Gaining, reaching the cap, spending and running out are told to the web of whoever applied the state (`OnStateGained`, `OnStateAtCap`, `OnStateSpent`, `OnStateExpired`), with the amount and the state as the noun. A draining meter tells nobody of each drop; it expires when it is empty.
+- **Events.** Gaining, reaching the cap, spending and running out are told to the web of whoever applied the state (`OnStateGained`, `OnStateAtCap`, `OnStateSpent`, `OnStateExpired`), with the amount and the state as the noun. A draining meter tells nobody of each drop; it expires when it is empty. A shared pile has many appliers: when it runs out, `OnStateExpired` is told once to the web of every pawn that added to it and is still alive, so a node of any of them can answer the end of a state it helped build (the Golem's Taunted can be shared). A state cleared because its holder died tells nobody.
 
 A state on another pawn takes the **applier's** resolved copy of its row (a node may change its cap, life or decay through a row override); a self state takes the holder's; a shared pile takes the copy of whoever adds to it.
 
@@ -50,7 +50,7 @@ An ailment is a row of `DT_KitAilments`. Six today:
 | `MoveAilment` | Answers `OnAilmentDisplaced`: the dropped instance goes to the nearest other enemy with room, as a copy. |
 | `TapAilment` | Answers `OnAilmentApplied`: the user heals a share of the instance over its life; half of the rest at once when it ends early. |
 
-Events told to the applier's web: `OnAilmentApplied`, `OnAilmentConsumed`, `OnAilmentExpired`, `OnAilmentDisplaced`. The rule set `AilmentRules` lets a node raise new instances (`Increased`) or the time an extension adds (`ExtendedMore`).
+Events told to the applier's web: `OnAilmentApplied`, `OnAilmentConsumed`, `OnAilmentExpired`, `OnAilmentDisplaced`. An ailment event carries the ability that applied the ailment as its **cause**: the move whose hit planted it, or for a placed thing the ability that placed the thing. The condition `HitAbilityIs` reads that cause, so a node can answer "Poison applied by Festering Shroud" with `OnAilmentApplied`, `triggerName` `Poison` and `HitAbilityIs` naming the move. `triggerAbility` does nothing on an ailment event; the cause is read by `HitAbilityIs` only. With `Slime.Kit.Trace 1` the event's line prints `(cause ability X)`. The rule set `AilmentRules` lets a node raise new instances (`Increased`) or the time an extension adds (`ExtendedMore`).
 
 ## The status row
 
@@ -127,6 +127,7 @@ State and ailment storage is on the wrapper ASC, beside the counts, the poison s
 
 ## The ops pass of 2026-10-04
 
+- **A forced crit covers one swing.** `ForceCrit` with a `Count` is spent on a swing, and every enemy that swing lands on crits. A channel's tick is a swing of its own, so on a channel one forced crit covers one tick. Detail on the [move phases](kit-move-phases.md) page.
 - **`MaxAdded` on `ExtendState`** is counted for each holder by itself, over one application of the state on that holder (each `AddKitState` gives the pile a new serial; `UMonsterAbilitySystemComponent::GetKitStateSerial`). `MaxAddedPerUse` is counted for all holders together as before.
 - **A refresh keeps the longer life.** A refresh-all gain on a per-stack pile and a gain on an all-at-once pile set each end to the later of where it stood and the row's `Life` from now (`EvaluateRefreshedEnd`), so an `ExtendState` is never cut back by the next application. A pile that loses a stack per interval counts from its last gain as before.
 - **`ExtendState` on a draining meter.** With a `DecayDelay` the drain is put off. With none (the Gargoyle's Stone Time) the meter holds `Seconds` x `DecayPerSecond` more, and `Fraction` of itself, under its cap (`EvaluateDrainExtension`).

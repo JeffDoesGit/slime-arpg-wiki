@@ -30,6 +30,16 @@ Some moves no longer hit the instant you press. A wind-up holds the body on its 
 
 **The price of a use.** `HealthCostFraction` (of maximum health) and `HealthCostCurrentFraction` (of current health) are paid on use, never the last point, and told as `OnHealthPaid`. With `bCostsHealthInsteadOfMana`, a row that names a health price pays that and no mana; a row that names none pays its mana cost in health one for one. `ManaToHealthRate` pays the mana the user lacks in health at that rate. `SelfStateSpend` with `DamagePerStackSpent` spends every stack of a self state the user holds and adds that much flat damage per stack to every hit of the use. `RequireSelfState` refuses the press unless the stacks are held. A pawn no player controls pays no mana at all.
 
+**The press gate** (trigger `PressGate`, op `AllowTarget`). An ability whose web holds any active `AllowTarget` op can be pressed only with a target (the Eloko's Devour). Each op is one way in: a pawn passes it when it is alive, within the op's `Range` of the user (edge to edge; one value per rank) and every condition of the op holds with that pawn as the target. The ops of one ability are alternatives, so a node widens the gate by adding an op. The candidates are the user's enemies, or the user's own minions for an op with `arg: OwnMinion`. The client sends its aim; the server reads the gate at the press, after the lock and the state requirement and before the cooldown and the cost, and takes the passing pawn nearest the aim. The ops are standing rules: they are never dispatched, draw no budget, and their conditions are read as a peek, so nothing rolls or stamps.
+
+- **Met.** The aim becomes that pawn's place, and every swing of the use is held to the pawn it let in: it lands on that pawn and on nothing else, whatever the row's footprint covers.
+- **Unmet.** The press is refused, costs nothing, and the owning player reads "No target it can be used on" on the toast card.
+- **A meal on the user's own minion.** A pawn that is no enemy takes no hit, so a use let in on the user's own minion resolves no swing: the Thrall is not bitten, nobody near it is, and the meal itself is the op the node carries (`EatThrall`).
+
+A field monster wearing the soul is held to the same gate.
+
+**`Kill`** (op). The op's target dies outright through the ordinary death path: a final hit for the health it has left, from the user, with no roll, crit or mitigation, so the death pays credit, XP, drops and `OnKill` like any kill. The hit names the ability of the event that set the op off, so that ability's `OnKill` ops hear the kill as their own; it fires no `OnHit`. It is refused on a Boss, on a pawn a player controls, on a pawn that is no enemy of the user, and for a cause the trigger-origin rule refuses. Conditions go on the op as usual (`TargetHasControl`, `TargetHealthBelow`, `TargetIsElite` with `not`); under `OnHit` they read the target after the hit's own damage.
+
 ## Deliveries
 
 **Kit projectiles** (`ProjectileCount` above 0). A fan of `ProjectileCount` across `ProjectileSpreadDegrees`, centred on the aim; one flies straight. Every projectile of a volley carries the whole hit. `ProjectilePierce` passes through that many enemies before it stops; `bProjectileReturns` turns it back to its shooter after its last hit, hitting what is in its path home; `ProjectileHoming` curves it toward the nearest enemy within that many degrees of its path. A projectile passes pawns of its own side. A row with no `ProjectileSpeed` flies at the soul asset's speed. `bProjectileLobbed`: one lob lands at the aim after its flight and hits `ImpactRadius`.
@@ -98,7 +108,7 @@ The phases are members of `USoulComponent`, defined in `Source/SandboxARPG/Kits/
 ## The ops pass of 2026-10-04
 
 - **`bOneCritRoll`** (move column). A swing or a leap's landing of the row rolls its crit on the first enemy it lands on; the others take that answer (`FHitSpec::bCritDecided`), each multiplying its own hit. Each hit index of a multi-hit swing is its own roll.
-- **A forced crit** (`ForceCrit` with a `Count`) is spent on a swing: every enemy the same ability, use and hit index lands on crits.
+- **A forced crit** (`ForceCrit` with a `Count`) is spent on a swing: every enemy the same ability, use and hit index lands on crits. On a channel each tick is a swing of its own, so one forced crit covers one tick and not the whole channel.
 - **`SelfStateSpend`**: the stacks a use spent at its press are remembered for that use (`USoulComponent::GetKitUseSpent`), so an `OverrideRules` rule with `AddPerStack` of that state still reads them when the row is resolved for the delivery.
 - **The press is pending** from the cost check until the web counts the use: `UseIndexEvery` in an `OverrideRules` rule on a cost column reads the use being pressed.
 - **The dash distance** (`LastDashDistanceAbove`) is taken when the dash has run, before its landing hit; a recast and a bounce measure from where they began. **The channel tick's number** is known to the tick's own swing.

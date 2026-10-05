@@ -90,7 +90,9 @@ For engineers: `AMonsterHUD::PlaceBasicAttack` and the pure rule `EvaluateBasicA
 
 Escape closes whatever is open on top: a screen, then the list above the bar, then the big map. With nothing open it opens the options screen. Play In Editor keeps Escape for itself, so this works in a Standalone or packaged game.
 
-For engineers: `AMonsterHUD::HandleCloseKey`; `Slime.CloseKey` presses it without a keyboard.
+**The Escape menu since E-2.183 (2026-10-06).** With the theme on (`Slime.UiTheme`, default 1) Escape with nothing open shows the mockup's board 5 instead of the options screen: the play view dimmed and five lines of big gold capitals down the left, Options, Session, PvP Arena, Leave game, Return to game; a line brightens with a diamond each side under the cursor. Options, Session and PvP Arena open the options screen beside the menu as one page each, a column with a gold line down its left and the page's title: brightness and screen shake, the three ground rings, the controls and Reset to defaults on the first; the Session section on the second; the arena queue on the third; "Previous menu" at the foot closes the page. Leave game does what the Session section's Leave does; Return to game closes the menu. Escape closes the page first, then the menu. O still opens the options screen on its own, showing every section. At `Slime.UiTheme 0` Escape opens the options screen as E-2.150 built it. The death screen in the theme reads "YOU HAVE DIED" in blood-red capitals over a dark red veil, with the experience lost, the countdown and the two ways back as stone buttons, "CHECKPOINT: <place>" and "RETURN TO TOWN". Provisional (register row `ui look`).
+
+For engineers: `AMonsterHUD::HandleCloseKey`; `Slime.CloseKey` presses it without a keyboard. The menu is `UI/EscapeMenuScreen.*` (`AMonsterHUD::ToggleEscapeMenu`, `OpenOptionsPage`); `UOptionsScreen::ShowPage` picks the page (`EOptionsPage`); `Slime.EscapeMenu [line]` opens the menu or presses one of its lines.
 
 ## The big map (E-2.149)
 

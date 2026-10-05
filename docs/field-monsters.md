@@ -75,6 +75,8 @@ No monster spawns where players arrive. Every teleport destination (a gate's lan
 
 **A short chase that ends in a reset (E-2.174).** A monster keeps a target out to 1,800 uu (it was 4,000) and walks home once it is more than 2,500 uu from where it spawned (it was 6,000). When it gets home it is at full health and its control ailments, poison and kit ailments are gone; the log says `reset at home (+N health, ...)`. So running does not wear a pack down, and a pack does not follow you across a zone into the next one. `Slime.Monster.HealAtHome 0` leaves a returned monster as it was; `Slime.Monster.Leash <uu>` still overrides the leash for a test. Provisional on the D-2.19 memo; the 4,000 and 6,000 were Jon's numbers of 2026-09-26 against kiting, which the reset now answers.
 
+**A pack is pulled as one (E-2.175).** A monster that is hit by a player it had not noticed takes that player as its target, from as far as its chase distance. When any monster takes a target, by noticing or by being hit, the other idle monsters of its pack take it too. A pack is the monsters whose spawn points lie within 800 uu of one another (the `PackRadius` row), so the two spawners of one pack spot are one pack and the next spot along the path is another. Another pack never joins for this reason; it wakes only when a player walks into its own detection. The log reads `target ... (N uu, it was hit)`, `Pack: ... pulls N pack mate(s)` and `target ... (N uu, its pack was pulled)`. `Slime.PackPull 0` turns both halves off. Provisional on the D-2.19 memo.
+
 **Who lives where.** Levels rise by about two a zone, and each lair holds one Elite:
 
 | Place | Monsters (level) | Lair |

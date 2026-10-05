@@ -13,6 +13,8 @@ Press `I`. The screen has three parts:
 
 That is the whole screen. No stash yet (it needs a city), no sorting.
 
+**The look since E-2.180 (2026-10-06).** With the theme on (`Slime.UiTheme`, default 1) the screen is one stone panel with a gold frame docked on the right edge of the view, 620 by 880 at 1080 lines, after the mockup's board 2: the three souls as discs with gold rings (the primary larger, its ring brighter; "WORN", "SOUL", "SECONDARY" beneath), the nine sockets as sunk wells rimmed in their colour (an empty socket shows only its rim and names itself on hover), the bag on a sunk well with one-pixel lines between its cells, a hint and the close button along the bottom. A gem's tooltip is a dark card in Diablo's manner: the stone's name and its rarity in the rarity's colour, one line per affix in blue with its tier, and "Socketed: Red" beneath an equipped one. Drag, right-click, Shift-right-click and every refusal are the same handlers as before; the theme only dresses the widgets. `Slime.UiTheme 0` before the screen is built gives the old look back. Provisional (register row `ui look`). Dev: `Slime.ToggleInventory` opens it with no keyboard, for a frame of a game rendered off screen.
+
 ## Where the layout comes from
 
 The gem slot list, their colours, the icon per gem colour and the bag size are project settings (Project Settings › Game › Slime ARPG Inventory Layout), so a designer can change them without touching code. The nine-slot row is transcribed from the team's Miro board and marked provisional: the number of slots and what each colour means are still design questions (D-3.2). The bag size has no design rule at all and is a placeholder.

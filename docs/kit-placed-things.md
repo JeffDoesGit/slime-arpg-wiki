@@ -62,6 +62,16 @@ The placed ops: `Place`, `BurstPlaced`, `PulsePlaced` (one pulse now; the thing'
 
 **The `OwnPlaced` target.** In a placed event the aim is where the thing stands. A `Hit`, `Place`, `Summon`, `Pull`, `Cue` or placed op aimed at `OwnPlaced` runs once at the place (a cone or capsule `Hit` runs along a placed line); any other op acts on the enemies within its `Radius` param, else the thing's own radius.
 
+## What the fix pass of 2026-10-04 changed
+
+- A row's `PlacedCount` of 0 places none.
+- A placed thing's pulse, enter hit and burst are the thing's own hits: the placing ability's row riders do not ride them, and an op of that ability's web answers them only when it carries `HitIsPlaced`. Passive ops with no ability hear them like any hit.
+- A placed row with `bNoEnterHitAtPlace` gives no enter hit to an enemy that stood in it when it was laid (the cast's own hit is theirs); one that walks in later is hit.
+- A lobbed projectile's row lays its thing where the lob lands. A use that lays a thing at the aim is held to the move's range.
+- A swing whose footprint covers a thing of the user's own touches it (`OnHitOwnPlaced`) with or without a pawn in it. `LaunchPlaced` with `Distance` launches the struck thing along the user's facing.
+- `OnPlacedPulse` carries how many enemies the pulse reached (`TargetsHitAtLeast`).
+- A Seed asked to sprout in a safe zone is kept (not shown in a run).
+
 ## Budgets
 
 Two limits, both ending the oldest with no event:
@@ -73,7 +83,7 @@ Two limits, both ending the oldest with no event:
 
 Each owner's web component replicates one list, `PlacedList` (push model), written by the manager when the owner's things change: per thing its id, row, location, a line's yaw, the radius and length it was given when placed, the server time it ends and the server time it is ripe, whether it follows its owner, and the arrival time of one in flight. A client tells a moved thing from a new one by the id.
 
-`AKitGroundMarks` is one transient actor per local player, spawned by the HUD, never replicated. On a timer (`GroundMarkRefreshSeconds`, 0.1) it draws every placed thing as flat pieces from a pool of engine basic shapes: a circle is one disc, a line one strip. It also draws the **telegraph** of a move in its wind-up, in the footprint of the move's own hit shape, so what is drawn is what will land: a circle one disc, a capsule a strip and a disc at its far end, a cone its two edges and `GroundMarkConeArcPieces` (6) strips closing the arc. It reads replicated state only, through `KitSeams::Placed()` and `KitSeams::Phases()`, and starts and stops each thing's loop cue. Numbers in `UHudLayoutSettings`: `bGroundMarks` on, opacity 0.3, ripe 0.6, telegraph 0.45, pool size 96, the material `M_Greybox`.
+`AKitGroundMarks` is one transient actor per local player, spawned by the HUD, never replicated. On a timer (`GroundMarkRefreshSeconds`, 0.1) it draws every placed thing as flat pieces from a pool of engine basic shapes: a circle is one disc, a line one strip. It also draws the **telegraph** of a move in its wind-up, in the footprint of the move's own hit shape, so what is drawn is what will land: a circle one disc, a capsule a strip and a disc at its far end, a cone its two edges and `GroundMarkConeArcPieces` (6) strips closing the arc. It reads replicated state only, through `KitSeams::Placed()` and `KitSeams::Phases()`, and starts and stops each thing's loop cue. Numbers in `UHudLayoutSettings`: `bGroundMarks` on, opacity 0.3, ripe 0.6, telegraph 0.45, pool size 96, the material `M_Greybox`. A wind-up's telegraph resolves its move's row once and keeps it for the wind-up; it reads it again for a new wind-up, for new kit tables, or after `GroundMarkResolveSeconds` (0.5), so the timer reads no rule and copies no row at each refresh.
 
 ## For testers
 
@@ -90,3 +100,11 @@ Log lines: `Placed: <pawn> places <row> #7 at (x, y) radius 250, life 6.0 s (1 o
 ## For engineers
 
 `Source/SandboxARPG/Kits/KitPlaced.*`: `UKitPlacedSubsystem` (a world subsystem: `Place`, `Burst`, `Pulse`, `Launch`, `Move`, `Extend`, `Remove`, `DamagePlaced`, the reads `GetOwned`, `IsInOwned`, `GatherInside`, and `Edit` and `TellFor` for the mechanic classes), `FKitPlacedThing` (the server struct; `Tag`, `Counter`, `Stamp` and `PulseCount` are what a mechanic keeps on a thing), `FKitPlacedRep` (the replicated entry), `FKitPlacedGeometry` (pure footprint tests, `Scatter`, `OverCap`, `BurstShare`). The ops are in `Kits/KitOpsExtra.cpp`; the overlap rule is `FKitLate::PlacedOverlapShare`. The list lives on `USoulWebComponent` (`PlacedList`, `SetPlacedList`, `OnRep_PlacedList`). `UI/KitGroundMarks.*` draws; `KitSeams.h` carries the read seam and the taunt seam. No tick, and nothing allocated per step once warm (CLAUDE.md 6.6). Tests: `SandboxARPG.Kits.Placed.*` (four), `Kits.OpsExtra.ThePlacedOpsRun`, `UI.SoulWeb.GroundMarkPiecesFollowTheShape`. Provisional markers: register row `soul webs`.
+
+## The ops pass of 2026-10-04
+
+- **`OnPlacedEvicted`.** A thing the row's `CapPerOwner` or the per-pawn budget pushes out when one more is placed tells its owner's web `OnPlacedEvicted`, once the new thing is in the store. `OnPlacedExpired` is still only a life that ran out (or a decoy's health); a node that means both lists both. Log: `Placed: <pawn>'s <row> #<id> gives way to #<id> (cap or budget); OnPlacedEvicted is told`.
+- **`OnHitOwnPlaced` and `EventHasHit`.** The event is told for a landed hit on a pawn in the thing, for a swing's footprint over it, for a dash that ends in it and for a use with no hit of its own aimed at it. `EventHasHit` holds for the first two only.
+- **`OnPlacedBurst`** is told once for the burst and once for each pawn it touched; an op whose target is the event's pawn runs in the per-pawn telling, every other op once.
+- **A Seed's pop** is a placed thing's hit (`HitIsPlaced`), like a pool's pulse: the popping ability's `OnHit` ops answer it only by that condition.
+- **An ailment a placed thing applies** tells `OnAilmentApplied` with the ability that placed the thing as its cause, so `HitAbilityIs` holds there.

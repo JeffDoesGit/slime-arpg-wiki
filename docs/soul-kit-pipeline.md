@@ -118,3 +118,43 @@ Both scripts are run by a person or on a person's word, under lock (CLAUDE.md 5.
 ## For engineers
 
 `scripts/gen_soul_webs.py`, `scripts/check_soul_webs.py` (imports the generator as a module), `scripts/check_souls.py`, `scripts/editor/soul_webs.py`, `scripts/editor/soul_monsters.py`. Row structs: `Source/SandboxARPG/Kits/KitTypes.h`. Table paths: `[/Script/SandboxARPG.KitTables]` in `Config/DefaultGame.ini`. `python scripts/gen_soul_webs.py --check` is the test that the generated files match their sources. Provisional markers: register row `soul webs`.
+
+## Feel defaults: play rate and commit window
+
+The bodies' clips are two to five seconds long, and a kit move with no `PlayRate` and no `CommitSeconds` held the pawn for the whole clip. The generator now fills both for every row whose sidecar leaves them out:
+
+- `Data/Authoring/Souls/clips.json` holds each clip's length. `scripts/editor/dump_clip_lengths.py` writes it by commandlet from `bodies.json`; run it again when a body's clip table changes.
+- `Data/Authoring/Souls/feel.json` holds the swing time per kind of move (basic 0.8 s, attack and spell 1.0 s, stance and command 0.8 s), the recovery after the last hit (0.25 s) and the play rate's bounds. A draft text that states its own time ("0.8 s swing", "0.6 s cast") wins over the kind's number, and a sidecar ability's own `"swing"` wins over both.
+- `PlayRate` becomes clip length over swing time. `HitDelayScale` is written at the same rate, so the sidecar's `hitDelay` and `ExtraHitDelays` stay the seconds they were written as; attack speed, a slow or a node's `PlayRate` override still moves them.
+- `CommitSeconds` becomes the last hit's time plus the recovery (a dash: its `DashSeconds` plus the recovery; a move with no hit: 0.3 s), never longer than the swing.
+- `CommitRate` is written with a derived `CommitSeconds` (not a dash's, whose window is its `DashSeconds`): the rate the window was derived at, so it shrinks as attack speed raises the move's rate. A window a sidecar wrote has none and stays real seconds.
+- A `PlayRate` or `CommitSeconds` written on a sidecar row is kept. Channel rows are left alone.
+- The bounds in `feel.json` are the generator's (the rate it may derive). At runtime the rate has no ceiling; the clip on the mesh is held between the `MoveClipRateMin` and `MoveClipRateMax` rows of `Data/DT_CombatRules.csv`, which `scripts/editor/soul_monsters.py` refills.
+
+Every number is a placeholder for Jon's feel pass. Field monsters wear the same rows, so their swings are faster too.
+
+## Clip contact times (2026-10-05)
+
+A move's hit lands by timer; its clip is a picture of it. So that the picture shows the hit when the hit lands, each clip a
+kit move plays has a measured contact time, and the clip is started at an offset on the mesh. Nothing mechanical reads it:
+the hit time, the commit window and the re-fire time are what they were.
+
+- **Measure**: `scripts/editor/dump_clip_contacts.py` (a pythonscript commandlet, run like `dump_clip_lengths.py`; no map,
+  read-only) samples every clip named in `Data/Kits/SoulAssets.json` 60 times a second in component space
+  (`unreal.AnimPoseExtensions`) and takes, of the hand, weapon, head, foot and tail bones, the one that reaches the highest
+  speed; the contact is the time of that peak speed. A clip whose fastest bone never passes 150 units a second or twice its
+  own mean speed has no clear strike and gets no entry. The result is `Data/Authoring/Souls/contacts.json` (contact, the
+  bone, its speed, and the time of its furthest reach for comparison). Run it again when a body's clip table changes.
+- **Data**: the generator writes `clipContact` on each move of `SoulAssets.json` (0 for a clip with no entry and for the
+  idle, walk and run clips standing in for a move's), and `scripts/editor/soul_webs.py` sets it as `FSoulMove::ClipContact`
+  on the soul asset, beside the clip it belongs to. 0 is the old behaviour, so the legacy souls' own entries are untouched.
+- **A plain swing** (`USoulComponent::PlayMove`): the clip starts at the contact less the hit delay times the play rate
+  (`FKitPhaseRules::ClipStart`). When the contact comes sooner than that, the clip starts at its first frame and the mesh
+  plays it slower (contact over hit delay), while the windows keep the move's rate. A dash is left alone.
+- **A wind-up** (the `WindUp` phase in `Kits/KitPhases.cpp`, on every machine by the replicated phase): the clip starts at
+  the press. When the swing would start part way into the clip, the wait plays the clip up to that frame and the clip
+  multicast goes on from it at the move's rate; otherwise wait and swing are one slow play from the first frame, which the
+  multicast lets run on, the contact landing at the wind-up's end. A wind-up a held key stretches (`MaxHold`) keeps the
+  held first frame, since its end is not known at the press.
+- Known: a slowed clip is cut by locomotion when the swing's window ends, part way through its recovery. The log line
+  `move clip ... shown from X s at xR` and `KitPhase: ... animates the wind-up of ...` say what the mesh was given.

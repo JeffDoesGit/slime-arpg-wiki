@@ -101,6 +101,8 @@ Rows of `Data/DT_CombatRules.csv` that hold whatever a node says. The caps and l
 | `PlagueGenerationCap` | 5 | Most generations of one lineage | same |
 | `StokeHeatCap` | 1000 | Ceiling of the Stoke's heat meter | `Kits/Mechanics/Stoke.cpp` |
 | `SwallowHoldCap` | 8 | Longest a swallowed monster is held, seconds | `Kits/Mechanics/Swallow.cpp` |
+| `MoveClipRateMin` | 0.1 | Slowest a move's clip plays on the mesh; the swing's own times are not held by it | `Souls/SoulComponent.cpp` (`GetMoveTiming`) |
+| `MoveClipRateMax` | 4 | Fastest a move's clip plays on the mesh; attack speed past it still shortens the swing | same |
 
 `ManaCostLess` is capped at 0.9 and `SelfDamageLess` at 0.9 in code, not by a row.
 
@@ -122,3 +124,13 @@ Log lines: `State: <pawn> <state> 2 -> 3 of 5 from <applier>`, `State: <pawn> sp
 ## For engineers
 
 State and ailment storage is on the wrapper ASC, beside the counts, the poison stacks and the controls, so there is no fifth wrapper type (CLAUDE.md 6.8): `Source/SandboxARPG/Abilities/MonsterAbilitySystemKit.cpp` and the kit block of `MonsterAbilitySystemComponent.h` (`AddKitState`, `SpendKitState`, `GetKitState`, `ExtendKitState`, `AbsorbWithKitMeters`; `ApplyKitAilment`, `ConsumeKitAilment`, `ExtendKitAilment`, `SpreadKitAilment`, `AccelerateKitAilment`, `TickKitAilmentNow`, `ConvertKitAilment`; the pure `Evaluate*` rules the tests call). Two timers at four ticks a second while anything is live; no per-frame work. The three replicated lists are `KitPlateStates`, `KitSelfStates` and `KitAilmentViews` (push model), with `OnKitStatusChanged` on every machine. The widget is `UI/StatusRowWidget.*`, built in code; `UI/NamePlateWidget.cpp` and `UI/PlayerHud.cpp` host it. The caps as pure rules are `FKitCaps` in `Kits/KitOpsLate.h`, enforced through `FKitLate::FilterControl`, `RedirectIncoming` and `PlacedOverlapShare`. Tests: `SandboxARPG.Kits.States.CapDecayAbsorbMath`, `Kits.Ailments.ShareFrontLoadTickMath`, `Kits.Caps.*`, `UI.SoulWeb.StatusDiscsCountAndDrain`.
+
+## The ops pass of 2026-10-04
+
+- **`MaxAdded` on `ExtendState`** is counted for each holder by itself, over one application of the state on that holder (each `AddKitState` gives the pile a new serial; `UMonsterAbilitySystemComponent::GetKitStateSerial`). `MaxAddedPerUse` is counted for all holders together as before.
+- **A refresh keeps the longer life.** A refresh-all gain on a per-stack pile and a gain on an all-at-once pile set each end to the later of where it stood and the row's `Life` from now (`EvaluateRefreshedEnd`), so an `ExtendState` is never cut back by the next application. A pile that loses a stack per interval counts from its last gain as before.
+- **`ExtendState` on a draining meter.** With a `DecayDelay` the drain is put off. With none (the Gargoyle's Stone Time) the meter holds `Seconds` x `DecayPerSecond` more, and `Fraction` of itself, under its cap (`EvaluateDrainExtension`).
+- **`MatchControl`** (state row column). A meter that counts the seconds of a control: when its amount rises on a holder that is under that control, the control is lengthened to the amount (`LengthenControlTo`: never shortened, nothing told, no clock asked; a holder not under the control is not put under it). `StoneTime` says `Stun`, so Glare's extension, Stone Sympathy's copy and Loose Masonry's 0.2 s lengthen the stun they stand for. Log: `Control: <pawn>'s stun lasts 2.10 s (was 0.60 s left)`.
+- **`AddState` `Floor`.** A count rounds and adds one stack at least for any amount above 0; with `Floor` 1 the op adds whole stacks only and under one whole stack none.
+- **An ailment's cause.** `OnAilmentApplied` carries no ability (every op hears it); `HitAbilityIs` there reads the ability of the landed hit, the aura's touch or the placed thing that applied it.
+- **Renewing a life without a stack**: `ExtendState` with `Seconds` and `MaxSeconds` both the row's `Life`.

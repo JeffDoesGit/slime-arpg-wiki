@@ -53,6 +53,8 @@ A square in the top-right corner shows the ground around you from above with you
 
 The toast card at the top of the screen, which the soul pickup already used, now also shows the name of the region the local pawn just entered (`AMonsterHUD::ShowRegionName`, `UPlayerHud::ShowToast`), for `RegionToastSeconds` (3 s, `UHudLayoutSettings`). Both lines share the one card; the newer replaces the older.
 
+The same card says why a press did nothing: "Needs 3 Spin" for a move that wants a state the pawn does not hold, "Not enough mana (10)", "Locked: unlock it in the soul's tree". The server tells the owning player (`USoulComponent::TellMoveRefused`, `ClientMoveRefused`, at most once per `RefusalNoticeSeconds`, 1.2 s) and `AMonsterHUD::ShowNotice` shows the line for that long. A cooldown and a busy window are not said: the bar already shows them.
+
 The key rows show a pad button by a short name ("Face Bottom" for the engine's "Gamepad Face Button Bottom") so it fits its button; a name that is still too wide ends in an ellipsis inside the button (E-2.130).
 
 A name plate's state line, under the health bar, starts with `Poisoned xN` while its owner carries poison stacks (E-2.135), before any control ailment (`Slowed 30% 2.4s`, E-2.123).

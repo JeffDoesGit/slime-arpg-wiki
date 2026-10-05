@@ -15,7 +15,9 @@ Your monster has eight numbers:
 | Defense | The one number that will reduce physical damage |
 | Move Speed | How fast you move, once it is wired to movement |
 
-Health and mana can never go below zero or above their maximum; the other numbers can never go below zero. Those guards are built in, so no later system can push a value out of range by accident.
+Health and mana can never go below zero or above their maximum; the other numbers can never go below zero, with one family apart. Those guards are built in, so no later system can push a value out of range by accident.
+
+The family apart is the **signed fractions** (2026-10-04, provisional with the soul webs): a bonus that starts at 0 and is read as 1 + itself may go negative, down to -1. They are Move Speed (-0.5 halves your walk, -1 stands you still, which is how a rooted stance pins its user), Attack Speed and Cast Speed (a negative line slows the move's clip; the play rate never drops under a tenth), Damage Taken Less (a negative line is damage taken more, at most double), the melee, projectile and area damage lines, and the two minion lines. The list is `UMonsterAttributeSet::EvaluateFloor`; every other stat still stops at 0.
 
 ## Where the numbers come from
 

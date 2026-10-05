@@ -77,6 +77,8 @@ No monster spawns where players arrive. Every teleport destination (a gate's lan
 
 **A pack is pulled as one (E-2.175).** A monster that is hit by a player it had not noticed takes that player as its target, from as far as its chase distance. When any monster takes a target, by noticing or by being hit, the other idle monsters of its pack take it too. A pack is the monsters whose spawn points lie within 800 uu of one another (the `PackRadius` row), so the two spawners of one pack spot are one pack and the next spot along the path is another. Another pack never joins for this reason; it wakes only when a player walks into its own detection. The log reads `target ... (N uu, it was hit)`, `Pack: ... pulls N pack mate(s)` and `target ... (N uu, its pack was pulled)`. `Slime.PackPull 0` turns both halves off. Provisional on the D-2.19 memo.
 
+**Detection needs a line of sight (E-2.177).** An idle monster takes a player inside its 900 uu detection only when a straight line between them is clear of the world's solid things. The line runs 250 uu above the ground at both ends (the `SightTraceHeight` row), so a wall taller than that hides you and a dune, a hedge or a 200 uu lair wall does not. Only things a pawn cannot walk through count; a trigger or a zone's box is looked past. A chase that has begun is not dropped by a wall (it ends by distance), and a monster that is hit, or whose pack is pulled, needs no line. `Slime.Monster.SightCheck 0` makes detection a plain distance again. Provisional on the D-2.19 memo.
+
 **Who lives where.** Levels rise by about two a zone, and each lair holds one Elite:
 
 | Place | Monsters (level) | Lair |

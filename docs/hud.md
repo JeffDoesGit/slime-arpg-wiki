@@ -96,7 +96,9 @@ For engineers: `AMonsterHUD::HandleCloseKey`; `Slime.CloseKey` presses it withou
 
 Tab or M shows the whole map over the play view, north up, and the same key hides it. It is the corner minimap drawn large: the same ground picture, the same fog (you only see where you have been), the same marks for wells, the arena and other players. Each region is named once you have stood in it. The game keeps running under it and it takes no clicks, like the automap in Diablo II. The Tab key can be changed on the options screen ("Map"); M is a second key that works while nothing else on your machine uses it.
 
-For engineers: `UBigMapWidget` draws through `UMinimapWidget::PaintMap`, which the minimap's own paint also calls; sizes are the `BigMap*` rows of `UHudLayoutSettings`; `Slime.ToggleBigMap` and the log line `HUD: big map open|closed`.
+**The automap since E-2.182 (2026-10-06).** With the theme on (`Slime.UiTheme`, default 1) the big map is Diablo II's automap after the mockup's board 4: no ground picture and no fog, each region as an outline, gold with a faint fill once you have stood in it and dim grey before, its name in small capitals at its corner; the wells as blue diamonds, the arena as a red ring with its word, other players as green dots with their names, you as a white dot. Top left a legend; top right, under the corner minimap, the region you stand in, whose game this is and its rule with the player count. Everything else is as before: the keys, play going on underneath, no clicks taken. `Slime.UiTheme 0` before the HUD is built gives the fogged picture back. Provisional (register row `ui look`).
+
+For engineers: `UBigMapWidget` draws through `UMinimapWidget::PaintMap`, which the minimap's own paint also calls (the plain look), or through `UMinimapWidget::PaintAutomap` and its own `PaintThemed` for the corner texts (the theme); sizes are the `BigMap*` rows of `UHudLayoutSettings`; `Slime.ToggleBigMap` and the log line `HUD: big map open|closed`.
 
 ## The host's two rules (E-2.158)
 

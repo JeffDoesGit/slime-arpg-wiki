@@ -73,6 +73,8 @@ No monster spawns where players arrive. Every teleport destination (a gate's lan
 
 **No refill under a player (E-2.173).** A spawner brings nothing back while any player stands within 3,000 uu of it (the `RefillPlayerClearRange` row of `DT_CombatRules`). The refill time on its spawn row counts only while nobody is that near; when it has run out, every missing monster of the spawner returns together. So a pack you have killed stays dead while you fight on past it, and a zone a group has left is whole again for the next. The spawner looks every two seconds, and only while it has losses. The host log says `the pack returns N s after the last player leaves` at a death and `refilled N ... together` at the return. `Slime.SpawnerRefillGate 0` puts back the old rule, each slot on its own timer whoever is standing there. Provisional on the D-2.19 memo.
 
+**A short chase that ends in a reset (E-2.174).** A monster keeps a target out to 1,800 uu (it was 4,000) and walks home once it is more than 2,500 uu from where it spawned (it was 6,000). When it gets home it is at full health and its control ailments, poison and kit ailments are gone; the log says `reset at home (+N health, ...)`. So running does not wear a pack down, and a pack does not follow you across a zone into the next one. `Slime.Monster.HealAtHome 0` leaves a returned monster as it was; `Slime.Monster.Leash <uu>` still overrides the leash for a test. Provisional on the D-2.19 memo; the 4,000 and 6,000 were Jon's numbers of 2026-09-26 against kiting, which the reset now answers.
+
 **Who lives where.** Levels rise by about two a zone, and each lair holds one Elite:
 
 | Place | Monsters (level) | Lair |

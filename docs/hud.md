@@ -133,3 +133,15 @@ For engineers: `UBigMapWidget` draws through `UMinimapWidget::PaintMap`, which t
 The Session section has two check boxes above the address field: "PvP everywhere" and "Drop gems on death". Tick them before you press Host a game or Play alone and that game runs with those rules. They are greyed once you are hosting or have joined someone: the rules are chosen before a game starts. The choice lasts for that run of the game; a server's config file still sets its own rules.
 
 For engineers: `USandboxServerRules::SetHostChoices` writes the live rule set in memory and logs `ServerRules: the host chose pvp=N dropAll=N for this session`; `Slime.HostRules <pvp> <dropAll>` does the same without the screen.
+
+## Damage numbers (E-2.196)
+
+Every hit you land shows its number beside the struck body. You see your own hits only (and your minions'): what monsters deal to you shows no number, and another player's numbers never show on your screen, as in Diablo III and IV.
+
+- **What a number says.** The health the hit removed, rounded to a whole number and never 0. Near white for an ordinary hit, whatever its damage type. A critical hit is yellow, 1.3 times the size and ends in "!". A poison or burn tick is smaller. A swing that missed reads "Miss" in grey.
+- **How it moves.** It pops in larger than it is, settles to its size in a tenth of a second, holds where the hit landed and fades: 0.6 seconds for a hit, 0.8 for a critical hit. A tick does not pop. Numbers that land together are set a little apart.
+- **What shows nothing.** A hit refused in a safe zone, a touch that deals no damage, and a hit a shield absorbed whole.
+- **The switch.** Options has "Damage numbers", on by default, saved per machine.
+- **Where it comes from.** The server decides every amount. When a hit resolves it tells the player who dealt it, and nobody else (`AMonsterCharacter::ClientShowDamageNumber`, owner-only, unreliable). The client only draws.
+
+For engineers: `UDamageNumbersWidget` (`UI/DamageNumbersWidget.h`) is one widget over the whole view, added first so the rest of the HUD draws over it. It paints from a fixed pool of 64 numbers; a number's text is built once when it arrives, and the paint allocates nothing. The pure rules (the flag byte, the pool cursor, rounding) are `FDamageNumbers`, tested by `SandboxARPG.UI.DamageNumbers.*`. Size, lifetime, the pop and the drift are `DamageNumber*` rows of `UHudLayoutSettings`, tunable in `Config/DefaultGame.ini`; the colours are constants in the widget and are placeholders. A number stays where the hit landed and does not follow the body.

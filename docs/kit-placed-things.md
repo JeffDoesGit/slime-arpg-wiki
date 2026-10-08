@@ -146,3 +146,9 @@ Log lines: `Placed: <pawn> places <row> #7 at (x, y) radius 250, life 6.0 s (1 o
 - **`OnPlacedBurst`** is told once for the burst and once for each pawn it touched; an op whose target is the event's pawn runs in the per-pawn telling, every other op once.
 - **A Seed's pop** is a placed thing's hit (`HitIsPlaced`), like a pool's pulse: the popping ability's `OnHit` ops answer it only by that condition.
 - **An ailment a placed thing applies** tells `OnAilmentApplied` with the ability that placed the thing as its cause, so `HitAbilityIs` holds there.
+
+## The ring a placing node left behind (E-2.208)
+
+When a node you hold places something (a Crater, a Pedestal), a short ring flashes where it lands. That ring used to stay on the ground for the rest of the session, one for every thing placed, which read as rings left everywhere. It is now a short pale ring that fades in half a second, the game's own, and no longer the ring of fire the old portals used.
+
+For engineers: the cue row `NodePlaced` names a looping Niagara system and had no Duration, and `FKitCues::PlayLocal` only ended a one-shot when its row had one. The row now names the project's mesh ring (`MI_KitEffect_Ring`, a Life of 0.5 s), and `PlayLocal` tells every one-shot to wind down at `EvaluateOneShotLife`: the row's Duration, else `OneShotMaxSeconds`. A looping system used as a one-shot should still name its own seconds on its row.

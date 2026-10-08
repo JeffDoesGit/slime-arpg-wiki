@@ -181,3 +181,7 @@ For engineers: `UDebugMenuScreen::HandleButton` turns `{pawn}` into `{self}` and
 Two small buttons to the left of the corner minimap, + and −, zoom it in and out through four steps. The game remembers your step on your machine. Tab (or M) now opens a larger version of the same minimap: the same picture, the same fog, the same marks, turned the same way as the corner map, showing two and a half times as far. It follows the same zoom. The gold outline map it replaces is gone.
 
 For engineers: the steps are `UHudLayoutSettings::MinimapZoomRadii` with `MinimapZoomDefault`; the step is `UPlayerOptions::MinimapZoom` (-1 until chosen). `UMinimapWidget::CurrentWorldRadius` is the one read, `StepZoom` the one write. `UBigMapWidget::NativePaint` clips to its square and calls `UMinimapWidget::PaintMap` with the pawn as the centre and `BigMapRadiusScale` times the radius. `Slime.MinimapZoom in|out`.
+
+## What opens each passive ring (E-2.205)
+
+On the passive web a small card at the bottom right says how many passive points you have spent and what each ring still needs: an open ring reads "open" in the soul's colour, the next ring to open is the bright line with its points to go, and later rings are dim. The same numbers are still written on the rings themselves.

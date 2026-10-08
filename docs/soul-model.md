@@ -71,3 +71,9 @@ Nothing about souls is saved yet. Until the persistence design lands, the bag li
 ## The soul swap (E-2.190)
 
 *Built 2026-10-06, provisional on the D-2.17 memo's section 3 ("A key switches between them in the field, with a cooldown").* Press X, or drag one slot's orb onto the other, and the secondary soul becomes the primary and the primary the secondary. The exchange runs on the server only: the secondary goes to the bag, takes the primary slot (which sends the old primary to the bag), and the old primary takes the secondary slot, so every check of an equip applies (owned, allowed where you stand) and the vital fractions carry over as on any equip. With no secondary the swap is refused; `Slime.SoulSwapCooldown` seconds must pass between swaps (0 until the memo's cooldown is decided). The secondary slot also takes its soul out of the bag now and returns it on unequip.
+
+## A new soul equips itself (E-2.202)
+
+When you pick a soul up, or finish one from fragments, it goes straight into a free slot: your primary if you have none, otherwise your secondary if that is empty, otherwise the bag. It never pushes a soul out of a slot. The human soul keeps its own rule and is worn. A fresh slime that walks over its first soul changes body at once and can attack without opening the bag.
+
+For engineers: `USoulComponent::AutoEquipNewSoul` runs on the authority from `ASoulPickup` and from the fragment assembly in the field monster's death path, and goes through the ordinary equip functions, so the server's checks are the same as for an equip asked by hand. `GrantSoul` alone slots nothing (dev grants, restored records). Switch: `Slime.SoulAutoEquip`. Provisional: the rule is Jon's word, not yet in the GDD.

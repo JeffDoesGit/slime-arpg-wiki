@@ -170,6 +170,12 @@ A gem on the ground shows its stone and its name, and a soul pickup its name, as
 
 For engineers: `AMonsterHUD::CheckDropOcclusion` runs on the name plates' timer. It collects the bounds of every player-controlled pawn recently rendered (skeletal mesh, or the capsule for a slime) and sets each pickup widget's render opacity to 0 while `IsDropBehindBody` holds: the segment from the camera to the drop crosses a body's box, or the drop is inside one. The switch is `bHideDropsBehindPawns` in `UHudLayoutSettings`.
 
+## Drops on the ground: the name always shows, the stone lies in the world (E-2.216)
+
+Hiding a whole drop behind a player (the section above) made gems blink out and back as you ran across them. Since E-2.216 a dropped gem is two things. Its name is a label that is always drawn, over bodies too, so you can always see that something is there. Its stone, on its glow, lies flat on the ground in the world, so a body standing on it covers it the way it covers the floor, and it grows and shrinks with the camera's zoom. A click on the name or on the stone still walks you in and picks it up. The hiding of E-2.201 is gone from the code; the section above is kept as history. The sizes are placeholders.
+
+For engineers: `AGemPickup` carries a screen-space `IconWidget` (the label alone) and a world-space `StoneWidget` drawn once when the look is set, never per frame; each machine traces once to the ground under the drop to place it. The click reads the label's box from its widget and the stone's circle from `AGemPickup::GetStoneOnScreen`. Settings: `PickupStoneWorldSize`, `PickupStoneGroundRise`, `PickupIconRise` in `UInventoryLayoutSettings`.
+
 ## The debug menu on a joiner (E-2.199)
 
 The debug menu's grants and level buttons used to do nothing on a joiner's machine, because those commands only act on the host. Now a joiner's menu sends them to the host for the joiner's own character: grant or equip a soul, set the level, add experience, fill or empty health and mana, grant a gem. The line under the buttons says what was sent; the result is in the host's log. A joiner can also type `server` followed by a `Slime.` command in the menu's command box to run it on the host. This is test tooling: it is not in a shipping build, and the host can switch it off with `Slime.DevCommandsFromClients 0`.

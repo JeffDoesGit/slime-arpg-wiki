@@ -191,3 +191,11 @@ For engineers: the steps are `UHudLayoutSettings::MinimapZoomRadii` with `Minima
 ## What opens each passive ring (E-2.205)
 
 On the passive web a small card at the bottom right says how many passive points you have spent and what each ring still needs: an open ring reads "open" in the soul's colour, the next ring to open is the bright line with its points to go, and later rings are dim. The same numbers are still written on the rings themselves.
+
+## Block C of 2026-10-09: what you can take, statuses on plates, piles of drops
+
+- **Soul web.** A node you can take right now is red, a node you cannot is grey, and a line is drawn only where it leads somewhere: lit between two nodes you hold, red toward a node you can take or have picked. Lines between locked nodes are gone.
+- **Statuses on name plates.** A monster's or another player's plate shows poison and control effects as small squares under its bar, the same squares your own row above the console uses: `P` with the stack count, and a letter with a draining strip for a slow, a stun, a weaken and the rest. The old yellow line of text is gone.
+- **Piles of drops.** When several gems lie on one spot their name labels stack upward with a small gap, so each can be read and clicked.
+- **Your own hit shape.** The game can draw the footprint of your own slower melee moves on the ground while they wind up. It is switched off (`bOwnHitShapeTelegraph`): the swing's own effect is meant to show the reach.
+

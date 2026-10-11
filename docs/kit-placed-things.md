@@ -152,3 +152,17 @@ Log lines: `Placed: <pawn> places <row> #7 at (x, y) radius 250, life 6.0 s (1 o
 When a node you hold places something (a Crater, a Pedestal), a short ring flashes where it lands. That ring used to stay on the ground for the rest of the session, one for every thing placed, which read as rings left everywhere. It is now a short pale ring that fades in half a second, the game's own, and no longer the ring of fire the old portals used.
 
 For engineers: the cue row `NodePlaced` names a looping Niagara system and had no Duration, and `FKitCues::PlayLocal` only ended a one-shot when its row had one. The row now names the project's mesh ring (`MI_KitEffect_Ring`, a Life of 0.5 s), and `PlayLocal` tells every one-shot to wind down at `EvaluateOneShotLife`: the row's Duration, else `OneShotMaxSeconds`. A looping system used as a one-shot should still name its own seconds on its row.
+
+## What the Corpse's totem added (CT-2.52, 2026-10-11)
+
+A placed thing can now do six more things, each a field on its table row or an op, all on the server with no tick:
+
+- **Fire.** `FireEvery`, `FireReach`, `FireDamage`, `FireCount`: every so many seconds it throws that many shards, each at a different nearest enemy in reach. One timer in the placed subsystem serves every thing. An op (`FirePlaced`) can also make it fire at once.
+- **Have health on the monster life curve** (`bHealthOnLevelCurve`): its health is the row's number times the life of a monster of its owner's level.
+- **Be rooted** (`bRooted`): nothing moves it.
+- **Be herded**: `MovePlaced` with `Beside` hops the nearest thing to its owner's side, with an optional landing hit; the hop is stamped so a rule can speed its fire for a few seconds.
+- **Be warded** (`WardPlaced`): for some seconds its life stands still and hits on it are scaled.
+- **Carry a count** (`CarrierState`, `CarrierStacks`): its owner's dash crossing it, projectile passing it or hit touching it pops it (`ShatterPlaced`) and its count leaves as shards.
+- **Stand as a body** (`BodyMesh`, `BodyHeight`): a static mesh drawn on every machine from the list a placed thing already replicates; no new actor.
+
+Things of one row standing close together can share their reach (`PlacedFireRules`, `ShareWithin`), and a thing can be felled by an op (`FellPlaced`), which tells the same event as running out.

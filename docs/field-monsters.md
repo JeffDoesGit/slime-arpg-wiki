@@ -118,3 +118,9 @@ A monster type opts in by giving its row a life and a damage scale for level 1. 
 For testers: `python scripts/monster_ttk.py` prints, for every monster row, how many hits an on-level player needs to kill it and how many of its swings kill the player. `Slime.MonsterLevelCurve 0` takes every row as typed. A monster on the curve logs `level N on the curve: life ..., damage scale ..., ... XP` when it spawns.
 
 For engineers: `UMonsterLevels` (`Monsters/MonsterLevels.h`): `Evaluate` is the arithmetic, `Resolve` reads the table; `AFieldMonster` calls it at spawn and when it pays experience. `scripts/gen_monster_levels.py` owns the formula and writes `Data/DT_MonsterLevels.csv` (`--check` compares). Every number is a placeholder.
+
+## The Corpse as a monster since its rework (CT-2.52, 2026-10-11)
+
+A field Corpse now uses its soul's mechanic on you. The forest's first Corpses only claw, and the second claw leaves a Splinter on your plate that nothing pops. A Normal from the Beach on also charges: it winds up for 0.7 seconds with a red line on the ground, then rushes 500 uu and pops your Splinters as one hit. An Elite adds a thrown bone spear from range, which plants a Splinter, and a lash that slows (it does not pull a player: no monster's pull does). The Beach lair's Elite also plants a bone totem that shoots you. No monster holds any node past each ability's Unlock, and a Normal carries no control, as before (D-2.18).
+
+Known from the first proof runs: this makes Corpse packs much more dangerous than before (four level 10 Normals took 35 to 50 health a second from a level 25 player with no gems), and Splinters are counted per attacker, so two Corpses can show six on a plate that reads "of 3". The numbers wait on Jon's play. The kits are `Corpse`, `CorpseElite`, `CorpseLair` and `CorpseTutorial` in `Data/Authoring/Souls/monsters.json`.

@@ -54,7 +54,7 @@ A request is a list of rows and ranks. The server walks it in order, each rank s
 
 **Field monsters buy nothing.** A monster wearing a v2 soul counts every web's Unlock row as held (so the ability's own ops and overrides act), the centre row acts, and no other node does. It is never asked whether a move is unlocked.
 
-**The frame the drafts are written to** (five abilities and the basic attack, seven nodes a web by slot, one Defining node of one rank, a 25-slot passive web on three rings, two builds, one named mechanic) is the designer's half of GDD 5.6: `docs/design/souls/soul-brief.md` says it and `python scripts/check_soul_webs.py --design` holds a draft to it (a draft with `"frame": 3`; the ten drafts written before the frame get warnings only). The engine does not read the frame: a pre-frame draft loads as it is and is simply under-bought under the new pools, its fourth ring opening with the rim. The play sheet Jon runs per build before a soul is frozen is `docs/plans/soul-play-sheet.md`.
+**The frame the drafts are written to** (six abilities and the basic attack, seven nodes a web by slot, one Defining node of one rank, a 25-slot passive web on three rings, three builds, one named mechanic; five and two until 2026-10-11) is the designer's half of GDD 5.6: `docs/design/souls/soul-brief.md` says it and `python scripts/check_soul_webs.py --design` holds a draft to it (a draft with `"frame": 3`; the ten drafts written before the frame get warnings only). The engine does not read the frame: a pre-frame draft loads as it is and is simply under-bought under the new pools, its fourth ring opening with the rim. The play sheet Jon runs per build before a soul is frozen is `docs/plans/soul-play-sheet.md`.
 
 ## Session only
 
@@ -193,3 +193,21 @@ Log lines: `SoulWeb: <pawn>'s cooldown of <row> is reset`, `Placed: <pawn>'s <ro
 A node's effect is shown by a short cue of its family. One family, the burst for spending a count, used to play even when there was nothing to spend, so a soul with a rule on a timer flashed a pink and purple burst about once a second while standing still. The cue now plays only when a count was really spent.
 
 For engineers: `FKitOps::Execute` asks `KitOpHasSomethingToSpend` before a `SpendState` or `ConsumeState` op runs (the holder's `GetKitState` for the op's state above 0) and calls `FKitNodeCues::OnOp` only then. Other ops are unchanged: their cue plays whenever the op runs. `Slime.Cue.Log 1` logs every cue a machine plays.
+
+## The Corpse, the first soul on the new frame (CT-2.52, 2026-10-11)
+
+The Corpse is the first soul rebuilt to the frame of GDD 5.6: six abilities and a basic attack, a web of seven nodes for each, and a passive web of 25 slots on three rings. Its design sheet is `docs/design/souls/corpse.md`, frozen by Jon on 2026-10-10; every pick in it is his. The other nine souls still wear their older, larger webs until their own rows.
+
+**What you play.** One mechanic, the Splinter: a shard of your own bone left in an enemy, shown as a small count under its name plate. Three fit in an enemy; each lasts six seconds. Something of yours that "pops" a carrier spends every Splinter in it as one hit (24 Physical a Splinter, which takes your damage bonuses and can crit) and throws one small homing shard per Splinter at the nearest other enemy. Three builds use it differently:
+
+- **Splinter** (Marrow Rush): claw the pack with Grave Clutch to plant, then charge through to pop them all.
+- **Boner** (Bone Spear): throw spears down a line from range; the spear pops what it passes and plants on the enemy it stops in.
+- **Totemist** (Bone Totem): plant up to three bone totems that stand, draw enemies, and fire shards that pop what you clawed.
+
+Three abilities are shared and bend to each build through their fork: Grave Clutch (the claws), Bone Ward (a defensive cage) and Spinal Tap (a lash that yanks enemies near its line onto it). The passive web's rim holds four keystones, of which two can be held: Domino, Impale, Dry Marrow and Ossified. Impale switches off two web nodes while it is held; a switched-off node keeps its points and says "Disabled by Impale".
+
+**The passive web has three rings** for a soul on the frame: six small nodes, then twelve, then the rim of seven. Ring 2 opens at 4 passive points spent, the rim at 10. A keystone is reached only through the ring 2 node at its own angle. The card at the stage's bottom right lists the gates the web actually has.
+
+**What is rough.** The totem is a stone obelisk from a pack already in the project, not bone. The spear and the shards use a generic trail. A warded totem shows nothing. The Splinter count is small on screen. On a joined game the bar shows an ability's base mana cost even when a node changed it on the server. Every number is a placeholder; the first play of the sheet is still to come, and section 9 of the sheet lists each reading the build took for Jon to confirm.
+
+**For engineers.** The sheet's draft is `Data/Authoring/Souls/corpse.json` (`"frame": 3`), its mapping `Data/Authoring/Souls/corpse.map.json`; the generator lays the three-ring template for a frame 3 draft (`template()` in `scripts/gen_soul_webs.py`) and the lint's design pass allows a three-build soul of one own ability a build and three shared (`scripts/check_soul_webs.py --design`). The engine words the Corpse added are schema sections 7.19 to 7.44 (`docs/design/soul-kit-schema-v2.md`): the shatter as a hit and its shards (`Kits/KitShards.*`), `WebNodeHeld`, the projectile end trigger, a placed thing that fires, is herded, warded, rooted, carries a count or stands as a body (`Kits/KitPlaced.*`), the yank onto a line, a flask-drink trigger, a held node disabling another (`FKitNodeRow::Disables`), and `FireShard`. Tests: `SandboxARPG.Kits.Corpse*`.

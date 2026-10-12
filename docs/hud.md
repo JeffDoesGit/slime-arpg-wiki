@@ -211,3 +211,6 @@ On the passive web a small card at the bottom right says how many passive points
 - **Piles of drops.** When several gems lie on one spot their name labels stack upward with a small gap, so each can be read and clicked.
 - **Your own hit shape.** The game can draw the footprint of your own slower melee moves on the ground while they wind up. It is switched off (`bOwnHitShapeTelegraph`): the swing's own effect is meant to show the reach.
 
+## A soul's level on its orb (E-2.206)
+
+Every soul's orb on the inventory screen carries that soul's own level (E-2.223) as a number at its lower right: the primary and the secondary slot, and each soul in the bag. The worn human has no level and shows none; a soul still in fragments shows its fragment count there as before. The numbers follow the levels as they change, on the host and on a joiner: the screen redraws when the owner's list of soul levels changes (`UProgressionComponent::OnSoulLevelsChanged`). `USoulSlotWidget` and `USoulItemCell` read `UProgressionComponent::GetSoulLevel`.

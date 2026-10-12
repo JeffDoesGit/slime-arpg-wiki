@@ -202,7 +202,7 @@ For engineers: the steps are `UHudLayoutSettings::MinimapZoomRadii` with `Minima
 
 ## What opens each passive ring (E-2.205)
 
-On the passive web a small card at the bottom right says how many passive points you have spent and what each ring still needs: an open ring reads "open" in the soul's colour, the next ring to open is the bright line with its points to go, and later rings are dim. The same numbers are still written on the rings themselves.
+On the passive web a small card at the bottom right says how many passive points you have spent and what each ring still needs: an open ring reads "open" in the soul's colour, the next ring to open is the bright line with its points to go, and later rings are dim. The same numbers are still written on the rings themselves. Since 2026-10-13 each ring that is still locked also shows it on itself: an arc along the ring, filled in the soul's colour for the share of its gate you have already spent, and a small dark badge on the ring with the points still to go. The next ring to open is bright, later ones dim, and an open ring shows neither.
 
 ## Block C of 2026-10-09: what you can take, statuses on plates, piles of drops
 

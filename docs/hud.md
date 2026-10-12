@@ -112,6 +112,18 @@ Every soul has a basic attack, and it lives on the left mouse button. When you p
 
 For engineers: `AMonsterHUD::PlaceBasicAttack` and the pure rule `EvaluateBasicAttackSlot`; the log line is `HUD: the left button takes <ability> (soul change|respawn|refill)`; `Slime.ShowBar` prints the bar.
 
+## A bar you arranged stays yours (E-2.198)
+
+Two things changed on the ability bar on 2026-10-12, after the playtest of 2026-10-07 in which both joining players saw slots lose their icons or keep an old name.
+
+**The bar is left alone once you have arranged it.** The first time you set or clear a slot by hand, the bar is yours until you change souls. Until then the game puts nothing back: a basic attack you moved off the left button stays where you put it or off the bar, and a first move you cleared stays cleared, through pickups, fragments, new ranks and a respawn. Before, each of those returned the basic attack to the first empty slot, which looked like a name sticking to the slot you had just emptied. Two things still happen: an ability you have just unlocked takes the first empty slot once, and a new soul is a new bar, filled as before (the section above).
+
+**The pick list holds still.** An open pick list used to be rebuilt whenever anything about your souls changed, twice an event, so a row you were pressing could vanish between press and release and the click was lost. It is rebuilt now only when what it offers changed. A click on the list's frame or between two rows stays on the list and no longer walks you.
+
+**A guard for joiners.** The bar learns of slot changes from the HUD that owns it. It used to find that HUD by asking the player's controller, which on a joining machine may not know it yet at that moment; the bar would then never redraw a slot for the whole session. The HUD now hands itself to the bar directly. This order of events has not been reproduced on one PC, so whether it was the playtest's fault is not known; each machine's log says which case it met.
+
+For engineers: `UPlayerHud::BindHud` (called from `AMonsterHUD::BeginPlay` before `AddToViewport`), `IsBoundToHud`, the log line `HUD: bar bound to slot changes (the controller knew|did not yet know its HUD at construct)`; `UPlayerHud::EvaluatePickListStale` and `GatherOfferedMoves`; `AMonsterHUD::EvaluateBarRefillAllowed`, `HasPlayerArrangedBar`, `ForgetBarArrangement`, set in `SetAbilitySlot`; `IsOverConsole` counts a visible pick list. Tests `SandboxARPG.UI.BarBinding.*`.
+
 ## Escape (E-2.150)
 
 Escape closes whatever is open on top: a screen, then the list above the bar, then the big map. With nothing open it opens the options screen. Play In Editor keeps Escape for itself, so this works in a Standalone or packaged game.

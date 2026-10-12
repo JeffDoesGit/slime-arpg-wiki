@@ -15,9 +15,12 @@ otherwise. It never runs on a client: every read and write happens on the author
 
 `FPersistenceKey::Resolve(const APlayerController*)` asks `FSteamIdentity::GetValidatedNetId` for
 a validated Steam ID first. When `IsValidated()` is false (Steam auth is off by default,
-`docs/systems/steam-identity.md`), it falls back to a sanitized per-machine name
-(`Controller->GetName()`'s host, cleaned to `[A-Za-z0-9_-]`) so a dev session without Steam still
-gets a stable, reproducible file. `bIsValidatedSteamId` on the resolved key records which path was
+`docs/systems/steam-identity.md`), it uses whatever unique net id the player state carries, which
+under OnlineSubsystemNull is the Null id: `<HostName>-<LoginId>` for the first Unreal process on a
+machine and a fresh GUID for any other, unless `[OnlineSubsystemNull] bForceStableNullId=true` is
+set, which makes every process on that machine key to the same record. Only when no online id
+exists at all (a headless test) does it fall back to `Controller->GetName()`. Either way the raw
+string is cleaned to `[A-Za-z0-9_-]` so it is a usable directory name. `bIsValidatedSteamId` on the resolved key records which path was
 taken, and every save/load log line names it, so a dev-key record is never mistaken for a real
 one.
 
@@ -115,7 +118,8 @@ against records this session happened to write.
   separated out; a dev-key record and a future local-only record would collide under this scheme.
   No `E-` row exists for it yet.
 - Only one character slot per key is restored; DS-2.1's account-vs-character question (D-4.3) is
-  answered for souls (unlocks are account-wide per the recorded decision) but the record format
+  answered for souls (unlocks are per character: `Souls.Unlocks` lives in `Char_<N>.sav`, the
+  per-character reading of DS-2.1 §5.3) but the record format
   itself does not yet branch on multiple character slots.
 - Session-only state (cooldowns, buffs, current zone beyond the last-used checkpoint) is
   deliberately not saved — per `CLAUDE.md` 1.9, nothing provisional writes persistent data, and

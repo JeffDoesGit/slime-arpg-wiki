@@ -23,6 +23,22 @@ Killing a field monster earns experience for whoever landed the killing blow. Ea
 
 Every monster has a level (since E-2.160, provisional on the 2026-09-23 zone-level research note): the forest's corpses 1 and 2, the Beach 4 to 6, the Fields 9 and 10, the Jungle 13 and 14, the Pass 17 and 18, each elite two above its zone. The level sits in front of the monster's name on its plate. A kill pays its full reward while you are within 5 levels of the monster, above or below; past that the reward shrinks, 81 % at a gap of 6, then 62, 43, 24, and 5 % at 10 or more, never below 1 point. Soul fragments are never reduced by the gap. The log line of a reduced kill ends with `[level gap: monster L<n>, <paid> of <full> XP]`.
 
+## A level for each soul (E-2.223)
+
+Since E-2.223 there is no character level: each soul you own has its own level and its own experience, and your level is the level of the soul in your primary slot. Everything that reads your level reads that one: your health and mana, the points you can spend in that soul's webs, the level-gap rule above, the experience bar. Swap souls and your level, your maxima and your points change with the body; health and mana keep the fraction they had.
+
+- A kill pays the primary soul in full and the secondary soul half (rounded down, at least 1). A soul in the bag earns nothing.
+- A soul you have just acquired starts at half the level of your highest soul, rounded down, at least 1. Your first soul starts at 1.
+- With no primary soul you are level 1 and a kill banks nothing.
+- The death penalty is taken from the primary soul's experience.
+- The worn human has no level.
+
+It is provisional on the D-2.16 memo (its section 3 and Jon's answers in section 7) and sits behind `Slime.SoulLevels`; at 0 the game has the one character level of before. A saved character still holds one level, the primary soul's at the moment it was saved: after the host restarts, your other souls come back at half of it. Saving a level a soul is a change to the character record that waits on Jeff's review.
+
+For testers: `Slime.ShowSoulLevels` prints every soul's level; `Slime.ShowSoulLevels DA_Soul_Corpse 8` sets one first. `Slime.SetLevel` and `Slime.AddXP` act on the primary soul (the secondary takes its half of the XP); with no primary soul, `Slime.SetLevel` sets every owned soul.
+
+For engineers: `UProgressionComponent` keeps `SoulLevels`, one entry a soul, replicated to the owner only; `Level` and `XP` stay replicated to everyone and mirror the primary's entry, so every older reader of `GetLevel()` is unchanged. `SyncSoulLevels` runs on the authority on every soul slot change, for player pawns only: it gives a soul with no entry its start level and reloads the mirror when the primary changed. The rules are the pure `EvaluateStartLevel`, `EvaluateSecondaryShare` and `EvaluateAddXP`, held by `SandboxARPG.Progression.SoulLevels.*`.
+
 ## Dying
 
 Death costs a tenth of the experience you had gathered toward the next level, rounded to the nearest point, and never a level: at 60 of 200 you lose 6 and stand at 54. With nothing gathered you lose nothing. Your screen dims with "You died", the points lost, and a three-second count, then you are back at the start of the level with full health and mana and everything you carried. The share is a placeholder from the design memo; where you come back is the level's start until the town exists.

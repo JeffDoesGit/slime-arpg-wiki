@@ -93,7 +93,7 @@ There is no title screen yet, so starting, hosting and joining a game live on th
 
 ## PvP section of the options screen (E-2.116, moved by E-2.118)
 
-The arena queue lives on the options screen, under the heading PvP, between the ground ring switches and the keys. Open the options with O, with the cog on the bar, or with the crossed swords beside it: since E-2.118 the Arena disc opens the options screen, and the small Arena panel of E-2.116 is gone. The section shows four things:
+The arena queue lives on the options screen, under the heading PvP, between the ground ring switches and the keys. Open the options from the Escape menu, with the options button on the bar (the O key was taken off on 2026-10-14, E-2.227; a key can still be bound on the options screen), or with the crossed swords beside it: since E-2.118 the Arena disc opens the options screen, and the small Arena panel of E-2.116 is gone. The section shows four things:
 
 - **Your state**: not queued, in the queue, or matched, read from your pawn's replicated arena state.
 - **Who is waiting**: the names of the players in the queue, or "Nobody is waiting". With a queue of two this is one name at most, because the second player to queue is matched at once.

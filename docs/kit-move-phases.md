@@ -116,3 +116,7 @@ The phases are members of `USoulComponent`, defined in `Source/SandboxARPG/Kits/
 - **The dash distance** (`LastDashDistanceAbove`) is taken when the dash has run, before its landing hit; a recast and a bounce measure from where they began. **The channel tick's number** is known to the tick's own swing.
 - **A drag** tells `OnControlApplied` (`Pull`) for each enemy set down.
 - **`SelfDamagePerSecond`** is paid by a player's pawn only.
+
+## A swing's effect waits for the swing (CT-2.64, 2026-10-14)
+
+An ability row's `CueOnUseDelay` is a share of the swing's hit delay: at 0 the use cue plays at the press, as every cue did; at 0.6 it is held for six tenths of the time to the first hit, counted from where the clip starts (after a wind-up). The ten basic attacks, Venom Rake and Bifurcating Rend are at 0.6 (`cues.onUseDelay` in each soul's sidecar). Each machine waits on its own timer; no hit time, cooldown or commit window moves. A row with `bCueOnUseFitShape` draws that arc to the hit itself: centred on the pawn, facing the aim, its outer edge at the reach of the cone the server hits with and cut to the cone's angle, so the effect shows where the hit lands. Since 2026-10-14 a basic attack plays no effect on any soul (Jon: "should just be the attack animation"); of the block's twelve moves the delay and the fitted arc show on the Creepy's Venom Rake and Bifurcating Rend, whose cones are 320 uu long.

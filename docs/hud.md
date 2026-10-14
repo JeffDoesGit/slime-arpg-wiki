@@ -214,3 +214,7 @@ On the passive web a small card at the bottom right says how many passive points
 ## A soul's level on its orb (E-2.206)
 
 Every soul's orb on the inventory screen carries that soul's own level (E-2.223) as a number at its lower right: the primary and the secondary slot, and each soul in the bag. The worn human has no level and shows none; a soul still in fragments shows its fragment count there as before. The numbers follow the levels as they change, on the host and on a joiner: the screen redraws when the owner's list of soul levels changes (`UProgressionComponent::OnSoulLevelsChanged`). `USoulSlotWidget` and `USoulItemCell` read `UProgressionComponent::GetSoulLevel`.
+
+## The swap medal and hint (E-2.230, 2026-10-14)
+
+While a second soul is slotted, a small medal stands on the console's rim beside the life orb: the secondary soul's orb in a gold ring with the bound swap key on a stone tab. A click swaps, as the key does. A swap starts a cooldown of 10 s (`SoulSwapCooldown` in `DT_CharacterRules`; `Slime.SoulSwapCooldown` at 0 or more overrides it for a dev); while it runs the medal is dim under the seconds left, and a swap asked for inside it shows "Soul swap ready in N s". The first time in a session the second slot fills, a gold line reads "Press X to swap to <Soul>" for `SwapHintSeconds`.

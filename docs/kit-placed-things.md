@@ -166,3 +166,7 @@ A placed thing can now do six more things, each a field on its table row or an o
 - **Stand as a body** (`BodyMesh`, `BodyHeight`): a static mesh drawn on every machine from the list a placed thing already replicates; no new actor.
 
 Things of one row standing close together can share their reach (`PlacedFireRules`, `ShareWithin`), and a thing can be felled by an op (`FellPlaced`), which tells the same event as running out.
+
+## No rings since 2026-10-14 (CT-2.63)
+
+On Jon's ruling after the playtest of 2026-10-13 ("all abilities that have aoes shouldn't show their rings or margins/borders in their vfx") a placed thing and an aura are drawn as a soft fill that fades to nothing at the edge of its area, with no outline: the engine plane in `M_KitGroundMark`, its softness and an aura's opacity in `UHudLayoutSettings` (`GroundMarkSoftness`, `GroundMarkAuraOpacity`). `RingColour` stays in the rows and is read only while `bGroundMarkRings` is on, which brings every outline back. The Gyre's turning streaks went with the rings. An enemy's wind-up warning keeps its crisp red shape: it is a warning, not an effect. Blight Bloom is purple (`CloudBlight`, a violet hit burst).

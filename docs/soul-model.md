@@ -62,7 +62,7 @@ Nothing about souls is saved yet. Until the persistence design lands, the bag li
 
 ## For testers
 
-`Slime.GrantSoul DA_Soul_Creepy` puts a soul in your bag (host only); `Slime.EquipSoul DA_Soul_Creepy` wears it without the inventory screen, through the same checks as the drag. Fragments: every kill that drops one logs `Fragment: <pawn> +1 DA_Soul_Corpse (1/3)`, the third `Soul assembled: <pawn> DA_Soul_Corpse`; raise `DropRates` in the server rules to make it near-certain.
+`Slime.GrantSoul DA_Soul_Creepy` puts a soul in your bag (host only); `Slime.EquipSoul DA_Soul_Creepy` wears it without the inventory screen, through the same checks as the drag. `Slime.UnequipSoul [primary|secondary|worn]` takes a slot's soul back to the bag the same way. Fragments: every kill that drops one logs `Fragment: <pawn> +1 DA_Soul_Corpse (1/3)`, the third `Soul assembled: <pawn> DA_Soul_Corpse`; raise `DropRates` in the server rules to make it near-certain.
 
 ## For engineers
 

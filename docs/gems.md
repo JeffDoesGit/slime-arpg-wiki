@@ -87,6 +87,17 @@ Any gem can be broken into shards of its rarity: white shards from a white gem, 
 
 A script beside the affix generator (`scripts/check_crafting_economy.py`) proves the placeholder numbers hold no loop that makes shards from shards. Assumed on the D-5.4 memo (register row `gem crafting`).
 
+## The gem bench (E-5.6)
+
+A workbench stands in the town square by the well (a grey block until its real body lands). Click it or press the pick-up key beside it and the bench opens: your gems on the left, bag then sockets; the chosen gem's lines on the right; five buttons under them, each with its price, greyed with the reason when it cannot act. Walk away and it closes.
+
+- **Polish** raises one chosen line by 5 % of its value, four times at most (+20 %), for 1, 2, 3 then 4 white shards.
+- **Grind** raises one chosen line one tier, never past the gem's own tier; the line keeps its place in the new tier's band, no reroll. 2 blue shards, plus 1 for every two tiers of the gem, as often as the shards allow.
+- **Cut** is for yellow gems only: a fourth line of the gem's colour, in whichever kind (prefix or suffix) has room, so the gem ends two and two. 3 yellow shards plus 1 for every two tiers. The gem is then sealed: nothing at the bench touches it again, only corruption (later) and salvage.
+- **Salvage** and the two **step-ups** as above. Salvage of a yellow, cut or corrupted gem asks for a second click.
+
+Every click is a request the server checks: that you stand at the bench, hold the gem, have the shards, and that the gem is open to the operation. A refusal names its reason on the notice line. Assumed on the D-5.4 memo (register row `gem crafting`).
+
 ## Since the playtest of 2026-10-13
 
 **A picked-up gem equips itself (E-2.226).** A gem taken off the ground goes into the first empty socket that takes its colour, in the right-click's order; with none free it goes to the bag; it never replaces a gem. A dev grant and a restored record do not. Each player's own switch is "Auto-equip gems" on the options page (on by default), sent with the pickup request; the host's switch for everyone is `Slime.GemAutoEquip`.

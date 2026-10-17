@@ -36,7 +36,10 @@ Per DS-2.1 §5, one `UCharacterRecord` per character holds:
 - **Fragments** — per-monster-type fragment counts (`USoulComponent::RestoreFragments`).
 - **Skill tree** — every soul's allocated nodes (`USoulTreeComponent::RestoreAllocations`, backed
   by a new `GetAllAllocations()` getter).
-- **Gems** — the bag and every equipped slot (`UGemEquipmentComponent::RestoreGem`).
+- **Gems** — the bag and every equipped slot (`UGemEquipmentComponent::RestoreGem`). A listen
+  host's own pawn is restored before the world begins play, so `RestoreGem` sizes the slot list
+  itself (`EnsureSlotsSized`) before it sockets a gem; a record naming a socket the layout does not
+  have logs a warning and that gem is not restored (E-2.233).
 - **Checkpoint** — the last zone entrance the pawn used, for respawn.
 
 Anything not in that list is not saved, because DS-2.1 does not name it: attack feel and movement

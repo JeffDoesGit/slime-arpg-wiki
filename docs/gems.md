@@ -81,6 +81,12 @@ The character holds counts for crafting on a component of its own: white, blue a
 
 A record saved before this change loads with no counts and every gem at its full budget. Assumed on the D-5.4 memo (register row `gem crafting`); the record change is reviewed by Jeff before it merges.
 
+## Salvage and shards (E-5.5)
+
+Any gem can be broken into shards of its rarity: white shards from a white gem, blue from a blue, yellow from a yellow. A gem of tier I or II gives one shard, III to V two, VI to VIII three, IX and X four. A socketed gem can be salvaged in place; its lines come off the character as it goes. Three shards of one kind become one of the next kind up (white to blue, blue to yellow), never the other way. Shards are counts on the character, saved with it, never items in the bag and never dropped on death.
+
+A script beside the affix generator (`scripts/check_crafting_economy.py`) proves the placeholder numbers hold no loop that makes shards from shards. Assumed on the D-5.4 memo (register row `gem crafting`).
+
 ## Since the playtest of 2026-10-13
 
 **A picked-up gem equips itself (E-2.226).** A gem taken off the ground goes into the first empty socket that takes its colour, in the right-click's order; with none free it goes to the bag; it never replaces a gem. A dev grant and a restored record do not. Each player's own switch is "Auto-equip gems" on the options page (on by default), sent with the pickup request; the host's switch for everyone is `Slime.GemAutoEquip`.

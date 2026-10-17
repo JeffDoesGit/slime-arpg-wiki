@@ -73,6 +73,14 @@ A gem on the ground is picked up with a left click. Walking over it does nothing
 
 For engineers: `AMonsterCharacter::PressLeftButton` asks `FindGemUnderCursor` (each drop's drawn stone and label, `UGemPickupWidget::GetViewportRects`) and enters the `PickUp` mode, which path-follows to the gem and sends `UGemEquipmentComponent::RequestPickUpGem` within `PickupReach` of the capsule's edge. The authority's `PickUpGem` re-checks through `EvaluatePickUpRefusal` (flag, alive, pickup still there, reach plus `PickupReachSlack`) and ends in `AGemPickup::TryGiveTo`. `UGemDropSettings::bClickToPickUpGems` off restores the walk-over. Dev: `Slime.PickUpGem`, `Slime.GemPoint [label|stone] [click]`.
 
+## The crafting record (E-5.4)
+
+Every gem now carries what the bench and alchemy will read: a polish step count on each line (0 to 4, each step +5 % of the line's value, applied when the gem is equipped and rounded to the line's band), and two states, Cut (sealed: nothing but corruption and salvage touches it again) and Corrupted (nothing but salvage). The tooltip shows each of them: `+12 Flat damage (T3, P) (+10 %)`, `Ruby X · Cut`. There is no budget of alterations on a gem: the shards are the budget (Jon, 2026-10-17).
+
+The character holds counts for crafting on a component of its own: white, blue and yellow shards today, reagents and soul essence later. The counts replicate to their owner alone and are saved with the character beside the gems. Every craft is one request to the server, which re-reads the gem, the counts and the budget before it moves anything, and tells the player why when it refuses. No operation exists yet: salvage and the step-up are E-5.5, the bench's Polish, Grind and Cut are E-5.6.
+
+A record saved before this change loads with no counts and every gem at its full budget. Assumed on the D-5.4 memo (register row `gem crafting`); the record change is reviewed by Jeff before it merges.
+
 ## Since the playtest of 2026-10-13
 
 **A picked-up gem equips itself (E-2.226).** A gem taken off the ground goes into the first empty socket that takes its colour, in the right-click's order; with none free it goes to the bag; it never replaces a gem. A dev grant and a restored record do not. Each player's own switch is "Auto-equip gems" on the options page (on by default), sent with the pickup request; the host's switch for everyone is `Slime.GemAutoEquip`.

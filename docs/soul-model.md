@@ -88,7 +88,7 @@ Whichever source the body comes from, the pawn applies one resolved description 
 
 ## The slime's own body (CT-2.65)
 
-A player who wears no soul is the slime, and since 2026-10-17 the slime has a body: a small green blob with two eyes that blink, McSteeg's "Slime Character" (itch.io; free, its licence allows it in a commercial game and forbids passing the pack on, see `docs/credits.md`). It replaced the green sphere that stood in for it since the start. It idles, scoots at a walk and hops at a run, wiggles when hit and squishes down when it dies.
+A player who wears no soul is the slime, and since 2026-10-17 the slime has a body: a small green blob with two eyes that blink, McSteeg's "Slime Character" (itch.io; free, its licence allows it in a commercial game and forbids passing the pack on, see `docs/credits.md`). It replaced the green sphere that stood in for it since the start. It idles, scoots at a walk and hops at a run, wiggles when hit and dies squashed flat (its `Squish_Start` clip, which ends flattened).
 
 The hop is played once, as a run starts; the scoot carries the rest of the run, and the slime hops again only after it has come to a stop (Jon: "slime hop is too repetitive"). That is a switch on the body asset, `bRunPlaysOnce`, so any body can have it; only the slime's is on.
 

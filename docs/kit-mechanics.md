@@ -65,7 +65,7 @@ Geometry on top of placed lines ([placed things](kit-placed-things.md)). A Fault
 
 What grows from placed Seeds. Every Seed op goes through one spend rule: an Old Seed refuses its first spend, a Seed Vault leaves it lying, a Volunteer grows back.
 
-- **Ops:** `PopSeeds` (ripe Seeds burst; told as a burst), `Sprout` (the oldest ripe Seed becomes a minion where it lies, while the minion budget has room), `Runners` (each Seed has a runner to its nearest neighbours; an enemy crossing one is told), `SeedHops` (a vine hit near a ripe Seed hops through it to the nearest untouched enemy, with side shoots), `RipenSeeds`, `MarkGreatSeed`, `DropSeed`, `CastFromSeed`, and for Sap `AddStateToMinion` and `CollectFromMinions`.
+- **Ops:** `PopSeeds` (ripe Seeds burst; told as a burst), `Sprout` (the oldest ripe Seed becomes a minion where it lies, while the minion budget has room), `Runners` (each Seed has a runner to its nearest neighbours; an enemy crossing one is told), `SeedHops` (a vine hit near a ripe Seed hops through it to the nearest untouched enemy, with side shoots), `RipenSeeds`, `MarkGreatSeed`, `DropSeed` (its `MaxPerUse` counted for the cast its hit came from, so a late hit of an older cast spends that cast's Seeds and not the newest one's), `CastFromSeed`, and for Sap `AddStateToMinion` and `CollectFromMinions`.
 - **Standing rules:** `SeedVault`, `OldSeed`, `Volunteer`, `Rootstock`.
 - **Events:** `OnRunnerCrossed`, `OnSeedHop`, `OnMinionStateCollected`.
 - **Readings of this pass:** a runner is the straight segment between two Seeds, and an enemy within `Width` of it has crossed it; a pop is a Triggered area hit, so the nodes that answer a burst answer a pop.

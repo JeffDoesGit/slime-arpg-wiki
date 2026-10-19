@@ -37,7 +37,7 @@ When a monster dies it may leave a gem on the ground (see [Gems](gems.md)); the 
 ## Settled
 
 - Monsters are data. A new monster type is a new asset, not new code, once its soul exists.
-- The brain is server-only and can be switched off for testing (`Slime.Monster.Brain 0`).
+- The brain is server-only and can be switched off for testing (`Slime.Monster.Brain 0`); a change applies at once to every live field monster, so `1` wakes them again.
 - Ranges, scan interval and despawn delay are rows on the asset. Health, mana, defense and resistances are the monster's row in the `DT_MonsterStats` table, keyed by the asset's name, so balance is a spreadsheet edit ([Combat](combat.md)).
 
 ## Waiting on design

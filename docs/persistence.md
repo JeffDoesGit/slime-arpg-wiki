@@ -42,6 +42,12 @@ Per DS-2.1 §5, one `UCharacterRecord` per character holds:
   have logs a warning and that gem is not restored (E-2.233).
 - **Checkpoint** — the last zone entrance the pawn used, for respawn.
 
+**Dead characters under Hardcore.** The record's header carries `bDead`, written from `AMonsterCharacter::IsDead()` at every save
+(S-3.1). With `bHardcore` on, a player's death is permanent: `AMonsterCharacter::Respawn` refuses (`respawn refused (hardcore): this
+character is gone`, plus an owner-only `ClientHardcoreNotice`), and on the next login `UPersistenceSubsystem::MoveDeadRecordAside`
+renames a dead `Char_1.sav` to `Char_1.sav.dead-<UTC yyyyMMdd-HHmmss>` (renamed, never deleted; the `.bak` files stay) and the player
+starts a fresh character. With `bHardcore` off a dead record loads as before.
+
 Anything not in that list is not saved, because DS-2.1 does not name it: attack feel and movement
 tuning cvars, cooldown/mana state (session-only), party or trade state (unbuilt), and anything an
 `OPEN` GDD rule would need to define (e.g. a co-op shared-save question is D-7.1, still open, out

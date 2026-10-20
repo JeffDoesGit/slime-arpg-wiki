@@ -23,21 +23,13 @@ Killing a field monster earns experience for whoever landed the killing blow. Ea
 
 Every monster has a level (since E-2.160, provisional on the 2026-09-23 zone-level research note): the forest's corpses 1 and 2, the Beach 4 to 6, the Fields 9 and 10, the Jungle 13 and 14, the Pass 17 and 18, each elite two above its zone. The level sits in front of the monster's name on its plate. A kill pays its full reward while you are within 5 levels of the monster, above or below; past that the reward shrinks, 81 % at a gap of 6, then 62, 43, 24, and 5 % at 10 or more, never below 1 point. Soul fragments are never reduced by the gap. The log line of a reduced kill ends with `[level gap: monster L<n>, <paid> of <full> XP]`.
 
-## A level for each soul (E-2.223)
+## One character level again (E-2.239)
 
-Since E-2.223 there is no character level: each soul you own has its own level and its own experience, and your level is the level of the soul in your primary slot. Everything that reads your level reads that one: your health and mana, the points you can spend in that soul's webs, the level-gap rule above, the experience bar. Swap souls and your level, your maxima and your points change with the body; health and mana keep the fraction they had.
+On Jon's ruling of 2026-10-20 ("we decided to scrap individual soul levels. there is one character level which raises based off of xp, the level integer will still be shown on an equipped soul but once another soul is equipped the level transfers (as do levels for the passive/active tree)") the character has one level again, raised by experience as above. Your primary and secondary souls show that level on their orbs in the inventory; a soul in the bag shows no number. Equip another soul and the level stays: your health, mana and the points you can spend in that soul's webs come from the same level. What each soul's webs hold stays that soul's own (reading, Jon's to confirm): equipping the Corpse at level 14 gives it 13 active and 7 passive points to spend, whatever the Creepy took.
 
-- A kill pays the primary soul in full and the secondary soul half (rounded down, at least 1). A soul in the bag earns nothing.
-- A soul you have just acquired starts at half the level of your highest soul, rounded down, at least 1. Your first soul starts at 1.
-- With no primary soul you are level 1 and a kill banks nothing.
-- The death penalty is taken from the primary soul's experience.
-- The worn human has no level.
+The per-soul levels of E-2.223 (each soul its own level and experience, a new soul starting at half your best, the secondary earning half) are off: `Slime.SoulLevels` defaults to 0 and the code stays behind it at 1 until it is removed. The D-2.16 memo's section 3 and Jon's answers of 2026-10-12 are superseded by this ruling. A saved character holds one level, which is now simply the character's.
 
-It is provisional on the D-2.16 memo (its section 3 and Jon's answers in section 7) and sits behind `Slime.SoulLevels`; at 0 the game has the one character level of before. A saved character still holds one level, the primary soul's at the moment it was saved: after the host restarts, your other souls come back at half of it. Saving a level a soul is a change to the character record that waits on Jeff's review.
-
-For testers: `Slime.ShowSoulLevels` prints every soul's level; `Slime.ShowSoulLevels DA_Soul_Corpse 8` sets one first. `Slime.SetLevel` and `Slime.AddXP` act on the primary soul (the secondary takes its half of the XP); with no primary soul, `Slime.SetLevel` sets every owned soul.
-
-For engineers: `UProgressionComponent` keeps `SoulLevels`, one entry a soul, replicated to the owner only; `Level` and `XP` stay replicated to everyone and mirror the primary's entry, so every older reader of `GetLevel()` is unchanged. `SyncSoulLevels` runs on the authority on every soul slot change, for player pawns only: it gives a soul with no entry its start level and reloads the mirror when the primary changed. The rules are the pure `EvaluateStartLevel`, `EvaluateSecondaryShare` and `EvaluateAddXP`, held by `SandboxARPG.Progression.SoulLevels.*`.
+For engineers: `Level` is `ReplicatedUsing = OnRep_Level`, which broadcasts `OnSoulLevelsChanged`, as the authority does at every level change, so a joiner's inventory orbs follow a level-up. `GetSoulLevel` returns the character level while the switch is 0. Held by `SandboxARPG.Progression.SoulLevels.OffByDefault`.
 
 ## Dying
 

@@ -222,3 +222,10 @@ While a second soul is slotted, a small medal stands on the console's rim beside
 ## The gem bench screen (E-5.6)
 
 Opened at the placed bench in the town, never from the console: the same docked panel as the inventory, which it replaces while open. Escape closes it like any screen; so does walking more than four metres from the bench. See `docs/systems/gems.md`.
+
+## After the playtest of 2026-10-20 (E-2.243, E-2.253, E-2.238)
+
+- **No empty button beside the bag.** The console's options button, which showed no key and opened the options when clicked, is gone. The options are on the Escape menu.
+- **QUIT GAME** is a fifth line on the Escape menu, between Leave game and Return to game, and closes the game. A host with other players connected must click it twice within 3 seconds, since quitting drops everyone.
+- **T no longer opens anything.** Abilities are reached from the tree screen's ABILITIES strip ([soul webs](soul-webs.md)).
+- **An ability that arrives with your level** shows a toast naming it and its slot.

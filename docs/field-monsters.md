@@ -124,3 +124,7 @@ For engineers: `UMonsterLevels` (`Monsters/MonsterLevels.h`): `Evaluate` is the 
 A field Corpse now uses its soul's mechanic on you. The forest's first Corpses only claw, and the second claw leaves a Splinter on your plate that nothing pops. A Normal from the Beach on also charges: it winds up for 0.7 seconds with a red line on the ground, then rushes 500 uu and pops your Splinters as one hit. An Elite adds a thrown bone spear from range, which plants a Splinter, and a lash that slows (it does not pull a player: no monster's pull does). The Beach lair's Elite also plants a bone totem that shoots you. No monster holds any node past each ability's Unlock, and a Normal carries no control, as before (D-2.18).
 
 Known from the first proof runs: this makes Corpse packs much more dangerous than before (four level 10 Normals took 35 to 50 health a second from a level 25 player with no gems), and Splinters are counted per attacker, so two Corpses can show six on a plate that reads "of 3". The numbers wait on Jon's play. The kits are `Corpse`, `CorpseElite`, `CorpseLair` and `CorpseTutorial` in `Data/Authoring/Souls/monsters.json`.
+
+## Corpses never block (E-2.247, 2026-10-20)
+
+A dead monster or player no longer blocks anyone, on any machine. Before this fix, a body turned its collision off on the server alone, so a joiner still bumped into it. A knockback or a dash ending on a corpse also leaves it passable.

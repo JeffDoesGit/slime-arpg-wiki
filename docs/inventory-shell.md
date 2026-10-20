@@ -41,3 +41,9 @@ A right-click on a bag cell sends the same request its drag would (E-2.86): a so
 ## Jon's first look fixes (E-2.190)
 
 *Built 2026-10-06.* In the themed bag a gem's cell is a dark well with a one-pixel line in the gem's rarity colour; before, the line's colour filled the whole cell behind the stone (white for a common gem). The themed soul slots take drags again: a soul dragged from the bag lands on the primary, secondary or worn slot (the worn slot still takes only a cosmetic soul), a slot's orb dragged into the bag unequips it, and the primary's orb dragged onto the secondary slot, or the other way, swaps the two souls; a right-click still equips the primary and a Shift-right-click the secondary. A soul in the secondary slot now leaves the bag, as the primary's does. The X key (rebindable, "Swap souls" on the options page) swaps the primary and secondary souls in the field: the body, moves and stats follow the primary as on any equip, the server decides, and `Slime.SoulSwapCooldown` is the wait between swaps (0 today). Provisional on the D-2.17 memo (register row D-2.17). For engineers: `USoulSlotWidget::BuildThemed` sets the widget `Visible` so Slate routes presses and drops to it; `USoulComponent::SwapSouls`, `RequestSwapSouls`, `ServerRequestSwapSouls`; `Slime.SwapSouls` and `Slime.DragTo` for a keyboard-free check.
+
+## A full bag, fragments and duplicate souls (E-2.241, E-2.249, 2026-10-20)
+
+- **A full bag refuses a pickup and says so.** A soul or a fragment you walk over with no free cell stays on the ground, and the notice line reads "Inventory full". Gems already worked this way.
+- **Fragments read right.** A soul being assembled shows its count until the third fragment; then the soul appears, and the dimmed "(0/3)" cell that used to stay behind is gone.
+- **A second copy of a soul stays in the bag.** Taking a soul off, swapping or moving it back could merge two copies into one; each copy now keeps its own cell.

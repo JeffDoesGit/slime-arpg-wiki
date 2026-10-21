@@ -30,6 +30,7 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 | [Kit placed things](kit-placed-things.md) | Pools, lines, seeds and decoys left on the ground: one store, pulses, bursts, ripeness, budgets, ground marks | first pass, provisional; flat placeholder shapes |
 | [Kit minions and monsters](kit-minions.md) | Minions, taunt, lure and entrance, how a monster picks between moves, the ten souls as field monsters | first pass, provisional on the minions study; no stances, no revive |
 | [Kit mechanics](kit-mechanics.md) | The ten bespoke mechanics: Plague, Static arc, Stoke, Swallow, Faultlines, Seeds, Stone Time, the Riddle ledger, Remains, Bewitch | first pass, provisional; each reads its soul's draft |
+| [Builds and the launcher](builds-and-launcher.md) | How every push to `main` becomes a build, and the launcher on your PC that fetches the newest one and runs it with your saves outside the build | launcher built and run once against a hand-made release; the workflow drafted, no runner yet; DS-0.11 open (Jeff) |
 
 ## Things that are true everywhere
 

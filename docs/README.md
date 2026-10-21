@@ -8,6 +8,7 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 
 | System | What it is | State |
 |---|---|---|
+| [Monster catalogue](monster-catalogue.md) | Every rigged body in the repository, its clips, and the codex line it draws on; generated from `Data/Authoring/monster-catalogue.csv` | 69 bodies, 13 in game; thumbnails owed |
 | [The monster you play](player-pawn.md) | Your character in the world: how it moves, what it looks like before and after wearing a soul | playable, placeholder look; click, keys and pad; cursor lands on the floor only; occluders fade; sphere colour per player |
 | [Stats](attribute-set.md) | Health, mana, defense, speed: the numbers on your monster | health and mana derived from level and souls; defense and speed still zero |
 | [Level and growth](progression.md) | Your character level, experience, regeneration, and the skill tree you spend points in | level, XP and regen in place; tree screen and allocation in place, numeric nodes work, verb nodes display only; all provisional on the stats and progression decisions |

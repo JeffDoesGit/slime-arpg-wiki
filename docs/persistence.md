@@ -6,8 +6,8 @@
 
 `UPersistenceSubsystem`, a `UGameInstanceSubsystem` in
 `Source/SandboxARPG/Server/Persistence/`, saves and loads one `UCharacterRecord` per player,
-keyed by the validated Steam ID (contract C-7) when one exists, or a stable per-machine dev key
-otherwise. It never runs on a client: every read and write happens on the authority, on
+keyed by the validated Steam ID (contract C-7) when one exists, or a dev key made on the
+player's own machine otherwise. It never runs on a client: every read and write happens on the authority, on
 `PostLogin`, `Logout`, the autosave timer, and whenever a component that owns saved state fires
 `CharacterPersistenceEvents::OnDirty()`.
 
@@ -23,6 +23,17 @@ exists at all (a headless test) does it fall back to `Controller->GetName()`. Ei
 string is cleaned to `[A-Za-z0-9_-]` so it is a usable directory name. `bIsValidatedSteamId` on the resolved key records which path was
 taken, and every save/load log line names it, so a dev-key record is never mistaken for a real
 one.
+
+## Where the files are
+
+`FPaths::ProjectSavedDir()/SaveGames/Characters/<Key>/` holds `Account.sav` and `Char_1.sav`, each
+with its `.tmp` while a write runs and up to `AutosaveBackupCount` `.bak1..N`. Only the host's
+process writes them. The subsystem logs the folder once at start (`Persistence: records live
+under '...'`). For a packaged Development build the saved folder is inside the build's own
+folder, so every new package would start from nothing; the playtest host starts the build with
+the engine's `-SaveToUserDir` switch, which puts the whole saved folder under
+`%LOCALAPPDATA%/SandboxARPG/Saved` and so outside the build. The path the code asks for is
+unchanged.
 
 ## What is saved
 
@@ -93,7 +104,23 @@ engine's own `Super::PostLogin`, so the record must already be loaded into a pen
 then). `HandleStartingNewPlayer_Implementation` calls `ApplyToPawn` right after
 `Super::HandleStartingNewPlayer_Implementation` returns, once the pawn exists. A key with no file
 yet gets a fresh, empty record and is logged as such — there is no error path for "no record",
-only for a record this build cannot read.
+only for a record this build cannot read. What a login finds at the path decides what happens
+(`UPersistenceSubsystem::OpenCharacterRecordAtLogin`, Jeff's split of 2026-10-12, E-2.212):
+
+- **No file:** a new player, a fresh record.
+- **Unreadable** (no engine save game tag, or not the record class): the file is renamed
+  `<file>.refused-<yyyymmdd-hhmmss>` (UTC) by `RecordFileIO::MoveAside`, one warning line, and the
+  player starts fresh. Before this the fresh character's saves overwrote it. The tag check
+  (`RecordFileIO::HasSaveGameTag`) also keeps a damaged file away from
+  `UGameplayStatics::LoadGameFromMemory`, which takes a buffer without the tag for a save from
+  before the header existed and ended the host's process on a text file.
+- **A newer build's record** (DS-5.1 section 5.2 rule 4): left exactly as it is, not moved and
+  not overwritten. The player is never tracked, so no autosave, event or logout writes for them;
+  a remote player is sent back to their menu on the next tick (`GameSession->KickPlayer`; their
+  `USessionSubsystem` reports the lost connection, the S-2.2 failure state), and the host's own
+  player, who cannot be sent anywhere, plays unsaved. Beside that, the one function every
+  character save goes through (`WriteCharacterRecord`) reads the file already at the path and
+  refuses to write over a newer one, whatever the caller believes.
 
 ### The Unlocks bug (fixed before merge)
 
@@ -130,6 +157,9 @@ against records this session happened to write.
   answered for souls (unlocks are per character: `Souls.Unlocks` lives in `Char_<N>.sav`, the
   per-character reading of DS-2.1 §5.3) but the record format
   itself does not yet branch on multiple character slots.
+- The soul web ranks (`USoulWebComponent`) are not in the record: the webs are provisional
+  (`soul webs` in `docs/provisional.md`) and `CLAUDE.md` 1.9 keeps provisional code from writing
+  persistent data, so a returning player's points are unspent again (roadmap E-2.212).
 - Session-only state (cooldowns, buffs, current zone beyond the last-used checkpoint) is
   deliberately not saved — per `CLAUDE.md` 1.9, nothing provisional writes persistent data, and
   none of this work rests on a `PROVISIONAL` marker for that reason: every field saved traces to a
@@ -137,6 +167,8 @@ against records this session happened to write.
 
 ## Tests
 
-Five headless automation tests under `SandboxARPG.Server.Records.*`: `RoundTrip`, `BackupRotation`,
-`FailedWriteLeavesPriorUntouched`, `VersionMismatchRefused`, `Migrate`. All green alongside the
+Seven headless automation tests under `SandboxARPG.Server.Records.*`: `RoundTrip`, `BackupRotation`,
+`FailedWriteLeavesPriorUntouched`, `NewerRecordLeftUntouched` (an older reader leaves a newer
+record byte-identical after a save cycle), `RefusedRecordKeptAside`, `VersionMismatchRefused`,
+`Migrate`. All green alongside the
 full `SandboxARPG` suite (92/92, 0 failures) after the Unlocks fix and rebuild.

@@ -25,7 +25,7 @@ You have two soul slots and a bag.
 
 - The **primary slot** is the soul you are. Put a soul there and your body changes on every machine in the game.
 - The **secondary slot** changes nothing you can see. Its one job so far is stat growth: the soul in it adds its per-level health and mana growth in full, the same as the primary ([Level and growth](progression.md)). The design memo behind it (D-4.2) says it will also open that soul's passive tree, once trees exist.
-- The **bag** holds every soul you own but are not wearing. How many it can hold is still open.
+- The **bag** holds every soul you own but are not wearing, one cell a soul with its copies counted (E-2.251). There is no limit: a soul is never lost or displaced by a carrying limit (GDD 2.8), and none can be dropped on the ground.
 
 You move souls between the bag and the slots by dragging them on the [inventory screen](inventory-shell.md). Behind the scenes, dragging sends a request to the server: "equip this soul". The server checks and decides; your screen updates when the answer comes back. This is the same path a multiplayer client uses, so single player and multiplayer behave identically.
 

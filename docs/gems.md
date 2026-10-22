@@ -63,9 +63,9 @@ Stones: `Equipment/GemBaseTable.*` reads `DT_GemBases` (fifty rows named `<Colou
 
 ## A full bag (E-2.215)
 
-The bag has forty cells, shared by the souls you carry, souls you are still collecting fragments for, and gems. When every cell is taken, a gem you walk onto stays on the ground and a line tells you the bag is full; a gem cannot be taken out of a socket either until a cell is free. Before this a gem picked up with a full bag was kept but never shown, which looked as if it had been destroyed. Souls are never turned away. Forty is a placeholder: later items may take more than one cell. Since 2026-10-19 a gem you pick up still goes in when the bag is full if an empty socket of its colour waits for it and your option to auto-equip gems is on: it goes straight into that socket.
+The bag has forty cells for gems; the souls you carry sit above them, one cell a soul, and take nothing from them (E-2.251, GDD 2.8). When every gem cell is taken, a gem you walk onto stays on the ground and a line tells you the bag is full; a gem cannot be taken out of a socket either until a cell is free. Before this a gem picked up with a full bag was kept but never shown, which looked as if it had been destroyed. Souls are never turned away. Forty is a placeholder: later items may take more than one cell. Since 2026-10-19 a gem you pick up still goes in when the bag is full if an empty socket of its colour waits for it and your option to auto-equip gems is on: it goes straight into that socket.
 
-For engineers: `UGemEquipmentComponent::GrantGem` and `UnequipGem` ask `HasBagRoom` on the authority (`EvaluateBagHasRoom` over `GetBagCapacity`, the grid's rows times columns); a refusal calls the owner's `ClientBagFull`, throttled to one in two seconds. `RestoreGem` is never refused. The inventory grows its cell pools a row at a time when more is held than the grid has cells.
+For engineers: `UGemEquipmentComponent::GrantGem` and `UnequipGem` ask `HasBagRoom` on the authority (`EvaluateBagHasRoom` over `GetBagCapacity`, the grid's rows times columns, counting the gems alone); a refusal calls the owner's `ClientBagFull`, throttled to one in two seconds. `RestoreGem` is never refused. The inventory grows its cell pools a row at a time when more is held than the grid has cells.
 
 ## Picking a gem up (E-2.213)
 

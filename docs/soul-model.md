@@ -43,7 +43,7 @@ The town gate is shut until someone who owns that soul touches it (roadmap E-2.4
 
 ## Fragments
 
-Since E-2.7 field monsters drop pieces of their soul. When you land the killing blow on a Corpse or a Creepy there is a one-in-five chance (a placeholder row per monster, scaled by the host's Drop rates rule) that one fragment of that monster's soul goes to you. Fragments are a count, not an item: the bag shows a dimmed cell with "1/3" for a soul you are still assembling. On the third fragment the soul assembles by itself, wherever you are, and lands in the bag ready to wear. Fragments keep dropping after that, so a second copy assembles in time; what a duplicate soul is for is not decided. Bosses, when they exist, drop no fragments. Nothing here is saved between sessions.
+Since E-2.7 field monsters drop pieces of their soul. When you land the killing blow on a Corpse or a Creepy there is a one-in-five chance (a placeholder row per monster, scaled by the host's Drop rates rule) that one fragment of that monster's soul goes to you. Fragments are a count, not an item: the bag shows a dimmed cell with "1/3" for a soul you are still assembling. On the third fragment the soul assembles by itself, wherever you are, and lands in the bag ready to wear. Fragments keep dropping after that, so a second copy assembles in time; what a duplicate soul is for is not decided. Bosses, when they exist, drop no fragments. Nothing here is saved between sessions. Since E-2.255 (2026-10-21) you can drag a fragment cell out of the bag onto the ground: the whole row lies there as one pickup for 180 seconds, and whoever walks onto it counts the fragments toward their own copy (see [Inventory](inventory-shell.md), Dropping fragments).
 
 ## What is settled
 

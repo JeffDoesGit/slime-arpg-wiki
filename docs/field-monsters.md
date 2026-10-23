@@ -128,3 +128,7 @@ Known from the first proof runs: this makes Corpse packs much more dangerous tha
 ## Corpses never block (E-2.247, 2026-10-20)
 
 A dead monster or player no longer blocks anyone, on any machine. Before this fix, a body turned its collision off on the server alone, so a joiner still bumped into it. A knockback or a dash ending on a corpse also leaves it passable.
+
+## Camps and refills (CT-2.67, 2026-10-23)
+
+A spawner refills only when no living player stands within `RefillPlayerClearRange` (1200 uu) of it; a dead player waiting on the death screen no longer holds a camp. Each spawner reads only its own range, so camps placed nearer than the range hold each other: `populate_zones.py` now keeps a spot's spawners 2200 uu from every earlier spot's in Zones 2 to 4 (Fields 5 spots, Jungle 6, Pass 14). Packs there refill after 90 s and Elites after 180 s (placeholders); the Beach keeps its 1300 uu spots and 60 s refill. Dev commands: `Slime.Spawners`, `Slime.ClearSpawner`, `Slime.StandAtSpawner`.

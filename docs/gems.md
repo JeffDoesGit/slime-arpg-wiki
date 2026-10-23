@@ -107,3 +107,7 @@ Every click is a request the server checks: that you stand at the bench, hold th
 **A drop floats (E-2.228).** The stone stands upright facing the camera, `PickupStoneFloatRise` above the ground over a soft shadow, still a thing in the world that a body in front of it covers; its label stands above it. When a gem is taken, every machine sees a burst in the gem's colour at the spot and the stone fly into the picker. The research behind it: `Research Bank/2026-10-14-item-pickup-feedback-in-arpgs-research.md`.
 
 **With the inventory open (E-2.224)** a gem can still be clicked or taken with the pick-up key.
+
+## Whole numbers only (E-2.244, 2026-10-23)
+
+Every gem affix rolls, polishes, grinds and reads as a whole number (a point line) or a whole percent (a fraction line, a multiple of 0.01). One rule, `FCraftingRules::ValueIsPercent`, decides which for the roll, the polish and grind rounding and the text; `gen_affix_tiers.py` refuses a band step other than 1 or 0.01. The two regeneration lines now step by whole points (1 at tier I, 18 to 19 at tier X). A gem rolled before the rule keeps its stored value and shows and applies it rounded.

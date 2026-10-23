@@ -65,3 +65,7 @@ The left button is decided the moment you press it, in the pawn's own code; the 
 - **Whiffs:** a player's swing that reaches nobody says so in the log (`Hit: <pawn> swung '<move>' and reached nobody`).
 
 `Slime.LmbAttackMove 0` puts back the earlier behaviour (the Blueprint's click-to-move with an attack only over a monster's capsule). Settings: `ClickVolumeScale`, `ClickVolumeMinHalfWidth`, `ClickScreenPickPixels`, `LeftButtonApproachMargin`, `LeftButtonChaseLeash`, `WalkTapSeconds`, `ClickMarkerEffect` in `[/Script/SandboxARPG.HudLayoutSettings]`. Code: `AMonsterCharacter::PressLeftButton`, `ReleaseLeftButton`, `UpdateLeftButton` (run from the pawn's tick on the owning client, allocating nothing), `FindHostileUnderCursor`, `RefitClickVolume` (called by `USoulComponent::ApplyBody` on every body swap), the pure `ClickVolumeExtent` and `ShouldApproachForSwing` (tests `SandboxARPG.Player.LeftButton.*`). The research behind the rules: `Research Bank/2026-09-28-arpg-left-click-move-and-attack-research.md`.
+
+## The occlusion fade takes only what hides the pawn (E-2.252, 2026-10-23)
+
+The camera's sweep toward the pawn only finds candidates. A mesh fades only when a thin line from the camera to the pawn's capsule centre, or to 0.8 of its half height above it (`OcclusionTopSightShare`), passes through that mesh (`bOcclusionNeedsBlockedLine`). A faded mesh stays faintly visible at `OcclusionFadeOpacity` 0.15. So a well beside the player stays solid; one that covers the player's middle or top fades; one that covers only the feet does not.

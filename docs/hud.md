@@ -229,3 +229,7 @@ Opened at the placed bench in the town, never from the console: the same docked 
 - **QUIT GAME** is a fifth line on the Escape menu, between Leave game and Return to game, and closes the game. A host with other players connected must click it twice within 3 seconds, since quitting drops everyone.
 - **T no longer opens anything.** Abilities are reached from the tree screen's ABILITIES strip ([soul webs](soul-webs.md)).
 - **An ability that arrives with your level** shows a toast naming it and its slot.
+
+## Wells on the maps (E-2.250, 2026-10-23)
+
+The corner minimap and the Tab map draw each well (a checkpoint destination) as a small well picture, `T_Icon_Hud_Well`, named by `MinimapWellIcon` in the HUD settings at `MinimapWellIconSize` (20 px, scaled like the dots); the Tab map's legend shows it beside "Well (checkpoint)". With no icon set the old mark is drawn. The player's own dot is drawn over it.

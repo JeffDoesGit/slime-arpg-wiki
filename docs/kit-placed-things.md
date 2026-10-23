@@ -170,3 +170,7 @@ Things of one row standing close together can share their reach (`PlacedFireRule
 ## No rings since 2026-10-14 (CT-2.63)
 
 On Jon's ruling after the playtest of 2026-10-13 ("all abilities that have aoes shouldn't show their rings or margins/borders in their vfx") a placed thing and an aura are drawn as a soft fill that fades to nothing at the edge of its area, with no outline: the engine plane in `M_KitGroundMark`, its softness and an aura's opacity in `UHudLayoutSettings` (`GroundMarkSoftness`, `GroundMarkAuraOpacity`). `RingColour` stays in the rows and is read only while `bGroundMarkRings` is on, which brings every outline back. The Gyre's turning streaks went with the rings. An enemy's wind-up warning keeps its crisp red shape: it is a warning, not an effect. Blight Bloom is purple (`CloudBlight`, a violet hit burst).
+
+## Along a dash (2026-10-23)
+
+`Place` with `AlongDash` 1 lays one thing from where the user's last kit dash began to where the user stands, its `Length` the distance between them (a `Line` shape row). The Creepy's Trail of Rot lays `RotTrail` at each Pounce's end: the acid puddle's numbers (6 Poison a second, poisoning) on a line 1 m either side, 3 s, three at most. A Pounce cut short lays only what it ran.

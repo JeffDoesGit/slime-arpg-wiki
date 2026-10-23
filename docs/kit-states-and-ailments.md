@@ -134,3 +134,9 @@ State and ailment storage is on the wrapper ASC, beside the counts, the poison s
 - **`AddState` `Floor`.** A count rounds and adds one stack at least for any amount above 0; with `Floor` 1 the op adds whole stacks only and under one whole stack none.
 - **An ailment's cause.** `OnAilmentApplied` carries no ability (every op hears it); `HitAbilityIs` there reads the ability of the landed hit, the aura's touch or the placed thing that applied it.
 - **Renewing a life without a stack**: `ExtendState` with `Seconds` and `MaxSeconds` both the row's `Life`.
+
+## A tick knows its cause, a stack can hold a value (2026-10-23)
+
+- **`OnAilmentTick`.** Each ailment instance remembers the ability that applied it and whether a placed thing applied it. After each summed tick the applier's web is told once per cause the tick paid for, so `HitAbilityIs` and `CauseIsPlaced` read it. The Creepy's Acid Reflux restores 2 mana on every tick of the Poison Acid Spit's own hit applied; a bloom's or a puddle's Poison does not count. Two Acid Spit instances on one enemy still give 2 a tick: one summed tick a step.
+- **`AddState` `KeepValue`** makes each stack remember a number, here the whole value of the Poison a claw applied; `OncePerSwing` lets one swing add one stack however many enemies it touched. **`ApplyStateValues`** lands one ailment instance per remembered value at `Share` of it on the target (a copy: no lines a second time). The Creepy's Venom Sac (state `VenomSac`, V on the status row, up to 10, never runs out) fills on each Venom Rake claw that poisons and is emptied by the next Pounce landing, which puts 80 % of each charge on every enemy it hits.
+- **Hit and Run** (data): a Pounce landing adds a 2 s state per node held, +5 % and +20 % move speed (both held, 25 %), and wards that hold a stun or a freeze until the basic attack, Venom Rake or Rend in progress ends.

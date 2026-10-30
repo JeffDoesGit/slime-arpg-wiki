@@ -8,6 +8,7 @@ Playing together from the editor, host and join by console, the Sunday run sheet
 
 | System | What it is | State |
 |---|---|---|
+| [Bestiary](bestiary/README.md) | Every creature: its body front and side, the clips it plays with their lengths, its flavour | twelve pages, frames of 2026-10-28 |
 | [Monster catalogue](monster-catalogue.md) | Every rigged body in the repository, its clips, and the codex line it draws on; generated from `Data/Authoring/monster-catalogue.csv` | 69 bodies, 13 in game; thumbnails owed |
 | [The monster you play](player-pawn.md) | Your character in the world: how it moves, what it looks like before and after wearing a soul | playable, placeholder look; click, keys and pad; cursor lands on the floor only; occluders fade; sphere colour per player |
 | [Stats](attribute-set.md) | Health, mana, defense, speed: the numbers on your monster | health and mana derived from level and souls; defense and speed still zero |

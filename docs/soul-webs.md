@@ -240,3 +240,27 @@ Three abilities are shared and bend to each build through their fork: Grave Clut
 **What is rough.** The totem is a stone obelisk from a pack already in the project, not bone, and a warded totem shows nothing. The spear and every shard are grey cones from the engine's basic shapes, stand-ins until the Corpse has art. A shard is in the air for about a fifth of a second, so it is seen rather than watched. The Splinter count under a plate is small. Every number is a placeholder. Jon played one build once on 2026-10-11; section 9 of the sheet lists each reading the build took and the rulings still open.
 
 **For engineers.** The sheet's draft is `Data/Authoring/Souls/corpse.json` (`"frame": 3`), its mapping `Data/Authoring/Souls/corpse.map.json`; the generator lays the three-ring template for a frame 3 draft (`template()` in `scripts/gen_soul_webs.py`) and the lint's design pass allows a three-build soul of one own ability a build and three shared (`scripts/check_soul_webs.py --design`). The engine words the Corpse added are schema sections 7.19 to 7.44 (`docs/design/soul-kit-schema-v2.md`): the shatter as a hit and its shards (`Kits/KitShards.*`), `WebNodeHeld`, the projectile end trigger, a placed thing that fires, is herded, warded, rooted, carries a count or stands as a body (`Kits/KitPlaced.*`), the yank onto a line, a flask-drink trigger, a held node disabling another (`FKitNodeRow::Disables`), and `FireShard`. Since the first play: a projectile's body is six fields on its cue row (`FKitCueRow::BodyMesh` and its neighbours, schema 7.45; `AMoveProjectile::InitBody`), the fan is `FKitShards::FanHalfAngle` and `FanDirection` with `AMoveProjectile::InitHeading`, the press memory is `FKitPressStore` (`Kits/Mechanics/KitMech3.h`), a hit carries its use in `FHitSpec::UseIndex` (stamped by `USoulWebComponent::StampUse`, read through `FKitOpContext::UseIndex()`), and the owning player's bar reads a use-counted cost from the owner-only `USoulWebComponent::UseViews`. Tests: `SandboxARPG.Kits.Corpse*`.
+
+## The nine trees, worded and built (E-2.262, 2026-10-27 to 2026-10-28)
+
+Every node of the nine v4 trees (CT-2.66) was rewritten to the word guide (`docs/design/word-guide.md`) with Jon's calls on the change lists; no number changed in that pass. The v2 adoption had left each chain pair's numbers on one half: the smaller node did what the top rank did and the larger did nothing. Each pair now gives rank 1 to the smaller half and the last rank to the larger, which reads as the total once both are held, as the Creepy's chains do. The Ogre's three builds, cut short at 8 to 40 points, take the inward nodes that make them legal again (Anvil and Bottomless 49 points, Quarryman 36).
+
+Then every written node with no mapping was given one, from the words that existed or from the new words on the [Kit mechanics](kit-mechanics.md) page, soul by soul and in three rounds. Root trees, full / partial / none:
+
+| Soul | Before | After |
+|---|---|---|
+| Creepy | 93 / 3 / 147 | 128 / 5 / 110 |
+| Corpse | 90 / 0 / 153 | 134 / 0 / 109 |
+| Ogre | 41 / 39 / 163 | 140 / 14 / 89 |
+| Oni | 81 / 20 / 142 | 152 / 4 / 87 |
+| Gargoyle | 39 / 49 / 155 | 137 / 20 / 86 |
+| Golem | 65 / 33 / 145 | 133 / 25 / 85 |
+| Eloko | 57 / 35 / 151 | 140 / 27 / 76 |
+| Treant | 49 / 37 / 157 | 139 / 24 / 80 |
+| Vampire | 54 / 31 / 158 | 124 / 27 / 92 |
+| Vetala | 61 / 24 / 158 | 135 / 15 / 93 |
+| All ten | 630 / 271 / 1529 | 1362 / 161 / 907 |
+
+Most of what is left as none are unwritten placeholders ("Not written yet."), about 880 of the 907; they wait on their text, not on the engine. A partial node does part of what its text says; what it lacks is in its sidecar note. A node still Not built says so on its card.
+
+For testers: a node's card still says Built or Not built, and the builds of the nine souls follow their v4 roads. Nothing of this was played on a joiner, and no node was tried on a Boss.

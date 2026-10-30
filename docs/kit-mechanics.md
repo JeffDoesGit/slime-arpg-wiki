@@ -111,6 +111,27 @@ One button. Pressed on a wild non-boss monster in range that holds enough of a s
 
 Three small files serve several souls. `Kits/Mechanics/KitAilmentVerbs.cpp`: an ailment instance's age and how long it has been carried, `MoveAilment`, `TapAilment`, the rule set `AilmentRules` ([states and ailments](kit-states-and-ailments.md)). `Kits/Mechanics/MinionVerbs.cpp`: `MinionRules`, `TendMinions`, `SpendPlaced` ([minions](kit-minions.md)). `Kits/Mechanics/KitMech3.*`: shatters counted per press (the conditions `SpentThisPressAtLeast`, `ShattersThisPressAtLeast`, `OncePerPress`, `MaxPerUse`), the rule sets `LeechRules`, `ThresholdRules` and `OverrideRules`, and the trigger `OnMissTaken`.
 
+## The words of Block E (E-2.262, 2026-10-27 to 2026-10-28)
+
+The nine trees of CT-2.66 asked for about 175 new engine words, schema sections 7.83 to 7.263 of `docs/design/soul-kit-schema-v2.md`, each named after the node text that asked for it and each with a test. They are general: a word built for one soul's node is open to every soul. Grouped by what they act on, one line each:
+
+- **Placed things** (`PlacedRules`): a thing's end as a place and a crumble that hurts; the first thing on an empty field; the third launched or broken in a window; a thing that grows as it sits; things dropped along a dash; more things a stack; lines between placed things; things laid apart, ahead, or as if they had sat; a thing that throws at random inside itself; a volley cast again from a placed thing (`VolleyRules`).
+- **States and meters** (`StateRules`): a meter worth a share of maximum health; a stat scaled from a state; a fading meter that heals; a buff that lasts until you walk; what a buff's Defense prevented; stacks that keep their applier; how fast a state drains and what it reaches, by its applier; a state set to a number, kept past its end, spent by a late amount, or on one pawn alone; a pile that cannot fall off; a flat per stack.
+- **States on stats that start at zero**: a state's per-stack Increased or More on such a stat (move speed, attack speed, area and the other fractions) now goes through the one rule a node's modifier already used (`FKitRules::AppendAttributeLine`), so Limescale slows and Sated speeds up where they did nothing.
+- **Hits** (`HitRules`): a hit that cannot miss, be dodged or blocked; no crit at all; a hit typed by name; a hit along the whole line; a path hit again; a circle hit that leaves out its own target; a bonus by the wind-up or the control a hit asks for; a hit rule that reads the target's hit clock.
+- **Poise and wind-ups**: a floor under Poise, a Poise that cannot miss, a hit in any wind-up told, the next wind-up out of a walk.
+- **Ailments**: an explosion, its reach, one that hurts its user and a chain of them (`ExplosionRules`); a kept instance, every Nth instance, one made again as it runs out, a hit as it runs out; a tick worth more with time left; a cap for one ability's instances; a tick that names its ailment; an instance passed to a neighbour; a Plague host's death told.
+- **Controls**: a control that stacks, that lasts longer, that holds a Boss, that is passed on by a dying pawn or matched to a count; a refused knockback sent back; a cleanse of your own controls; a target that ignores a control kind.
+- **Heals and flasks** (`HealRules`, `FlaskRules`): every heal of one ability scaled; no health on hit; a restore you keep a share of; a flask that pours past full, a flask step read as it pours, a flask that is gone.
+- **Consumes and refunds** (`ConsumeRules`): a consume of so much at most, counted from one enemy, paid as a crit or paying more under its rules; a refund of what is left or of the longest cooldown; a spend that leaves some, or only reads.
+- **Movement and bodies** (`BodyRules`, `DashRules`): walking through enemies and being told of each; enemies chained to your walk; a holder a charge cannot pass; a dash that stops at the first enemy, that a Boss stops, or that ends beside a marked enemy; a swing you walk through; a turn rate attribute.
+- **Chains, aftershocks and rings** (`ChainRules`, `AftershockRules`): a chain's end pull, a chain of shares of the first hit, an extra Static arc jump; aftershocks that come sooner and wider; a ring after other rings; the nearest few round a target.
+- **Allies, minions and taunts** (`AllyGuardRules`, `TauntRules`): a guard that takes a share of an ally's hits; a taunt that holds a Boss; a minion near you, alone, or young; controls and ailments handed to a minion; a sacrifice of the nearest minion and a regrowth that knows why it died.
+- **Attributes and gem lines** (`AttributeRules`): gem lines and bonuses of an attribute that do nothing, for a keystone's price.
+- **Uses and timing**: an ability that uses itself and cannot be pressed; every Nth time, on one target or every third cast; an interval of its own; a run of uses; a use aimed near the last; the last swing; a recast chain that waits for a hit.
+
+A channel's per-tick price now pays through the same mana-to-health conversion as the cast (`FKitLate::PayChannelTick`), so Blood Rider's Gyre spins.
+
 ## For testers
 
 `Slime.Curse.Show` prints every live curse. The rest is reached through the general commands: `Slime.Kit.Op <Op> ...` runs one op as a rank-1 node would, `Slime.State.Show` shows `Plagued`, `Stoked`, `BellyFull` and the other marker states, `Slime.Placed.Show` shows Faultlines, Seeds and Remains, `Slime.Minion.Show` shows Thralls and Saplings.

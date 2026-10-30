@@ -12,7 +12,7 @@ Players cannot hurt each other. Monsters do not hurt monsters.
 
 Every hit goes through one function on the server, the same one whether a player hits a monster or a monster hits a player. In order:
 
-1. **Roll.** A chance to hit, 95% to begin with, times one plus the attacker's accuracy lines, clamped between a floor and a cap. A miss does nothing.
+1. **Roll.** Since E-3.13 (2026-10-27) there is no accuracy and no chance to miss by default: a hit lands unless the target dodges it or the attacker is Blinded. The chance to land is (1 - Blind) x (1 - Dodge). Dodge is a chance on the target, capped at 75%, against every hit that rolls for itself (melee, projectile, area or spell, from a player or a monster; never an ailment tick or a share of another hit). Blind is a chance that the blinded attacker's hit misses (a 30% Blind misses 30% of its hits). Both are rolled pseudo-randomly, as Path of Exile rolls evasion: a counter per target (and per blinded attacker) adds the chance to land each hit and lets the hit through each time it passes 1, so 50% Dodge avoids exactly every other hit. A missed or dodged hit does nothing at all: no damage, no ailment, no on-hit effect. "Dodge" floats over the defender, "Miss" over the target of a blinded hit, seen by the player who was hit and by the player who swung. Monsters have no Dodge of their own unless their kit gives one.
 2. **Crit.** A chance to crit, 5% plus the attacker's critical-chance lines, for 150% damage plus its critical-damage lines.
 3. **Type.** Every hit has exactly one type: physical, fire, cold, lightning or poison. The number is the move's damage plus the attacker's flat lines (untyped, and of the hit's type), times its increased lines summed, times its more lines compounded (since E-3.9; every red gem was inert before it).
 4. **Mitigate.** Physical damage is reduced by defense on a ratio that never reaches zero (defense 100 halves it). Elemental damage is reduced by that element's resistance, capped at 75%, less the attacker's penetration of that type, never below zero.
@@ -46,7 +46,6 @@ Since the tree-verbs pass of 2026-09-27 (E-2.123, E-2.124) a landed hit can also
 - **Poison** (D-3.5): built as stacking instances since E-2.109; see [Progression](progression.md). **Control ailments** (D-3.7): the four the trees need since E-2.123, provisional on the memo; freeze, shock, blind and crowd-control resistance wait (E-2.127).
 - **The XP penalty on death** (D-2.3): in since E-2.31 as a 10% placeholder of your progress toward the next level; see [Progression](progression.md).
 - **The city as the respawn point**: the level's PlayerStart stands in until the city exists.
-- **Accuracy, evasion, crit and reduction lines** from accessories: fixed at their base values until the affix system applies them.
 - **Damage numbers and miss text on screen**: allowed, not built.
 - **The Creepy's death**: it has no death clip in its pack, so it holds its pose.
 - **Hit stop** (E-2.72): a landed hit freezes the attacker and the victim for the move's `HitStopSeconds` (a few hundredths of a second, capped at 0.12) and shakes the attacker's own camera. A victim mid-swing keeps its swing and only freezes; one outside a swing plays its hit-react clip and freezes on it. Cosmetic, after the server's hit, off with `Slime.AttackFeel 0`.

@@ -42,7 +42,7 @@ Two host-only console commands:
 
 - Base values and growth (D-2.2): built on the memo, provisional until decided.
 - Typed resistances, fire, cold, lightning, poison (D-3.1 memo recommends those four).
-- Evasion (D-3.6 memo). The attacker-side numbers landed with E-3.9 on the memo's steps: flat, increased and more damage (untyped and per type), critical chance and damage, accuracy, a penetration per resisted type; they are read on the server only and not replicated, and a negative value is clamped to zero like every other attribute.
+- Evasion (D-3.6 memo). The attacker-side numbers landed with E-3.9 on the memo's steps: flat, increased and more damage (untyped and per type), critical chance and damage, a penetration per resisted type (accuracy was one until E-3.13 removed it, 2026-10-27; Dodge, on the defender, is the one chance to avoid a hit, with Blind on the attacker); they are read on the server only and not replicated, and a negative value is clamped to zero like every other attribute.
 
 ## For engineers
 

@@ -94,6 +94,12 @@ Its lines start `SOUL_MONSTERS:`, with one `VERIFY` per table, per definition an
 
 Both scripts are run by a person or on a person's word, under lock (CLAUDE.md 5.3, 7.8).
 
+## Editing trees and affixes by hand: the tree editor and Tree Studio
+
+A soul's root tree can be edited in a browser instead of in its JSON. **The tree editor** (`tools/tree-editor/`, its own README) is a local page: `python tools/tree-editor/tree_file.py export <soul>` writes the tree as a `slime-tree/1` file, `python tools/tree-editor/serve.py` serves the editor on 127.0.0.1, and after the edit `tree_file.py import <soul> <file>` writes the names, texts, positions and links back into `Data/Authoring/Souls/<soul>.json`, patches numbers in the sidecar where only numbers changed, and logs every change to `tools/tree-editor/changes/` as patched, text only or needs behaviour. A change that needs behaviour is mapped to ops by hand, as any new node is.
+
+**Tree Studio** (E-0.14, `tools/tree-studio/`, its own README) is the same two editors, the tree map and its text page, plus an Affixes tab, wrapped as one page the three of us share: a claude.ai artifact with a shared store behind it, so Jeff and Duilio can edit too. `python tools/tree-studio/build.py` builds it from the repository: every tree file, the node budget, and the affix sheet with each line's bands at tiers I to X worked out the way `scripts/gen_affix_tiers.py` does them (Tier X min and max as fields where a line has a target); `node tools/tree-studio/test_affixes.js` checks the bands against `Data/DT_Affixes.csv` and must print `mismatches 0`. Nothing reaches the game from the page alone: a save there becomes an order, and a desktop session turns the order into the import, the generator, the lint, the table refill under lock and a pull request on Jon's word. The generator stays the authority over the bands. Republishing to the artifact's url, and sharing it with Jeff and Duilio as writers, are Jon's.
+
 ## How to add things
 
 - **A node.** Add it to the draft and give it a sidecar entry under `nodes`. Generate, lint, run `soul_webs.py`. No build is needed when only table rows changed; `Slime.Web.Reload` reads the tables again in a running game.

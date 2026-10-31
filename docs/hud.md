@@ -208,7 +208,7 @@ On the passive web a small card at the bottom right says how many passive points
 
 - **Soul web.** A node you can take right now is red, a node you cannot is grey, and a line is drawn only where it leads somewhere: lit between two nodes you hold, red toward a node you can take or have picked. Lines between locked nodes are gone.
 - **Statuses on name plates.** A monster's or another player's plate shows poison and control effects as small squares under its bar, the same squares your own row above the console uses: `P` with the stack count, and a letter with a draining strip for a slow, a stun, a weaken and the rest. The old yellow line of text is gone.
-- **Piles of drops.** When several gems lie on one spot their name labels stack upward with a small gap, so each can be read and clicked.
+- **Piles of drops.** When several gems lie on one spot their name labels stack upward with a small gap, so each can be read and clicked. Since 2026-10-31 a label the spread moved, or one with another stone between it and its own, draws a thin line in its rarity's colour down to its own stone ([Gems](gems.md)).
 - **Your own hit shape.** The game can draw the footprint of your own slower melee moves on the ground while they wind up. It is switched off (`bOwnHitShapeTelegraph`): the swing's own effect is meant to show the reach.
 
 ## A soul's level on its orb (E-2.206)
@@ -233,3 +233,7 @@ Opened at the placed bench in the town, never from the console: the same docked 
 ## Wells on the maps (E-2.250, 2026-10-23)
 
 The corner minimap and the Tab map draw each well (a checkpoint destination) as a small well picture, `T_Icon_Hud_Well`, named by `MinimapWellIcon` in the HUD settings at `MinimapWellIconSize` (20 px, scaled like the dots); the Tab map's legend shows it beside "Well (checkpoint)". With no icon set the old mark is drawn. The player's own dot is drawn over it.
+
+## The options page scrolls (2026-10-31)
+
+The options page had grown, row by row, until its key rows ran over the console and the mana orb. Its three sections (brightness, shake, rings and keys; Session; PvP) now sit in a scroll box between the page's title and "Previous menu" at its foot, at most 700 px tall at 1080 lines, so the page ends above the console; the mouse wheel or the bar on its right scrolls it. The page is 540 px wide (it was 560) so the scroll bar stays left of the minimap's zoom buttons. `UOptionsScreen::BuildThemed`, `OptionsPageScrollHeight`; provisional under the `ui look` register row.

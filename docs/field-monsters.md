@@ -87,11 +87,13 @@ No monster spawns where players arrive. Every teleport destination (a gate's lan
 
 | Place | Monsters (level) | Lair |
 |---|---|---|
-| Starting forest | Corpse, the lone one (1) and the pack (2) | none |
+| The starter cave, each new player's own | weak Corpse (1), three of them | Creepy boss, an Elite (2) |
 | Zone 1, the Beach | Creepy (2), Corpse (3) | Corpse Elite (4) |
 | Zone 2, the Fields | Gargoyle (4), Vampire (5), Ogre (5) | Vampire Elite (6) |
 | Zone 3, the Jungle | Eloko (6), Treant (7) | Treant Elite (8) |
 | Zone 4, the Pass | Vetala (8), Golem (9), Oni (9) | Golem Elite (10) |
+
+**The starter cave's monsters (E-2.268).** They stand in a level loaded for one player at a time, and spawn into that player's copy alone ([The starter cave](soul-cave.md)). `DA_Monster_Corpse_Cave` has the lone Corpse's numbers (45 life, damage scale 0.15, level 1) and a fragment chance of 0: it drops gems as any Normal, never a fragment. Its rows `Cave_Lone` (one) and `Cave_Pack` (two) never refill. `DA_Monster_Creepy_CaveBoss` is an Elite at level 2, 420 life, damage scale 0.06, wearing the Creepy's Elite kit, on `Cave_Boss`. A monster row may set `bGuaranteedSoul` (False on every other row): its kill then spawns one whole soul pickup of its soul at the corpse, in the monster's own level, instead of rolling a fragment; the cave boss is the one that does. Provisional on the D-2.29 memo and D-2.1.
 
 **How thick.** In Zones 1 to 4 the packs stand beside the path, placed by `scripts/editor/populate_zones.py` (pythonscript commandlet, editor closed; `POPULATE_ZONES_DRY=1` prints the plan and writes nothing). A pack is three monsters of two types: two of the zone's first type and one of its second (on the Beach one Corpse and two Creepies, since a Corpse hits harder). Packs stand 2,600 uu of path apart in Zones 1 to 3 and 3,200 in Zone 4, further than a monster's 900 uu detection plus both packs' reach, so a fight held in place does not wake the next pack. A killed pack monster returns after 180 s and an Elite after 300 s. Every fourth pack of Zones 2 to 4 has an Elite with it; the Beach has its Elite in the lair only. That is 9, 13, 19 and 39 field monsters in Zones 1 to 4. The numbers were 6 a pack, 2,000 uu and 30 s until the evening of 2026-10-05, when a level 10 player died on the Beach under twelve monsters of two packs that kept refilling. They are sized for one player of the zone's level; a group raises the host's Mob density rule. A chase still runs 4,000 uu, so a player who flees through the zone gathers it. Spacing and Elite frequency per zone are `TUNE` at the top of the script; pack size and refill time are the `Zone<N>_Pack_*` rows of `Data/DT_SpawnTable.csv`, which a real run writes into the table asset.
 
@@ -101,7 +103,7 @@ A part of the map that streams out of the world and back in keeps its monsters (
 
 ## For testers
 
-Place a `MonsterSpawner` in a level, set its Spawn Row to `Forest_Corpse` or `Forest_Creepy` (4 Corpses or 2 Creepies, refill 30 s), or one of the ten `Beach_*` rows of the beach blockout (CT-2.27: 2 to 4 each, the Corpse standing in for the beach's signature monster until it exists), Build Paths, play as a listen server. The Output Log line `MonsterSpawner ...: spawned N of M` says what happened; `refill in 30.0 s` follows a kill and `refilled` the return. Change `MobDensity` under `[/Script/SandboxARPG.SandboxServerRules]` in `Saved/Config/WindowsEditor/Game.ini` to see the count scale.
+Place a `MonsterSpawner` in a level, set its Spawn Row to `Zone1_Pack_Corpse` or `Zone1_Pack_Creepy` (one of each a Beach spot, refill 60 s; the forest's `Forest_*` rows went with the forest, CT-2.72), or one of the ten `Beach_*` rows of the beach blockout (CT-2.27: 2 to 4 each, the Corpse standing in for the beach's signature monster until it exists), Build Paths, play as a listen server. The Output Log line `MonsterSpawner ...: spawned N of M` says what happened; `refill in 30.0 s` follows a kill and `refilled` the return. Change `MobDensity` under `[/Script/SandboxARPG.SandboxServerRules]` in `Saved/Config/WindowsEditor/Game.ini` to see the count scale.
 
 `Slime.SpawnMonster DA_Monster_Corpse` or `Slime.SpawnMonster DA_Monster_Creepy` (optionally a count) spawns in front of you, host only. `Slime.SetAttribute Health 0 FieldMonster_0` kills the first one. `Slime.Monster.Brain 0` before spawning leaves monsters standing.
 
@@ -121,7 +123,7 @@ For engineers: `UMonsterLevels` (`Monsters/MonsterLevels.h`): `Evaluate` is the 
 
 ## The Corpse as a monster since its rework (CT-2.52, 2026-10-11)
 
-A field Corpse now uses its soul's mechanic on you. The forest's first Corpses only claw, and the second claw leaves a Splinter on your plate that nothing pops. A Normal from the Beach on also charges: it winds up for 0.7 seconds with a red line on the ground, then rushes 500 uu and pops your Splinters as one hit. An Elite adds a thrown bone spear from range, which plants a Splinter, and a lash that slows (it does not pull a player: no monster's pull does). The Beach lair's Elite also plants a bone totem that shoots you. No monster holds any node past each ability's Unlock, and a Normal carries no control, as before (D-2.18).
+A field Corpse now uses its soul's mechanic on you. The weakest Corpses, the starter cave's, only claw, and the second claw leaves a Splinter on your plate that nothing pops. A Normal from the Beach on also charges: it winds up for 0.7 seconds with a red line on the ground, then rushes 500 uu and pops your Splinters as one hit. An Elite adds a thrown bone spear from range, which plants a Splinter, and a lash that slows (it does not pull a player: no monster's pull does). The Beach lair's Elite also plants a bone totem that shoots you. No monster holds any node past each ability's Unlock, and a Normal carries no control, as before (D-2.18).
 
 Known from the first proof runs: this makes Corpse packs much more dangerous than before (four level 10 Normals took 35 to 50 health a second from a level 25 player with no gems), and Splinters are counted per attacker, so two Corpses can show six on a plate that reads "of 3". The numbers wait on Jon's play. The kits are `Corpse`, `CorpseElite`, `CorpseLair` and `CorpseTutorial` in `Data/Authoring/Souls/monsters.json`.
 

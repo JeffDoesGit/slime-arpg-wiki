@@ -16,7 +16,7 @@ What stands between the camera and you no longer hides you (since E-2.55). A tre
 
 In multiplayer every machine now paints every player's sphere the same colour (since E-2.79): the server picks one per player by arrival order, green, blue, orange, magenta, and replicates it. Before this the tint was applied on each machine at spawn, before a client's mesh had its material, which is why the 2026-09-15 playtest saw brown on one screen and green on another. The colour is only on the sphere; a worn soul's body is the same for everyone.
 
-A new character starts with an empty bag. The first soul lies on the ground outside the town gate of the starting forest; walk over it and it is yours to equip (see [Souls](soul-model.md)). A config list can still seed the bag for testing, and whether the slime ever starts with a soul is a design decision still open.
+A new character starts with an empty bag, as the slime, alone in its own starter cave; its first soul is the cave boss's, which drops whole and equips itself (see [The starter cave](soul-cave.md)). A config list can still seed the bag for testing, and whether the slime ever starts with a soul is a design decision still open.
 
 The mouse wheel zooms (since E-2.96). Scroll up and the camera comes in, scroll down and it pulls back, easing rather than jumping, between a closest and a farthest distance around the usual view (1500 to 4500 uu around the 3000 default; step, limits and speed are config). It is your own camera only, nothing about it is sent anywhere, and the wheel does nothing while the bag, the tree, the options or the debug menu is open, so a list can scroll without the world zooming under it. `Slime.Camera` still sets the arm outright, and the wheel carries on from wherever it left the arm.
 

@@ -22,7 +22,7 @@ A minion is an ordinary field monster with an **owner**. There is no separate mi
 | Op | What it does |
 |---|---|
 | `Summon` | Raises `Count` minions of a row round a spot, within the budget. Under `OnKill` it is a raise from a kill (a minion's own kill never fires it). |
-| `TakeOver` | A live non-Boss wild monster becomes the user's minion for `Duration` (0 until killed), at most `Count` taken at once. It leaves its spawner's count as if it had died, so the slot refills on the row's timer; its kill is paid to the user once, at the take-over. |
+| `TakeOver` | A live non-Boss wild monster becomes the user's minion for `Duration` (0 until killed), at most `Count` taken at once. It leaves its spawner's count as if it had died (since 2026-11-02 through the home the spawn set, `AFieldMonster::HomeSpawner`; before, the slot was looked for on the monster's owner, which is its AI controller, so it was never freed), so the slot refills on the row's timer; its kill is paid to the user once, at the take-over. |
 | `CommandMinions` | `Attack`: every minion fights the target for `MinionCommandSeconds` (6). `Return`: for `MinionReturnSeconds` (2) they take no target and walk back. `Leap`: each is set down by the aim (no arc is played) and lands `Share` of its first move's damage within `MinionLeapRadius` (160). |
 | `DetonateMinions` | Each minion bursts and dies; the hit is the minion's and Triggered. |
 | `SacrificeMinion` | One minion dies; the user gains health and mana. |

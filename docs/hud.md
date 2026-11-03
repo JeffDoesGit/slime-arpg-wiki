@@ -186,7 +186,7 @@ For engineers: `AMonsterHUD::CheckDropOcclusion` runs on the name plates' timer.
 
 Hiding a whole drop behind a player (the section above) made gems blink out and back as you ran across them. Since E-2.216 a dropped gem is two things. Its name is a label that is always drawn, over bodies too, so you can always see that something is there. Its stone, on its glow, lies flat on the ground in the world, so a body standing on it covers it the way it covers the floor, and it grows and shrinks with the camera's zoom. A click on the name or on the stone still walks you in and picks it up. The hiding of E-2.201 is gone from the code; the section above is kept as history. The sizes are placeholders.
 
-For engineers: `AGemPickup` carries a screen-space `IconWidget` (the label alone) and a world-space `StoneWidget` drawn once when the look is set, never per frame; each machine traces once to the ground under the drop to place it. The click reads the label's box from its widget and the stone's circle from `AGemPickup::GetStoneOnScreen`. Settings: `PickupStoneWorldSize`, `PickupStoneGroundRise`, `PickupIconRise` in `UInventoryLayoutSettings`.
+For engineers: `AGemPickup` carries a screen-space `IconWidget` (the label alone) and a world-space `StoneWidget` drawn once when the look is set, never per frame; each machine traces once to the ground under the drop to place it. The click reads the label's box from its widget and the stone's circle from `AGemPickup::GetStoneOnScreen`. Settings: `PickupStoneWorldSize`, `PickupStoneGroundRise`, `PickupIconRise` in `UInventoryLayoutSettings`. Since E-2.274 the stone stands facing the camera instead of lying flat, and since blast A (2026-11-04) the label is pinned by its bottom to the top of the stone as drawn, one screen size at every zoom (`PickupLabelGapAboveItem`); see [Gems](gems.md).
 
 ## The debug menu on a joiner (E-2.199)
 
@@ -237,3 +237,7 @@ The corner minimap and the Tab map draw each well (a checkpoint destination) as 
 ## The options page scrolls (2026-10-31)
 
 The options page had grown, row by row, until its key rows ran over the console and the mana orb. Its three sections (brightness, shake, rings and keys; Session; PvP) now sit in a scroll box between the page's title and "Previous menu" at its foot, at most 700 px tall at 1080 lines, so the page ends above the console; the mouse wheel or the bar on its right scrolls it. The page is 540 px wide (it was 560) so the scroll bar stays left of the minimap's zoom buttons. `UOptionsScreen::BuildThemed`, `OptionsPageScrollHeight`; provisional under the `ui look` register row.
+
+## The bar greys in town (E-2.275, 2026-11-03)
+
+While the pawn stands in a safe zone every ability slot on the bar shows its icon at a third and the unavailable colour (`UAbilitySlotWidget::SetInTown`, driven by `UPlayerHud`), so the bar says what the press would do: nothing (see the player pawn page). The look is provisional under `ui look`.

@@ -134,3 +134,13 @@ A dead monster or player no longer blocks anyone, on any machine. Before this fi
 ## Camps and refills (CT-2.67, 2026-10-23)
 
 A spawner refills only when no living player stands within `RefillPlayerClearRange` (1200 uu) of it; a dead player waiting on the death screen no longer holds a camp. Each spawner reads only its own range, so camps placed nearer than the range hold each other: `populate_zones.py` now keeps a spot's spawners 2200 uu from every earlier spot's in Zones 2 to 4 (Fields 5 spots, Jungle 6, Pass 14). Packs there refill after 90 s and Elites after 180 s (placeholders); the Beach keeps its 1300 uu spots and 60 s refill. Dev commands: `Slime.Spawners`, `Slime.ClearSpawner`, `Slime.StandAtSpawner`.
+
+## Turning at a rate (2026-11-02)
+
+A monster no longer snaps to face you. None of the packs ship a turn clip, so the turn is the body itself turning: while a monster walks it turns at `Slime.Monster.TurnRate` (220 degrees a second), and while it stands, between moves or inside a wind-up, it turns toward the target of its last move at the same rate. A move with a wind-up does not snap to its aim when it is pressed, so the wind-up is where the monster turns to you; a move with no wind-up still faces its aim at once. Players turn as before. `Slime.Monster.TurnRate 0` brings back the old snap and the player's rate.
+
+For engineers: `AFieldMonster::Tick` (authority, alive, awake, standing) turns the actor toward `FacingTarget`, the target `NoteMoveFired` keeps; `TurnRateOverride` on `AMonsterCharacter` hands the rate to `RefreshTurnRate` for the walk; `USoulComponent::ActivateMove` skips its turn to the aim when `AFieldMonster::UsesMonsterTurnRate` and the move's row has a `WindUp`.
+
+## A monster remembers its spawner (2026-11-01)
+
+A field monster keeps a pointer to the spawner that made it, set before it finishes spawning (`AFieldMonster::SetHomeSpawner`, `HomeSpawner`), because once its AI controller possesses it its owner is the controller, not the spawner. Two things read it. A spawn row with `bFirstKillDropsGem` (the starter cave's first pack, `Cave_FirstPack`) owes one gem: the first of its monsters to die drops at least one gem whatever the drop roll says (`FGemDrops::RollDrop` takes a minimum count). And a monster a soul web takes over (`TakeOver`, [Kit minions](kit-minions.md)) frees its slot in its spawner through it, so the spawner refills that slot as if the monster had died. `Slime.KillSpawner <Spawner> [Count]` kills a spawner's monsters through the ordinary hit, so their drops run.

@@ -1,6 +1,6 @@
 # The starter cave
 
-*Built in roadmap items E-2.266 (a copy of the cave for each new player), E-2.267 (the sewer ladder and the cave's death rules), E-2.268 (the cave's monsters) and CT-2.72 (the starting forest removed). Provisional on the D-2.29 memo, sections 3, 5, 6 and 7 (register row D-2.29): the rules it touches, one open map per server (GDD 5.7) and an opening every new character plays alone, wait on a decision-log row. The level is a grey box until CT-2.71 dresses it from Epic's Soul: Cave pack.*
+*Built in roadmap items E-2.266 (a copy of the cave for each new player), E-2.267 (the sewer ladder and the cave's death rules), E-2.268 (the cave's monsters) and CT-2.72 (the starting forest removed). Provisional on the D-2.29 memo, sections 3, 5, 6 and 7 (register row D-2.29): the rules it touches, one open map per server (GDD 5.7) and an opening every new character plays alone, wait on a decision-log row. The level is the Burrow, dressed from Epic's Soul: Cave pack (CT-2.71).*
 
 ## What you see
 

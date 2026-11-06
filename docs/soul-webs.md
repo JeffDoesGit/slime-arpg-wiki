@@ -264,3 +264,29 @@ Then every written node with no mapping was given one, from the words that exist
 Most of what is left as none are unwritten placeholders ("Not written yet."), about 880 of the 907; they wait on their text, not on the engine. A partial node does part of what its text says; what it lacks is in its sidecar note. A node still Not built says so on its card.
 
 For testers: a node's card still says Built or Not built, and the builds of the nine souls follow their v4 roads. Nothing of this was played on a joiner, and no node was tried on a Boss.
+
+## The partial nodes, passes 3 to 5 (2026-11-04 to 2026-11-06)
+
+Three passes took the nodes that did part of what their text says and built what each lacked, soul by soul, from audits of every partial node; the engine words are schema 7.276 to 7.341 ([kit mechanics](kit-mechanics.md) and the pages it names). `DT_KitNodes`, `DT_KitPlaced` and `DT_KitAbilities` were refilled after each pass and read back. Root trees, full / partial / none, before pass 3 and after pass 5:
+
+| Soul | Before | After |
+|---|---|---|
+| Creepy | 234 / 4 / 5 | 235 / 3 / 5 |
+| Corpse | 159 / 0 / 84 | 159 / 0 / 84 |
+| Ogre | 140 / 14 / 89 | 143 / 11 / 89 |
+| Oni | 152 / 4 / 87 | 154 / 2 / 87 |
+| Gargoyle | 137 / 20 / 86 | 144 / 13 / 86 |
+| Golem | 133 / 25 / 85 | 144 / 14 / 85 |
+| Eloko | 140 / 27 / 76 | 161 / 6 / 76 |
+| Treant | 139 / 24 / 80 | 157 / 6 / 80 |
+| Vampire | 124 / 27 / 92 | 147 / 4 / 92 |
+| Vetala | 135 / 15 / 93 | 148 / 2 / 93 |
+| All ten | 1493 / 160 / 777 | 1592 / 61 / 777 |
+
+Most of the 61 left wait on a ruling of Jon's, named in each node's sidecar note, not on the engine.
+
+Three changes reach how a node's numbers are resolved for every soul:
+
+- **An op override that multiplies lands last** (7.303). `ApplyOpOverrides` runs in two passes: the sets and adds in their order, then every multiply. Before, a multiply could land on a value a later set replaced. The Treant's Little Acorn with Walking Roots. No live number moved: the pairs of a set and an add on one param (the Gargoyle's Tombstone and Bell Tower, the Golem's Summit and Foothill, the Vetala's Neck Riddle and The Last Riddle) keep their order.
+- **Overrides that write a name** (7.310, 7.339). A row override (`FKitRowOverride::Name`) and a move override (`FKitOverride::Name`) may now set one name field, where both wrote numbers only; the generator writes `Name` for a name column and the lint checks the name. Every override row in `DT_KitNodes` carries `Name` now (`None` when unused). The Creepy's Pyre Bloom (the bloom's store as Burn) and the Vampire's Bloodhounds (bats that home on your Bleed).
+- **A client reads a health test** (7.285). The owning client's override rules now read a held health threshold, so the bar shows the cost the server charges under one (display only).

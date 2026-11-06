@@ -128,3 +128,13 @@ A player whose web holds entrance rules changes how its entrances behave; with n
 ## Bewitch's two presses (2026-10-05)
 
 Bewitch's take-over takes the nearest monster to the aim that may be taken (it holds the Tolls and is of a tier the user may take), so a monster without Tolls standing nearer the cursor no longer turns the press into a command. The web hears `OnBewitchTakeOver` for a take-over and `OnBewitchCommand` for a command, so a node can answer one and not the other (schema 7.15). Log line: `Bewitch: <user>'s press was the command (N Thrall(s))`.
+
+## Minion words of the partial nodes, passes 3 to 5 (2026-11-04 to 2026-11-06)
+
+The passes over the partial nodes (#605) asked for these; the rest are on [kit mechanics](kit-mechanics.md).
+
+- **An enemy whose last hit struck your minion** (7.280). Each pawn keeps the victim of its last landed hit (`UMonsterAbilitySystemComponent::GetLastLandedVictim`, written after the damage, ticks excepted); the condition `TargetLastHitOwnMinion` holds when that victim is one of the user's minions. A destroyed minion reads as none. The Eloko's Second Row.
+- **A planted minion's reach** (7.301). `MinionRules` `PlantedRange` sets how far a Planted minion fights from, the largest held rule winning (`FKitTreantRules::PlantedRange`, read in `AFieldMonster::PlantMinion`); its share is unchanged. The Treant's Bud Slingers: 9 m.
+- **A minion's owner flat read when it rises** (7.302). `MinionRules` `ReadAtSummon` reads the owner's flat damage once, when the minion is summoned, regrows or is taken over (`AFieldMonster::MinionOwnerFlatAtStart`), not at each hit. The Treant's Green Man. A flat gained later reaches a Sapling at its next regrowth.
+- **A call that brings minions up beside the user** (7.336). `CommandMinions` `Return` with `Delay` and `Radius` calls the minions within reach and, after the delay, brings them up round the user (`FKitMinions::CallUp`), tells `OnMinionArrived` for each as the calling ability's (event `Called`), then puts a Planted one back where it stood. `CollectFromMinions` on an event about one minion takes from it alone, with `HealthBelow` and `Share`. The Treant's Call the Grove (9 m, 0.5 s) and Prune: a Sapling under 30 % (Prune II: 50 %) is cut as it arrives and hands over twice its Sap. The Saplings keep fighting during the wait. With Feast held, Feast takes the Saplings at the press and none arrive.
+- **A meal of your own Thrall** (7.281). The Eloko's Devour can eat its own Thrall, and the meal ends the swing (`USoulComponent::InterruptMove`, on [kit mechanics](kit-mechanics.md)).

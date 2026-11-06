@@ -124,3 +124,13 @@ An ability row's `CueOnUseDelay` is a share of the swing's hit delay: at 0 the u
 ## A recast that cuts a run short (2026-10-23)
 
 `RecastMove` `Cut`: a recast of the same ability while its dash or leap still runs ends it at once, at the second press's aim held to the row's `DashDistance` from where the run began, and lands it there exactly once (the landing hit, `OnDashEnd`, the end of being untargetable). No clip, no cost, no new cooldown; the move's own commit window does not block it. The Creepy's Ambush Hole: dig in, press Pounce again to burst out early.
+
+## Move columns of the partial nodes, passes 3 to 5 (2026-11-04 to 2026-11-06)
+
+New columns on the move row (`Abilities/MoveStats.h`), each set by a node's override; every row holds the default, so nothing changes without one. The other words of these passes are on [kit mechanics](kit-mechanics.md).
+
+- **`ManaCostMaxFraction`** (7.291). The cost is that share of the user's maximum mana, in place of the row's, read where the move is resolved before mana cost reduction (`FKitRules::ManaCostFor`). The Vampire's Eternal Night: Veil of Night costs 40 % of maximum mana.
+- **`bPressEndsBuffInCooldown`** (7.293). With `bPressEndsBuff`, the press that ends a stance is taken inside the ability's cooldown (`HandleKitPhasePress`). The Golem's Controlled Demolition: recasting Dig In ends it at once. The Ogre's Callus is unchanged.
+- **`bDashBouncesReturn` and `DashMaxHitsPerEnemy`** (7.318). A dash's bounces may return to enemies already hit, or rebound off a lone one, up to that many hits on one enemy. The Vetala's Pinball: 5 at most.
+- **`bKnockbackAside`** (7.328) and **`ProjectileHomingAilment`** (7.339). A knockback across the hit's line, and a homing projectile that curves only toward the nearest enemy in its cone carrying an instance of that ailment of its shooter's, straight when none (`AMoveProjectile::PickHomingTarget`). The Ogre's Bowling and the Vampire's Bloodhounds. A row with no ailment homes as before.
+- **A share of an ability's timed buff** (7.295). `TimedModifiers` `ShareOfBuff`: each modifier's value is a share of the named ability's resolved `BuffModifiers` line of the same attribute and operation. The Golem's Stand Behind Me: allies within 3.5 m gain 30 % (II: 50 %) of the Defense and block Dig In grants, and they follow Dig In's row as nodes change it (Bedrock Pulpit's halving, Load-Bearing's 60 % block).

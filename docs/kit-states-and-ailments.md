@@ -4,11 +4,11 @@
 
 ## What you see
 
-Small discs under a pawn's name plate and, larger, above your own ability bar. Each disc is one state or one ailment: the row's colour, its letter, the stack or instance count beside it, and a ring that drains with its time. A meter on your own row is a thin bar with its amount. A plate shows the states others may see on that pawn and every ailment on it; your own row shows the states only you see (the self states) and your ailments. There are no icons yet: the coloured disc and letter are placeholders.
+Small discs under a pawn's name plate and, larger, above your own ability bar. Each disc is one state or one ailment: the row's colour, its letter, the stack or instance count beside it, and a ring that drains with its time. A meter on your own row is a thin bar with its amount. A plate shows the states others may see on that pawn and every ailment on it; your own row shows the states only you see (the self states), then (since 2026-11-04) the states other pawns placed on you, such as an enemy Corpse's Splinters, and your ailments, each ailment with the damage it still has to pay (see [HUD](hud.md)). There are no icons yet: the coloured disc and letter are placeholders.
 
 ## States
 
-A state is a row of `DT_KitStates` (71 rows today: Sunder, Splinter, Static, Tempo, Morsel, Gristle, Tolls, Coil, Stone Time and the rest). It is either a **count** (whole stacks) or a **meter** (a float pool).
+A state is a row of `DT_KitStates` (168 rows today: Sunder, Splinter, Static, Tempo, Morsel, Gristle, Tolls, Coil, Stone Time and the rest). It is either a **count** (whole stacks) or a **meter** (a float pool).
 
 - **Whose pile.** A row with `bOnSelf` is the holder's own, whoever added to it (Tempo, Morsel). A row with `bShared` is one pile for everyone who applies it (Sunder, the one armour shred). Any other state is counted per applier: my Splinters on a monster are mine, yours are yours.
 - **Cap.** `Cap` stacks or units; for a meter with `CapFractionOfMaxHealth` above 0, that fraction of the holder's maximum health instead. A gain never passes the cap. A meter that absorbs hits is also held to the `HealthPoolCap` rule row.
@@ -39,7 +39,7 @@ An ailment is a row of `DT_KitAilments`. Five today:
 
 | Op | What it does |
 |---|---|
-| `ApplyAilment` | One instance on the target: `ShareOfHit`, or `Flat` from any trigger. |
+| `ApplyAilment` | One instance on the target: `ShareOfHit`, or `Flat` from any trigger, or `FractionOfAmount` of an event's own amount (a final number). With `AnswersTriggered` it also answers a Triggered cause, such as a tick, under the chain depth bound alone. |
 | `ConsumeAilment` | Ends the user's instances on the target and deals what was left at once, as a final number; `Share`, a splash `Radius`, `HealShare`. |
 | `ExtendAilment` | Live instances run longer at the rate they had, so they pay more in all. |
 | `SpreadAilment` | Copies live instances to enemies near the target at `Share` of what is left, for the time left. A copy never copies. |
@@ -140,3 +140,13 @@ State and ailment storage is on the wrapper ASC, beside the counts, the poison s
 - **`OnAilmentTick`.** Each ailment instance remembers the ability that applied it and whether a placed thing applied it. After each summed tick the applier's web is told once per cause the tick paid for, so `HitAbilityIs` and `CauseIsPlaced` read it. The Creepy's Acid Reflux restores 2 mana on every tick of the Poison Acid Spit's own hit applied; a bloom's or a puddle's Poison does not count. Two Acid Spit instances on one enemy still give 2 a tick: one summed tick a step.
 - **`AddState` `KeepValue`** makes each stack remember a number, here the whole value of the Poison a claw applied; `OncePerSwing` lets one swing add one stack however many enemies it touched. **`ApplyStateValues`** lands one ailment instance per remembered value at `Share` of it on the target (a copy: no lines a second time). The Creepy's Venom Sac (state `VenomSac`, V on the status row, up to 10, never runs out) fills on each Venom Rake claw that poisons and is emptied by the next Pounce landing, which puts 80 % of each charge on every enemy it hits.
 - **Hit and Run** (data): a Pounce landing adds a 2 s state per node held, +5 % and +20 % move speed (both held, 25 %), and wards that hold a stun or a freeze until the basic attack, Venom Rake or Rend in progress ends.
+
+## Ailment rules of the unwritten nodes (2026-11-02 to 2026-11-04)
+
+The Creepy's unwritten nodes (#596, #599) asked for five ailment words, schema 7.265 to 7.272:
+
+- **A tick can take a bonus that asks for it** (7.266). A held `BonusDamage` rule whose conditions name `HitIsTick` or `HitIsForcedTick` now raises a tick: the tick lands as (its number + Flat) x (1 + Increased) x More, still with no crit and no weaken, and the damage over time lines stay as the instance was made. A rule that does not ask for a tick still leaves it alone. Clustered Rot uses it with `IncreasedPerAilingNearTarget` (on [kit mechanics](kit-mechanics.md)).
+- **More of the hit as the row's own ailment** (7.268). `MoveAilmentRules` gains `ShareAdd`: points added to the move row's own `AilmentShare` before the share rule is read (Many Stings: 5 points, so the Rake's 60 % becomes 65 % and the Spit's 120 % becomes 125 %). A rule's higher `Share` still takes the row's place, so beside After the Leap's 90 % the add is not felt.
+- **Worth more in its last seconds** (7.270). `AilmentRules` gains `IncreasedInLastSeconds` with `LastSeconds`, read as each instance is made and kept on it: each tick of that instance pays so much increased while it has `LastSeconds` or less left, by its own clock, so a fresh instance beside an old one is not raised. Dying Venom: 10 % in a Poison's last 2 seconds. Log: `Ailment: that X on Y pays N% increased in its last S s (AilmentRules IncreasedInLastSeconds)`.
+- **An ailment at a tick** (7.272). `ApplyAilment` with `AnswersTriggered` above 0 plants at a Triggered cause too (an `OnAilmentTick`); without it the origin rule refuses the plant, as before. `ShareOfHit` there is of the tick's amount. Hollow Brood: each Plague tick puts one Poison worth 25 % of that tick on its host.
+- **An ailment from an event's amount** (7.265). `ApplyAilment` `FractionOfAmount` takes that share of the event's own number, with only the ailment's own lines in it. Last Swarm uses it at the end of a Plague lineage ([kit mechanics](kit-mechanics.md), Plague).

@@ -128,7 +128,7 @@ Three working lines meet less in play than the test shows:
 | PoisonPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on PoisonPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
 | PoisonResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on PoisonResistance |
 | PoisonResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
-| ProjectileSpeed | inert | no attribute ProjectileSpeed; its mechanic is not built |
+| ProjectileSpeed | inert (last run) | since 2026-11-04 (#599) the attribute exists and every launch reads it (schema 7.274), and the test gained a probe (a projectile's launch speed); the line has not been re-measured in this table |
 | RangedDamage | inert | no attribute Damage; its mechanic is not built |
 | ReducedCriticalDamageTaken | inert | no attribute CritDamageTaken; its mechanic is not built |
 | ShockMagnitude | inert | no attribute ShockMagnitude; its mechanic is not built |

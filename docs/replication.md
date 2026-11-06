@@ -60,6 +60,10 @@ The wrapper ASC (`UMonsterAbilitySystemComponent`) runs `EGameplayEffectReplicat
 
 One thing a client does apply: its own walk speed. CharacterMovement predicts the owning client's walk (the only prediction, GDD 9.6), so that client writes `MaxWalkSpeed` from the same three replicated inputs as the authority: the `MoveSpeed` attribute (owner only), the slow's magnitude and the kit phase's channel scale (`AMonsterCharacter::RefreshWalkSpeed`, `EvaluateWritesWalkSpeed`). Another player's copy of a pawn is never written.
 
+## Which builds may talk to each other (S-2.1a)
+
+At login the server compares its network version with the client's and refuses a mismatch ("CheckVersion: Incompatible version"). The engine's version includes the engine's changelist, which is 0 on a server built from engine source and a real number on the installed engine, so a source-built dedicated server refused every launcher-built client of the same commit. The game module now replaces it at startup (`FProjectNetworkVersion` in `Source/SandboxARPG/Server/ProjectNetworkVersion.h`): a checksum of the project name, the stamped project version and the engine and game network protocol versions, with the changelist left out. Two builds of one commit match; builds of different commits do not, because the packaging workflow stamps the commit into the project version.
+
 ## What is settled and what is waiting
 
 - **Settled:** Iris is the driver; the tag cvar stays at 0; the fallback is real; filtering, prioritization and dormancy for this project's classes are audited and, at today's scale, need no override beyond the object-count buffer; per-property conditioning and the `OwnedSouls` FastArray (S-2.3b, above) are code-complete and headless-tested; the GAS push-model question is answered from source, no exception needed.

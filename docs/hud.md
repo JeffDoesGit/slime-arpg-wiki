@@ -229,6 +229,10 @@ While a second soul is slotted, a small medal stands on the console's rim beside
 
 Opened at the placed bench in the town, never from the console: the same docked panel as the inventory, which it replaces while open. Escape closes it like any screen; so does walking more than four metres from the bench. See `docs/systems/gems.md`.
 
+## The soul-keeper screen (CT-5.2)
+
+Opened at the placed soul-keeper block in the town, past the shrine from the bench: the bench's panel on the right with the inventory docked to its left, one row a soul with the three verbs under the list, the outcome card under the verbs (where it covers no row), and the shard counts at the foot. Escape, either panel's X or walking more than four metres from the block closes both. See `docs/systems/soul-keeper.md`.
+
 ## After the playtest of 2026-10-20 (E-2.243, E-2.253, E-2.238)
 
 - **No empty button beside the bag.** The console's options button, which showed no key and opened the options when clicked, is gone. The options are on the Escape menu.

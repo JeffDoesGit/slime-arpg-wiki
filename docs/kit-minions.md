@@ -103,15 +103,21 @@ Log lines: `Minion: <owner> raises 2 DA_Monster_Bonewalker (2 serving, 2.0 of 6 
 
 ## What is not built
 
-- Minion stances (the study's R6 is built without them); a planted minion "plants itself beside its target" only in that it plants where it stands; no thorn projectile, no ground ring for a planted cluster, the mode does not replicate.
+- Minion stances (the study's R6 is built without them); no thorn projectile, no ground ring for a planted cluster, the mode does not replicate.
 - Minion orders: move all to the aim after a delay, carry and plant a Seed, graft into one, kill on recall (Treant Transplant, Gleaners, Graft, Prune); Corpse One Big Friend, the share at a raise, Bone Tax.
 - A leap arc for a commanded leap: the minion is set down.
-- A minion crossing a distance line as an event (Short Leash), a verb that moves ailments from the user to a minion and "the healthiest minion" as a target (Scapegoat), a placed thing that absorbs a share (Soul Jar), a reach measured from the aim or from a placed thing.
+- A minion crossing a distance line as an event (Short Leash), a verb that moves ailments from the user to a minion and "the healthiest minion" as a target (Scapegoat), a reach measured from the aim or from a placed thing.
 - A plate for an entranced monster.
 - The vocabulary marks `MinionDamageIncreased` as not built: the read exists (`AFieldMonster::GetOutgoingDamageScale`), but no minion landed a hit in the proof runs.
 - A picker condition beyond weight, cooldown and range band (the review's finding asks for "cooldown, range band and condition"; no condition column exists).
 - The picking rule itself has no memo behind it; it is this pass's own.
 - Nothing here has been seen on screen by the team.
+
+## Minion words of Jon's node answers (2026-11-07)
+
+- **Planted beside its target** (7.360). `MinionMode` Planted with `BesideSeconds` and `BesideWithin`: a minion with a living target (its command target, else the enemy it fights) walks on with its own brain and is planted once within `BesideWithin` of it, edge to edge, or where it got to after `BesideSeconds`; with no target it is planted where it stands at once (`AFieldMonster::PlantMinionBeside`). Uprooting first cancels the walk. The Treant's Grove Roots: 1 m, 2 s. A regrown Sapling still comes up Planted at your feet. Log: `Minion: <minion> of <owner> walks to <pawn> to be planted beside it`.
+- **Bells that take a share of a redirect** (7.358). `RedirectDamage` with a placed row and `PlacedAbsorb`: the user's things of that row within reach share the moved part evenly with the minions, each up to its budget (counted apart from its health), then break with no burst and no event; what they could not take comes back to the user. The Eloko's Soul Jar: Bells within 8 m, 30 each. Its price needs neither a minion nor a Bell near.
+- **Every entrance one length** (7.357). `EntranceRules` `Seconds` sets the length of every Entrance the Eloko causes, the Peal's, Ring and Run's and a bell's repeat alike, before the per-Toll seconds and the cap (8). The Eloko's Deep Trance: with the cap and the base both 8, Tolls add nothing to its length.
 
 ## For engineers
 

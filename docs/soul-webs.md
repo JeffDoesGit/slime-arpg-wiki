@@ -290,3 +290,29 @@ Three changes reach how a node's numbers are resolved for every soul:
 - **An op override that multiplies lands last** (7.303). `ApplyOpOverrides` runs in two passes: the sets and adds in their order, then every multiply. Before, a multiply could land on a value a later set replaced. The Treant's Little Acorn with Walking Roots. No live number moved: the pairs of a set and an add on one param (the Gargoyle's Tombstone and Bell Tower, the Golem's Summit and Foothill, the Vetala's Neck Riddle and The Last Riddle) keep their order.
 - **Overrides that write a name** (7.310, 7.339). A row override (`FKitRowOverride::Name`) and a move override (`FKitOverride::Name`) may now set one name field, where both wrote numbers only; the generator writes `Name` for a name column and the lint checks the name. Every override row in `DT_KitNodes` carries `Name` now (`None` when unused). The Creepy's Pyre Bloom (the bloom's store as Burn) and the Vampire's Bloodhounds (bats that home on your Bleed).
 - **A client reads a health test** (7.285). The owning client's override rules now read a held health threshold, so the bar shows the cost the server charges under one (display only).
+
+## Jon's node answers (2026-11-07)
+
+Pass 5 left 64 questions for Jon on its review page. He did not mark it, so each took its recommended answer, marked `PROVISIONAL(soul webs): Jon, 2026-11-07, took the recommendation: "..."` in the code and in each node's sidecar note. Most answers kept the node as built; the rest asked for schema 7.342 to 7.361 ([kit mechanics](kit-mechanics.md)) or changed a node's data or text. `DT_KitNodes`, `DT_KitPlaced` (the column `bStruckByFlight`, the Statue's body, the Leftover's radius) and `DT_KitStates` (the column `PoolCapLift`) were refilled and read back. Root trees, full / partial / none, before and after:
+
+| Soul | Before | After |
+|---|---|---|
+| Creepy | 235 / 3 / 5 | 238 / 0 / 5 |
+| Corpse | 159 / 0 / 84 | 159 / 0 / 84 |
+| Ogre | 143 / 11 / 89 | 154 / 0 / 89 |
+| Oni | 154 / 2 / 87 | 156 / 0 / 87 |
+| Gargoyle | 144 / 13 / 86 | 156 / 1 / 86 |
+| Golem | 144 / 14 / 85 | 157 / 1 / 85 |
+| Eloko | 161 / 6 / 76 | 167 / 0 / 76 |
+| Treant | 157 / 6 / 80 | 163 / 0 / 80 |
+| Vampire | 147 / 4 / 92 | 151 / 0 / 92 |
+| Vetala | 148 / 2 / 93 | 150 / 0 / 93 |
+| All ten | 1592 / 61 / 777 | 1651 / 2 / 777 |
+
+The two partial nodes left need a call beyond their answer: the Gargoyle's Drop It (Crash Down pressed while Swoop runs, the carried enemies set down at the landing) and the Golem's Slow Clap (the Slam landing at the aim off a timer, and which wind-up wins with Where I Stand).
+
+Texts that changed with an answer: the Golem's Shield Arm, Counterweight and Bedrock's price; the Ogre's Stone Soup ("your Rubble"); the Creepy's Blasting Cap; the Vampire's Bloodhound (no see-through) and Puncture ("Your Bleed ignores 20% of Defense."); the Eloko's Stuck in the Mud; the Treant's Old Seed ("glows") and Fernlord (no "fully grown").
+
+Seen in games on the refilled tables (logs and frames under `D:/UnrealProjects/builds/blast-1107/C/`, 0 ensures): the Ogre's Chain Reaction (a Bowling roll launches the Rubble it passes), the Gargoyle's Statuary (a stone statue stands where a frozen enemy died; a Crash Down shatters it as its own hit), the Vampire's Deep Cellar (Vitae to 60 %), the Golem's Sand Fall and Patience of Stone (the basic 10 to 11.30, the Slam 24 to 31.92) and the Treant's Mycelium (Scatter Seeds and the vine leave from a Seed).
+
+**For engineers.** The answers' code is on `content/node-answers-2026-11-07` (five commits, then the refill); the ledger is `D:/UnrealProjects/builds/blast-1107/notes.md`, Block C. New tests: `SandboxARPG.Kits.Golem.*` (five new, `ThornsAShareOfTheHitBeforeDefense` extended), `GargoyleAnswers.*` (five) and `Meters.AnUncappedStatPassesTheHitsOwnFlat`, `OgreAnswers.*` (three), `VampireAnswers`, `ElokoAnswers`, `TreantAnswers.*` (three), `Minions.EntranceRulesFold` extended.

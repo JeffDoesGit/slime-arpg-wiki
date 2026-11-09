@@ -225,6 +225,8 @@ Every soul's orb on the inventory screen carries that soul's own level (E-2.223)
 
 While a second soul is slotted, a small medal stands on the console's rim beside the life orb: the secondary soul's orb in a gold ring with the bound swap key on a stone tab. A click swaps, as the key does. A swap starts a cooldown of 10 s (`SoulSwapCooldown` in `DT_CharacterRules`; `Slime.SoulSwapCooldown` at 0 or more overrides it for a dev); while it runs the medal is dim under the seconds left, and a swap asked for inside it shows "Soul swap ready in N s". The first time in a session the second slot fills, a gold line reads "Press X to swap to <Soul>" for `SwapHintSeconds`.
 
+The same line carries one more hint, once a session (2026-11-09): the first time a second copy of a soul lands in your bag, "A spare Creepy soul: the tree's gates and the soul-keeper by the shrine take spares", for the swap hint's seconds. It reads the owned-souls count each frame and counts the souls only when that changes; the words are a placeholder until Jon reads them (PROVISIONAL, ui look).
+
 ## The gem bench screen (E-5.6)
 
 Opened at the placed bench in the town, never from the console: the same docked panel as the inventory, which it replaces while open. Escape closes it like any screen; so does walking more than four metres from the bench. See `docs/systems/gems.md`.

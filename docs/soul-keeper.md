@@ -28,7 +28,7 @@ The keeper's verbs run at the keeper. A button on the screen, yours or a joiner'
 
 ## The screen
 
-One row a soul you hold, slotted souls first: its orb, its name, how many copies you hold ("x 6"), five pips that fill to its stage, the quirk line ("No quirk yet" until quirks exist, E-5.11) and how much essence of its kind you hold. The human, a body alone, is shown dim and cannot be chosen: it has no stage and no essence. Click a row to choose that soul; the three buttons under the list then read what they will do and what it costs, before you confirm:
+One row a soul you hold, slotted souls first: its orb, its name, how many copies you hold ("x 6"), five pips that fill to its stage, no quirk line until quirks exist (E-5.11; a "No quirk yet" line stood there for a day and Jon had it removed on 2026-11-09 as confusing) and how much essence of its kind you hold. The human, a body alone, is shown dim and cannot be chosen: it has no stage and no essence. Click a row to choose that soul; the three buttons under the list then read what they will do and what it costs, before you confirm:
 
 - **Stage II · 1 spare Creepy soul** buys the next stage with spare souls of that kind.
 - **Render · 1 spare Creepy soul · +3 essence** turns one spare into essence of its kind.

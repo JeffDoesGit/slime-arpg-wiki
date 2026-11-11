@@ -69,7 +69,7 @@ The left button is decided the moment you press it, in the pawn's own code; the 
 
 ## The occlusion fade takes only what hides the pawn (E-2.252, 2026-10-23)
 
-The camera's sweep toward the pawn only finds candidates. A mesh fades only when a thin line from the camera to the pawn's capsule centre, or to 0.8 of its half height above it (`OcclusionTopSightShare`), passes through that mesh (`bOcclusionNeedsBlockedLine`). A faded mesh stays faintly visible at `OcclusionFadeOpacity` 0.15. So a well beside the player stays solid; one that covers the player's middle or top fades; one that covers only the feet does not.
+The camera's sweep toward the pawn only finds candidates. A mesh fades only when a thin line from the camera to the pawn's capsule centre, or to 0.8 of its half height above it (`OcclusionTopSightShare`), passes through that mesh (`bOcclusionNeedsBlockedLine`). A faded mesh stays faintly visible at `OcclusionFadeOpacity` 0.15. So a well beside the player stays solid; one that covers the player's middle or top fades; one that covers only the feet does not. A faded mesh casts no shadow while it is faded and casts again once it is back (Jon, 2026-11-12: the shrine pillar's own shadow read as a black block under the faded column); `bOcclusionFadedCastsNoShadow` (on) in `[/Script/SandboxARPG.HudLayoutSettings]` turns this off, and the first fade of each mesh logs `OcclusionFade: <actor> fades, shadow off`.
 
 ## A low wall fades when it hides you (E-2.265, 2026-10-27)
 

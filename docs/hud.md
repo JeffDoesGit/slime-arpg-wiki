@@ -268,3 +268,10 @@ From the UI polish audit of 2026-11-12, on Jon's "blast blocks". None of it has 
 - **Tooltips.** Every tooltip that was the engine's grey box (the ability bar, the bag's souls and items, the soul slots, the keeper, the bench, the close buttons, the web's tabs, the swap medal, the shard icons, the death screen's town button) is now the gem card's dark ink inside a one-pixel line with 18 px body text wrapped at 340 (`FUiTheme::SetTip`, settings `UUiThemeSettings::Tip*`). The gem cards are unchanged.
 - **Minimap captions.** The region line (now in the bright text colour) and the session line sit on one dark plate. The session line no longer names the host: under the null subsystem that name was the host's Windows machine name, and no character name exists yet to show instead, so it reads "PvE · 1 player".
 - **Soul orbs.** The soul's level on its orb sits on the same dark disc as its stage numeral. In the bag the stage numeral is at the cell's top left and the copies count stays at the bottom right, so the two never meet.
+
+## Teaching lines and the life orb's warning (E-2.295, 2026-11-12)
+
+From the UX audit of 2026-11-12, on Jon's "blast blocks". Not yet seen in the running game; the words and every number are placeholders.
+
+- **Five teaching lines** show on the line under the toast (the swap hint's), each once a session, for the swap hint's seconds, never over another hint: in the starter cave "Click the ground to walk, or use W A S D", then "Click a monster to attack it; hold the button to keep hitting"; the first time life falls under half, "Press Q to drink your health flask"; the first time a drop lies on the ground, "Click a drop or press F to pick it up"; after the first level gained, "Press P to open the soul webs and spend your point". The keys are this machine's own bindings, so a rebinding shows. Nothing is written anywhere, so a returning player sees them again in each new session. `UHudLayoutSettings::bTeachingHints` turns them off.
+- **The life orb** glows in the theme's red over its ring for a quarter second when life falls, and pulses once a second while life is under 30 % (`UHudLayoutSettings::LifeOrb*`, `LowLife*`).

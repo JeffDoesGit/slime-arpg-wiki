@@ -164,3 +164,7 @@ the hit time, the commit window and the re-fire time are what they were.
   held first frame, since its end is not known at the press.
 - Known: a slowed clip is cut by locomotion when the swing's window ends, part way through its recovery. The log line
   `move clip ... shown from X s at xR` and `KitPhase: ... animates the wind-up of ...` say what the mesh was given.
+
+## Feel defaults: hit stop (E-2.295, 2026-11-12)
+
+`apply_hit_stop` in `scripts/gen_soul_webs.py` gives a kit row with `FlatDamage` or `ProjectileCount` above 0, no `ChannelTick` and no `HitStopSeconds` of its own the hit stop of its kind from `feel.json`'s `hitStopSeconds` (Basic 0.04, every other kind 0.05), or `heavyHitStopSeconds` (0.06) when its clip's length over its `PlayRate` is `heavySwingSeconds` (1.2) or more. A sidecar row that writes `HitStopSeconds` keeps it. After a regeneration the move table needs Jon's refill by `scripts/editor/soul_webs.py`. Placeholders.

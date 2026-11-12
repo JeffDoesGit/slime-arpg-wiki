@@ -99,3 +99,11 @@ What differs from before: a hit that pushes a pawn under Molt's threshold report
 For testers: `Slime.DeferHitReactions 0` puts every reaction back where it ran before.
 
 For engineers: `FHitReactionQueue` in `Abilities/HitReactionQueue.h` (`BeginHit`, `Push`, `EndHitAndDrain`, `DrainOrder`), held by `UMonsterAbilitySystemComponent`; `ApplyHit` opens a frame after its early refusals, `HandleHealthChanged` records while a frame is open, `FinishHit` is the one end of `ApplyHit` and runs the frame. One array reused for every frame, nothing allocated per hit once warm. Tests `SandboxARPG.Combat.HookQueue.*`. Provisional: register row `hook queue`; the order is this build's, the research note names none.
+
+## Hit stop on the souls' moves, shakes by size and a burst on a kill (E-2.295, 2026-11-12)
+
+From the UX audit of 2026-11-12, on Jon's "blast blocks". None of it has been seen in the running game yet; every number is a placeholder.
+
+- **Hit stop.** Every soul's damaging move froze 0: only the slime's tackle had a freeze. The kit generator now gives a damaging kit row a freeze when its sidecar sets none (`Data/Authoring/Souls/feel.json`): 0.04 s for a basic attack, 0.05 s for any other move, 0.06 s for a slow one (its swing at its play rate 1.2 s or longer). A channel's ticks keep 0. The numbers come from the old rows: the tackle's 0.05, the light strike's 0.04, the heavy rend's 0.06. The game reads them from `DT_MoveStats` only after Jon refills it from the CSV with `scripts/editor/soul_webs.py`.
+- **Shake by size.** The one hit shake now comes in three sizes picked by how much of the target's maximum life the hit took: under 10 % small (as before), 10 % or more medium (1.6 times), 25 % or more big (2.4 times). It shakes the player who landed the hit and, new, the player who took it; a kill shakes the killer at the big size. The server sends it to each player's own machine (`AMonsterCharacter::ClientHitShake`); the screen shake option and `Slime.AttackFeel` still turn it off.
+- **A burst on a kill.** A monster's death plays the shared `BloodSplash` cue where it fell, on every machine (`UHudLayoutSettings::KillBurstCue`; none turns it off). A player's death plays none. Elites and bosses use the same burst; a heavier one needs art.

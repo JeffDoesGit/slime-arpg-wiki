@@ -257,3 +257,14 @@ The options page had grown, row by row, until its key rows ran over the console 
 ## The bar greys in town (E-2.275, 2026-11-03)
 
 While the pawn stands in a safe zone every ability slot on the bar shows its icon at a third and the unavailable colour (`UAbilitySlotWidget::SetInTown`, driven by `UPlayerHud`), so the bar says what the press would do: nothing (see the player pawn page). The look is provisional under `ui look`.
+
+## Panels, menus and tooltips follow the theme (E-2.294, 2026-11-12)
+
+From the UI polish audit of 2026-11-12, on Jon's "blast blocks". None of it has been seen in the running game yet; every size is a placeholder.
+
+- **Escape menu.** The eight lines are 52 px capitals 16 apart (they were 68 and 22 and filled almost the whole view), over a darker dim (0.85), and the column stands in the middle of the space above the console, so "RETURN TO GAME" no longer lies on the hotbar. A line you press goes back to its unlit ink and drops a pixel until you let go. The numbers are `UHudLayoutSettings::EscapeMenu*`.
+- **Status squares.** A stack count sits inside its square's rim at the lower right on both rows, on a small dark plate (`StatusCountPlateAlpha`, `StatusCountPlatePad`), and the letter moves to the upper left to make room. From ten stacks up the count drops its "x": "12", not "x12".
+- **Right-hand panels.** The soul-keeper's panel ends 256 above the foot of the view (`UInventoryLayoutSettings::RightPanelFootClearance`), clear of the mana orb's label. The inventory is as tall as what is in it (at most 880). While the bag, the keeper or the bench is open the minimap and its captions are hidden, so the map no longer pokes out above the panel. The bench keeps its fixed 1000 and still covers the mana orb.
+- **Tooltips.** Every tooltip that was the engine's grey box (the ability bar, the bag's souls and items, the soul slots, the keeper, the bench, the close buttons, the web's tabs, the swap medal, the shard icons, the death screen's town button) is now the gem card's dark ink inside a one-pixel line with 18 px body text wrapped at 340 (`FUiTheme::SetTip`, settings `UUiThemeSettings::Tip*`). The gem cards are unchanged.
+- **Minimap captions.** The region line (now in the bright text colour) and the session line sit on one dark plate. The session line no longer names the host: under the null subsystem that name was the host's Windows machine name, and no character name exists yet to show instead, so it reads "PvE · 1 player".
+- **Soul orbs.** The soul's level on its orb sits on the same dark disc as its stage numeral. In the bag the stage numeral is at the cell's top left and the copies count stays at the bottom right, so the two never meet.

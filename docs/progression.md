@@ -15,7 +15,7 @@ Two things follow from the formula being recomputed rather than banked:
 - **Swapping a soul is free of history.** Slot a different soul at level 20 and your maximum recomputes as if that soul had been there all along. Nothing depends on the order you wore souls in.
 - **Swapping keeps your fraction.** At half health, swapping to a soul with more growth leaves you at half of the new maximum, not at a fixed number.
 
-A level change fills health and mana to the new maximum. Whether a level-up should heal is still open; filling is the placeholder.
+A level gained by experience shows a gold line on the toast card, "LEVEL 7 · 1 SKILL POINT" (E-2.293; a level set by a dev command or a soul swap shows none). A level change fills health and mana to the new maximum. Whether a level-up should heal is still open; filling is the placeholder.
 
 ## Experience
 

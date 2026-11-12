@@ -4,7 +4,7 @@
 
 ## What you see
 
-Two flask pictures on the ability bar, the red health flask left of slot 1 and the blue mana flask right of the RMB slot, each larger than the round Skills, Options and Arena buttons, with its key under it. The picture is the gauge: full, two thirds, one third or empty, one drink per third. Press the key or click the flask and it pours: your orb climbs over the next few seconds, the picture dims and shows the seconds left; when a drink cannot be paid for the flask reddens. Kill things and the counts go up. Walk into a town or bind a checkpoint well and both counts fill.
+Two flask pictures on the ability bar, the red health flask left of slot 1 and the blue mana flask right of the RMB slot, each larger than the round Skills, Options and Arena buttons, with its key under it. The picture is the gauge: full, two thirds, one third or empty, one drink per third. Press the key or click the flask and it pours: your orb climbs over the next few seconds, the picture dims and shows the seconds left; when a drink cannot be paid for the flask reddens and a line says so ("Health flask empty", "Mana flask empty", at most once every 1.2 s; E-2.293). A health drink plays the shared heal pulse on you; a mana drink has no effect of its own yet. The key under each flask and the pour's seconds are in the console's own face, the key in gold, since E-2.293. Kill things and the counts go up. Walk into a town or bind a checkpoint well and both counts fill.
 
 ## The rules
 

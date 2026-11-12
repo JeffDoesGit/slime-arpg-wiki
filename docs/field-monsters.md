@@ -227,7 +227,7 @@ A dead monster or player no longer blocks anyone, on any machine. Before this fi
 
 ## Camps and refills (CT-2.67, 2026-10-23)
 
-A spawner refills only when no living player stands within `RefillPlayerClearRange` (1200 uu) of it; a dead player waiting on the death screen no longer holds a camp. Each spawner reads only its own range, so camps placed nearer than the range hold each other: `populate_zones.py` now keeps a spot's spawners 2200 uu from every earlier spot's in Zones 2 to 4 (Fields 5 spots, Jungle 6, Pass 14). Packs there refill after 90 s and Elites after 180 s (placeholders); the Beach keeps its 1300 uu spots and 60 s refill. Dev commands: `Slime.Spawners`, `Slime.ClearSpawner`, `Slime.StandAtSpawner`.
+A spawner refills only when no living player stands within `RefillPlayerClearRange` (1200 uu) of it; a dead player waiting on the death screen no longer holds a camp. Each spawner reads only its own range, so camps placed nearer than the range hold each other: `populate_zones.py` now keeps a spot's spawners 2200 uu from every earlier spot's in Zones 2 to 4 (Fields 5 spots, Jungle 6, Pass 14). Packs there refill after 90 s and Elites after 180 s (placeholders); the Beach keeps its 1300 uu spots and 60 s refill. Since E-2.289 (Jon, 2026-11-12: "all 4 zones, spawner timers should be reduced by 20 seconds each") every row of the four fields in `Data/DT_SpawnTable.csv` is 20 s shorter than the numbers on this page: 30 s rows 10 s, 60 s 40 s, 90 s 70 s, 120 s 100 s, 180 s 160 s, 300 s 280 s (the cave's rows, 0, unchanged). Dev commands: `Slime.Spawners`, `Slime.ClearSpawner`, `Slime.StandAtSpawner`.
 
 ## Turning at a rate (2026-11-02)
 

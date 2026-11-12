@@ -22,7 +22,7 @@ Since 2026-10-26 (Jon's pass over every line) two more things hold. Every line w
 
 ## Which lines do something (E-3.11)
 
-The test `SandboxARPG.Affixes.EveryAffixProven` puts each of the 106 lines on a gem by itself, at the middle of its tier V band, equips it the way a player does, and measures the change the line names where the game reads it: a hit's number, misses or crits over a seeded run of hits, a vital, a timer, a move's cooldown or cost. Last run (2026-10-27, after E-3.13 removed Accuracy): **57 working, 49 inert, 0 broken.** A working line moved its measure the way its name says; an inert line names a stat the game does not have yet, so it rolls and shows but changes nothing until its mechanic is built.
+The test `SandboxARPG.Affixes.EveryAffixProven` puts each of the 106 lines on a gem by itself, at the middle of its tier V band, equips it the way a player does, and measures the change the line names where the game reads it: a hit's number, misses or crits over a seeded run of hits, a vital, a timer, a move's cooldown or cost. Last run (2026-11-12, E-3.14): **58 working, 48 inert, 0 broken** (57 and 49 on 2026-10-27, before ProjectileSpeed was measured working). Since E-3.14 the 48 inert families are parked: the sheet's `Rollable` column is False on each, and no drop, developer roll, Cut or Etching Needle draws them on a gem of any colour until their mechanic is built (`Slime.AffixParking`, provisional on D-3.8 G9). A gem that already carries one keeps it. The game reads the column once Jon refills `DT_Affixes` from the CSV; until then every row rolls as before. The proof test itself still measures all 106. A working line moved its measure the way its name says; an inert line names a stat the game does not have yet, so it rolls and shows but changes nothing until its mechanic is built.
 
 Three working lines meet less in play than the test shows:
 
@@ -128,7 +128,7 @@ Three working lines meet less in play than the test shows:
 | PoisonPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on PoisonPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
 | PoisonResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on PoisonResistance |
 | PoisonResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
-| ProjectileSpeed | inert (last run) | since 2026-11-04 (#599) the attribute exists and every launch reads it (schema 7.274), and the test gained a probe (a projectile's launch speed); the line has not been re-measured in this table |
+| ProjectileSpeed | working | a projectile's launch speed: 1000 without, 1110 with a line of 0.115 on ProjectileSpeed (re-measured 2026-11-12; the attribute exists since #599) |
 | RangedDamage | inert | no attribute Damage; its mechanic is not built |
 | ReducedCriticalDamageTaken | inert | no attribute CritDamageTaken; its mechanic is not built |
 | ShockMagnitude | inert | no attribute ShockMagnitude; its mechanic is not built |

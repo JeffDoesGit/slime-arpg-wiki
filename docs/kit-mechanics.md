@@ -224,6 +224,18 @@ Jon's answers to the 64 questions of pass 5's review (he took every recommendati
 
 **What reaches other souls.** `OnControlEndedOnSelf` named `Knockback` is now told for every pawn whose web listens; `OnAftershockEnd` is told for every `Hit` op with an Aftershock; `HitAtDashEnd` holds inside any soul's `OnDashEnd`. Only the souls named above read them. Everything else is named by one soul.
 
+## The words of conversion (E-3.21, 2026-11-14)
+
+Provisional on the hit formula (`docs/decisions/D-3.6.md` section 11, Jon's okays of 2026-11-14), schema section 7.366. A node can now turn part of a hit into another damage type, or add some of it again as another type. No node carries these words yet: the tree nodes are mapped onto them in CT-2.80.
+
+- **Converted** (`BonusDamage` param `<From>To<To>Conversion`, for example `PhysicalToLightningConversion 0.5`): "50 % of the Physical damage of your Toll strikes is converted to Lightning". The share leaves its type at the hit's base, before any increased line, and is scaled only by the lines of its new type (and the untyped and tag lines), and meets its new type's defence.
+- **As extra** (`BonusDamage` param `<From>AsExtra<To>`, for example `PhysicalAsExtraToxic 0.06`): "your hits gain 6 % of Physical damage as extra Toxic damage". The share is added as a new portion; the original keeps all of itself.
+- Both take the rule's conditions as any `BonusDamage` does, so "your melee hits", "your eruptions" or "while you stand in a bell's radius" are the conditions that already exist. On a `MinionRules` rule they convert the minion's hit ("your Thralls gain ..."). The soul's nodes convert first, then the gems (the attributes `PhysicalTo<Type>Conversion` and `PhysicalAsExtra<Type>`, which no gem line reaches yet); conversions out of one type past 100 % are scaled down to 100 % in proportion.
+- **Explosive** is a tag, not a type: "15 % increased explosive damage" is a `BonusDamage` `Increased` under `HitIsExplosion` (built before), and the new attribute `ExplosiveDamageIncreased` is the same line for a gem.
+- A rule under `HitDamageType` (for example "your Physical hits deal 10 % increased damage") now raises only the portion of that type when a hit is split, and on a split hit's own events `HitDamageType` holds for every type the hit carries.
+
+Not expressible yet: a conversion that grows per stack of a state (the Ogre's Bile, "1 % for each Morsel you hold"), and any conversion on thorns (the Gargoyle's Cold Iron): a thorns number is final when it is made.
+
 ## For testers
 
 `Slime.Curse.Show` prints every live curse. The rest is reached through the general commands: `Slime.Kit.Op <Op> ...` runs one op as a rank-1 node would, `Slime.State.Show` shows `Plagued`, `Stoked`, `BellyFull` and the other marker states, `Slime.Placed.Show` shows Faultlines, Seeds and Remains, `Slime.Minion.Show` shows Thralls and Saplings.

@@ -115,7 +115,7 @@ Place a `MonsterSpawner` in a level, set its Spawn Row to `Zone1_Pack_Corpse` or
 
 ## The level curve (E-2.169)
 
-A monster's level can set its numbers. One table, `DT_MonsterLevels`, says what each level from 1 to 60 multiplies: life grows 10% a level up to level 20 and 7% after, damage grows 5% a level, and a kill pays 10 + 5 x level experience. Two more rows say what an Elite and a Boss multiply on top (an Elite has three times the life, 1.3 times the damage and pays three times the experience).
+A monster's level can set its numbers. One table, `DT_MonsterLevels`, says what each level from 1 to 60 multiplies: life grows 10% a level up to level 20 and 7% after, damage grows 5% a level, and a kill pays 10 + 5 x level experience. Two more rows say what an Elite and a Boss multiply on top (an Elite has three times the life, 2.3 times the damage since E-2.300 (1.3 before) and pays three times the experience).
 
 A monster type opts in by giving its row a life and a damage scale for level 1. The game then works out its real numbers from its level. A row without those two numbers is used exactly as typed. Every monster type that stands in Zones 1 to 4 is on the curve: its life, damage and experience come from its level-1 base and its `Level` in `DT_MonsterStats` through `DT_MonsterLevels`, with the Elite row on top for a lair's Elite (a Golem has a base of 120 life, so 257 at level 9, and its Elite 849 at level 10). The two forest Corpses and the plain `DA_Monster_Corpse` have no base and keep the numbers typed on their rows.
 
@@ -214,6 +214,26 @@ For engineers: the kit is `ElokoElite` in `Data/Authoring/Souls/monsters.json`, 
 Provisional, Jon: "yes to scaling a monster's flat numbers by its damage scale". A monster's hits were already scaled: a Normal at damage scale 0.3 lands 30 % of its move's number. Some numbers were not, because they are written as a fixed amount rather than as a hit: the poison a Festering Shroud lays on entry (16), a Blight Bloom's stored poison (6 each), the Coil a Treant's vine wraps you in (12), what the Eloko's Great Bell pays for each Toll you carry (6), the stone the Gargoyle's Quarry spends (18 a second of Stone Time) and the thorns a dug-in Golem returns (8). A weak monster dealt them in full, so the Bell's reading was worth more than the Bell, and a Golem's thorns more than its own swing. Now each is multiplied by the monster's damage scale, as its hits are: a Golem at 0.44 returns 3.5 thorns, a Treant at 0.4 wraps you in a Coil worth 4.8. Players and their minions are unchanged.
 
 For engineers: `FMonsterMoveRules::ScaleFlat(Source, Flat)` (`Monsters/MonsterMoveRules.h`, pure `EvaluateFlatScale`) multiplies a number by `GetOutgoingDamageScale()` when the source is an `AFieldMonster` that is no minion, behind `Slime.MonsterFlatScale` (1). It is called where a fixed number becomes damage or an ailment's worth without going through `ApplyHit`'s attacker step: `ApplyAilment`'s `Flat`, `ConsumeState`'s `DamagePerStack` when paid final (an `AsHit` shatter is scaled in `ApplyHit`), the `Thorns` op's `Flat`, `ThornsHit`'s Thorns attribute, the reflected thorns in `UMonsterAbilitySystemComponent::ApplyHit`, a move row's `AilmentFlat` (`UKitAbility`, an aura's touch in `KitDeliveries.cpp`), a placed row's `AilmentFlat` and its stored instances (`KitPlaced.cpp`, `KitOpsExtra.cpp`'s carried store) and `GatherState`'s `DamagePerStack`. A share of a hit is never scaled again. Test `SandboxARPG.Monsters.FlatScale.AMonstersFixedNumbersTakeItsDamageScale`.
+
+## Monsters hit hard enough to matter (E-2.300, 2026-11-14)
+
+Provisional, Jon's go on the threat proposal (`builds/threat-1114/threat-proposal.md`, decisions 1, 2, 5, 6, 7 and 8; zone identities and level bands not in it). The soul monsters used to take 30 to 66 attacks to kill an on-level player and an Elite 15 to 30, so no fight asked anything of you. Now a bare on-level player dies to about 25 attacks of a Beach Normal, 20 in the Fields, 18 in the Jungle and 17 in the Pass, and to 7 to 9 of an Elite's. A Normal's hit takes a visible bite of the orb (4 to 6 %), an Elite's 11 to 14 %, and each lair Elite has one marked heavy hit worth a quarter to nearly a third of your health:
+
+| Lair | Elite | Heavy hit | Share of an on-level player | Wind-up and mark |
+|---|---|---|---|---|
+| Beach | Corpse Elite (4) | Marrow Rush | 25 % | 1.0 s, its 5 m line |
+| Fields | Vampire Elder (6) | Feast | 29 % | 1.1 s, its cone |
+| Fields | Gargoyle Sentinel (6) | Crash Down, then Quarry | 16 % and 19 % (35 % caught by both) | 0.7 s, the landing circle |
+| Jungle | Elder Treant (8) | Wring | 14 % a Coil you carry | 1.2 s, the 9 m circle round it |
+| Pass | Golem Warden (10) | Seismic Slam | 27 % | 1.0 s, the circle at the aim |
+
+The Elite's kit carries it, so the same Elite on a road pack has it too. Monsters crit as players do (5 %, x 1.5), so a heavy hit can land as 44 %. The Elder's Wring is the one hit no number here caps: it pays a fixed 10 a Coil at the monster's damage scale, which no monster block reaches (an engine row; see ROADMAP E-2.300), so a player carrying five Coils can lose two thirds of their health to it. Get the Coils off before it wrings.
+
+Any monster hit worth 10 % of an on-level player's health or more now winds up at least 0.7 s with its ground mark, whatever its row's number; before, only a row of 35 or more did. Hits of 20 % or more wind up 1.0 s. That reaches some Elite basics (11 to 13 %), which now pause before they land. A Boss keeps its own wind-ups.
+
+Each soul family now resists the types its lair suits, never above 0.50 and at most two types: the Beach Corpses Cold, the Gargoyle Lightning and Toxic, the Vampire Cold, the Eloko Lightning, the Treant Toxic and Cold, the Vetala Cold and Toxic, the Oni Fire and Lightning, the Golem Lightning and Toxic; an Elite resists 0.10 more than its Normal. The Ogre, the Creepy, the starter cave and the forest's tutorial Corpses resist nothing and hit as before.
+
+For engineers: a Normal and its Elite share one `LevelBaseDamageScale` in `Data/DT_MonsterStats.csv`; the Elite's extra is `Rarity_Elite` damage 2.3 (`scripts/gen_monster_levels.py`). The heavy floor is `FMonsterMoveRules::IsHeavyFor` (`Monsters/MonsterMoveRules.h`: `IsHeavyHit`, `OnLevelPlayerHealth`, `TakesHeavyRule`), read in `USoulWebComponent`'s resolve after the monster's block: one hit's `FlatDamage` x the monster's damage scale against the `MonsterHeavyHitHealthShare` row of `DT_CombatRules` (0.10) of `BaseHealth + HealthGrowth x (level - 1)` at the monster's own level; the `MonsterHeavyHitDamage` row is gone. Test `SandboxARPG.Monsters.MoveRules.HeavyIsAShareOfHealth`. The heavy hits and the 1.0 s and 1.2 s rungs are `FlatDamage` and `WindUp` overrides in `Data/Authoring/Souls/monsters.json`, each with its note. `python scripts/monster_ttk.py` prices each row by its own kit (attacks to die, top%). Every number is a placeholder.
 
 ## No move under its minimum range (2026-11-07)
 

@@ -25,14 +25,15 @@ An ailment is a row of `DT_KitAilments`. Five today:
 | Ailment | Type | Duration | Tick | Front load | Cap per source |
 |---|---|---|---|---|---|
 | Poison | Poison | 4 s | 0.5 s | 0 | none |
-| Bleed | Physical | 6 s | 0.5 s | 0.3 | 3, the weakest replaced |
-| Burn | Fire | 4 s | 0.5 s | 0 | none |
+| Bleed | Physical | 6 s | 0.5 s | 0.3 (0 since E-3.26) | 3, the weakest replaced (one a target since E-3.26) |
+| Burn | Fire | 4 s | 0.5 s | 0 | none (one a target since E-3.26; the Oni's OniBurn counts as Burn) |
 | Plague | Poison | 8 s | 1 s | 0 | none (counts as Poison; its jumps are its own mechanic's) |
 | Coil | Physical | 6 s | 1 s | 0 | 5, the oldest replaced |
 
 - **A share of the hit.** Each application is one independent **instance** worth a share of the **base** of the hit that applied it (the row and flat lines, before the hit's increased, more and crit; `Slime.Kit.DotLines`, on by default), raised once, as it is applied, by the damage over time lines alone (% damage, the increased line of the ailment's damage type, `AilmentDamageIncreased`, `DamageOverTimeMore`), and paid out over the row's duration (times the move's duration scale and the applier's `AilmentDuration` line). The front load is owed at once; the rest is spread evenly. A row or op may give a flat total instead when the hit itself deals none.
 - **Summed ticks.** Every instance accrues on its own clock. When a tick is due, each source's instances of one ailment on one target pay as **one summed hit**, never one hit per instance. A tick is a Triggered secondary hit: only the target's mitigation changes it, with no hit roll and no crit, and it fires no `OnHit`, `OnCrit` or `OnHitTaken`.
 - **The cap.** With `CapPerSource` above 0, a source at its cap on a target replaces its weakest instance (`bReplaceWeakest`) or its oldest. With replace-weakest, a new instance weaker than the weakest is dropped. The dropped instance is told as `OnAilmentDisplaced`.
+- **One Bleed and one Burn** (E-3.26, `Slime.Damage.OneInstanceBleed`, `Slime.Damage.OneInstanceBurn`). Bleed and Burn are one instance a target, whoever applied them: a new one with a strictly higher damage a second takes over with its full time, a weaker or equal one is dropped; a hit makes them worth 60 % (Bleed) or 90 % (Burn) of its base of their type every second for the row's time, paid evenly, whatever share the row or op names (`docs/systems/combat.md`, schema 7.399).
 - **Only a Direct hit plants** a move row's own ailment (the E-2.166 rule, as the legacy poison).
 
 **The verbs** (ops; `Kits/KitOpsBuiltin.cpp`, `Kits/KitOpsExtra.cpp`, `Kits/Mechanics/KitAilmentVerbs.cpp`):

@@ -24,7 +24,7 @@ Since E-2.302 (2026-11-14, provisional on Jon's go) three groups of bands moved,
 
 ## Which lines do something (E-3.11)
 
-The test `SandboxARPG.Affixes.EveryAffixProven` puts each of the 106 lines on a gem by itself, at the middle of its tier V band, equips it the way a player does, and measures the change the line names where the game reads it: a hit's number, misses or crits over a seeded run of hits, a vital, a timer, a move's cooldown or cost. Last run (2026-11-14, E-2.302): **58 working, 48 inert, 0 broken** (57 and 49 on 2026-10-27, before ProjectileSpeed was measured working); the table below is that run's output. Since E-3.14 the 48 inert families are parked: the sheet's `Rollable` column is False on each, and no drop, developer roll, Cut or Etching Needle draws them on a gem of any colour until their mechanic is built (`Slime.AffixParking`, provisional on D-3.8 G9). A gem that already carries one keeps it. The game reads the column once Jon refills `DT_Affixes` from the CSV; until then every row rolls as before. The proof test itself still measures all 106. A working line moved its measure the way its name says; an inert line names a stat the game does not have yet, so it rolls and shows but changes nothing until its mechanic is built.
+The test `SandboxARPG.Affixes.EveryAffixProven` puts each of the 106 lines on a gem by itself, at the middle of its tier V band, equips it the way a player does, and measures the change the line names where the game reads it: a hit's number, misses or crits over a seeded run of hits, a vital, a timer, a move's cooldown or cost. Last run (2026-11-15, E-3.25): **59 working, 47 inert, 0 broken** (58 and 48 on 2026-11-14 before the Freeze chance was built and ChanceToFreeze made rollable; 57 and 49 on 2026-10-27, before ProjectileSpeed was measured working); the table below is that run's output. Since E-3.14 the inert families (47 since E-3.25) are parked: the sheet's `Rollable` column is False on each, and no drop, developer roll, Cut or Etching Needle draws them on a gem of any colour until their mechanic is built (`Slime.AffixParking`, provisional on D-3.8 G9). A gem that already carries one keeps it. The game reads the column once Jon refills `DT_Affixes` from the CSV; until then every row rolls as before. The proof test itself still measures all 106. A working line moved its measure the way its name says; an inert line names a stat the game does not have yet, so it rolls and shows but changes nothing until its mechanic is built.
 
 Three working lines meet less in play than the test shows:
 
@@ -47,7 +47,7 @@ Three working lines meet less in play than the test shows:
 | ChanceToBlind | inert | no attribute BlindChance; its mechanic is not built |
 | ChanceToBurn | inert | no attribute BurnChance; its mechanic is not built |
 | ChanceToDoubleDamage | inert | no attribute DoubleDamageChance; its mechanic is not built |
-| ChanceToFreeze | inert | no attribute FreezeChance; its mechanic is not built |
+| ChanceToFreeze | working | Freezes in 200 seeded Cold hits on a Chilled enemy: 0 without, 2 with a line of 0.105 on FreezeChance (E-3.25, 2026-11-15; the hard-control clock holds the count down) |
 | ChanceToKnockback | inert | no attribute KnockbackChance; its mechanic is not built |
 | ChanceToMarkOnHit | inert | no attribute MarkChance; its mechanic is not built |
 | ChanceToPoison | inert | no attribute PoisonChance; its mechanic is not built |

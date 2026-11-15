@@ -18,11 +18,13 @@ Since E-3.3 the table has numbers, all placeholders. Every line exists ten times
 
 Nobody types those 1060 rows. Two small sheets hold what a designer tunes: one row per line with its tier 1 band, how fast the band widens per tier, and the grid its values sit on (whole points, tenths, hundredths); and one row per tier with a knob that widens or narrows that tier for every line at once. A script turns the two sheets into the table and checks it. A line's display name is the whole line as the player reads it, in the word guide's form (`docs/design/word-guide.md` sections 3, 4 and 13; E-3.10), with `#` for the rolled number: `+# Physical damage`, `+#% Physical damage`, `#% more damage`, `#% chance to Burn`. A line on an attribute the game reads as a fraction rolls a fraction: critical chance, critical damage, attack and cast speed, accuracy, the penetrations, area of effect, ailment and stun duration, block chance and block value, healing received and the resistances roll 0.03 for 3 %. Until 2026-10-19 fifteen of them rolled whole points, so a critical chance line of 3 gave 300 %; gems rolled before then keep those numbers until they are rerolled or the saves are wiped. Eight more lines named an attribute that does not exist and did nothing; since 2026-10-19 they name the one the game reads, as fractions: dodge (capped at 75 %), leech (all leech together heals at most 20 % of maximum health a second, the `LeechMaxPerSecond` row, Path of Exile 1's rule; the rest is lost), cooldown recovery, skill duration, mana cost (capped at 90 %), damage taken, minion damage and minion health. Low-health damage reduction still does nothing. Since E-5.3 every line is also a **prefix** or a **suffix** (`Slot`), Path of Exile's convention as read in `Research Bank/2026-10-16-affix-prefix-suffix-conventions-research.md`: a prefix is what the gem gives on an empty character (a pool, a flat amount, a damage family, a magnitude), a suffix is how that power is shaped (a rate, a chance, a resistance, regeneration, on-hit, penetration, shred, a speed). Offense is 39 prefix families to 19 suffix, Defense 11 to 14, Control and utility 10 to 14; the script refuses a sheet where any colour has fewer than two families of a kind, since a cut gem must be two and two (D-5.4). The picks are provisional on the D-5.4 memo's Appendix A; which slots a gem can sit in and local versus global stay with D-3.3.
 
-Since 2026-10-26 (Jon's pass over every line) two more things hold. Every line whose name puts `%` after the number is a fraction and reads as a percent at every tier, whether its stat exists yet or not: 45 lines (the chances to Burn, Poison, Bleed, Slow, Freeze, Shock, Stun, Knockback, Blind, Weaken and mark, double damage, the shreds, damage against a kind of enemy, melee, spell and ranged damage, conversion and "gain as", the four control strengths, projectile speed, low-health damage reduction and the two critical-hit defences) rolled whole points before, so a chance to Burn of 3 read as 300 % to anyone reading the table. And 81 lines name their tier X band in two more sheet columns (`T10Min`, `T10Max`) instead of widening by a growth factor, which had carried 64 lines from 5 to 10 at tier I to 174 to 227 at tier X: the tiers between start on a geometric climb from tier I to tier X, each ending one step below the next. Tier X now reads: chances 25 to 30 %, double damage and critical chance 10 to 12 %, attack and cast speed, block chance, penetration, shred and "gain as" 15 to 20 %, critical damage, accuracy, damage against a kind of enemy, conversion, minions and control strengths 40 to 50 %, melee, spell and ranged 30 to 35 %, cooldown recovery, mana cost, dodge and low-health damage reduction 20 to 25 %, area, durations, projectile speed, block value, healing and the critical-hit defences 30 to 40 %, life leech 10 to 12 %, flat damage of every kind, health on kill and thorns 40 to 60, health on Hit 10 to 15, mana on Hit 10 to 12, mana on kill 20 to 30. Ten whole tiers need room, so five tier I bands were lowered (double damage, critical chance, life leech, health and mana on Hit to 1; penetration, shred and "gain as" to 3 to 5 %). The lines left on growth (increased and more of every kind, resistances, movement speed, regeneration, flat health, mana and Armour) keep their numbers. Every number is a placeholder until the balance pass (D-3.3). Gems saved before keep their old values, so a saved chance line of 17 now reads 1700 %: wipe the saves. The measured numbers in the table below are from the bands of 2026-10-25.
+Since 2026-10-26 (Jon's pass over every line) two more things hold. Every line whose name puts `%` after the number is a fraction and reads as a percent at every tier, whether its stat exists yet or not: 45 lines (the chances to Burn, Poison, Bleed, Slow, Freeze, Shock, Stun, Knockback, Blind, Weaken and mark, double damage, the shreds, damage against a kind of enemy, melee, spell and ranged damage, conversion and "gain as", the four control strengths, projectile speed, low-health damage reduction and the two critical-hit defences) rolled whole points before, so a chance to Burn of 3 read as 300 % to anyone reading the table. And 81 lines name their tier X band in two more sheet columns (`T10Min`, `T10Max`) instead of widening by a growth factor, which had carried 64 lines from 5 to 10 at tier I to 174 to 227 at tier X: the tiers between start on a geometric climb from tier I to tier X, each ending one step below the next. Tier X now reads: chances 25 to 30 %, double damage and critical chance 10 to 12 %, attack and cast speed, block chance, penetration, shred and "gain as" 15 to 20 %, critical damage, accuracy, damage against a kind of enemy, conversion, minions and control strengths 40 to 50 %, melee, spell and ranged 30 to 35 %, cooldown recovery, mana cost, dodge and low-health damage reduction 20 to 25 %, area, durations, projectile speed, block value, healing and the critical-hit defences 30 to 40 %, life leech 10 to 12 %, flat damage of every kind, health on kill and thorns 40 to 60, health on Hit 10 to 15, mana on Hit 10 to 12, mana on kill 20 to 30. Ten whole tiers need room, so five tier I bands were lowered (double damage, critical chance, life leech, health and mana on Hit to 1; penetration, shred and "gain as" to 3 to 5 %). The lines left on growth (increased and more of every kind, resistances, movement speed, regeneration, flat health, mana and Armour) keep their numbers. Every number is a placeholder until the balance pass (D-3.3). Gems saved before keep their old values, so a saved chance line of 17 now reads 1700 %: wipe the saves. The measured numbers in the table below are from the run of 2026-11-14, on the bands of E-2.302.
+
+Since E-2.302 (2026-11-14, provisional on Jon's go) three groups of bands moved, because a hit now grows with the character's level and a flat line was worth more than the hit it was added to. The six flat damage lines (untyped, Physical, Fire, Cold, Lightning, Toxic) are a tenth of what they were: tier I 0.5 to 1, tier X 4 to 6, on a grid of tenths, the only lines that roll and read with one decimal. Critical chance is tier I 3 %, tier X 30 to 36 % (three times the old ends; the tiers between climb from I to X, so tier IV is 7 to 8 %, not three times its old 4 %). Critical damage is twice the old bands, tier I 10 to 20 %, tier X 80 to 100 %. Thorns, the ailment flats, health, Armour and mana are unchanged. Saved gems are converted once on load (see [gems](gems.md)).
 
 ## Which lines do something (E-3.11)
 
-The test `SandboxARPG.Affixes.EveryAffixProven` puts each of the 106 lines on a gem by itself, at the middle of its tier V band, equips it the way a player does, and measures the change the line names where the game reads it: a hit's number, misses or crits over a seeded run of hits, a vital, a timer, a move's cooldown or cost. Last run (2026-11-12, E-3.14): **58 working, 48 inert, 0 broken** (57 and 49 on 2026-10-27, before ProjectileSpeed was measured working). Since E-3.14 the 48 inert families are parked: the sheet's `Rollable` column is False on each, and no drop, developer roll, Cut or Etching Needle draws them on a gem of any colour until their mechanic is built (`Slime.AffixParking`, provisional on D-3.8 G9). A gem that already carries one keeps it. The game reads the column once Jon refills `DT_Affixes` from the CSV; until then every row rolls as before. The proof test itself still measures all 106. A working line moved its measure the way its name says; an inert line names a stat the game does not have yet, so it rolls and shows but changes nothing until its mechanic is built.
+The test `SandboxARPG.Affixes.EveryAffixProven` puts each of the 106 lines on a gem by itself, at the middle of its tier V band, equips it the way a player does, and measures the change the line names where the game reads it: a hit's number, misses or crits over a seeded run of hits, a vital, a timer, a move's cooldown or cost. Last run (2026-11-14, E-2.302): **58 working, 48 inert, 0 broken** (57 and 49 on 2026-10-27, before ProjectileSpeed was measured working); the table below is that run's output. Since E-3.14 the 48 inert families are parked: the sheet's `Rollable` column is False on each, and no drop, developer roll, Cut or Etching Needle draws them on a gem of any colour until their mechanic is built (`Slime.AffixParking`, provisional on D-3.8 G9). A gem that already carries one keeps it. The game reads the column once Jon refills `DT_Affixes` from the CSV; until then every row rolls as before. The proof test itself still measures all 106. A working line moved its measure the way its name says; an inert line names a stat the game does not have yet, so it rolls and shows but changes nothing until its mechanic is built.
 
 Three working lines meet less in play than the test shows:
 
@@ -32,15 +34,15 @@ Three working lines meet less in play than the test shows:
 
 | Line | Verdict | What the test measured |
 |---|---|---|
-| AilmentDuration | working | a poison instance's seconds: 4 without, 4.76 with a line of 0.19 on AilmentDuration |
+| AilmentDuration | working | a poison instance's seconds: 4 without, 4.44 with a line of 0.115 on AilmentDuration |
 | AllResistances | inert | no attribute Resistance; its mechanic is not built |
-| AreaOfEffect | working | Acid Spit's impact radius: 100 without, 147 with a line of 0.47 on AreaOfEffect |
-| AttackSpeed | working | an attack's play rate: 1.5 without, 1.785 with a line of 0.19 on AttackSpeed |
+| AreaOfEffect | working | Acid Spit's impact radius: 100 without, 117 with a line of 0.165 on AreaOfEffect |
+| AttackSpeed | working | an attack's play rate: 1.5 without, 1.635 with a line of 0.09 on AttackSpeed |
 | BleedDamage | inert | no attribute BleedDamage; its mechanic is not built |
-| BlockChance | working | blocks in 2000 seeded hits taken: 0 without, 390 with a line of 0.19 on BlockChance |
-| BlockValue | working | damage taken over 500 seeded hits with a 75% block chance: 1e+04 without, 6400 with a line of 0.47 on BlockValue |
+| BlockChance | working | blocks in 2000 seeded hits taken: 0 without, 190 with a line of 0.09 on BlockChance |
+| BlockValue | working | damage taken over 500 seeded hits with a 75% block chance: 1e+04 without, 8698 with a line of 0.165 on BlockValue |
 | BurnDamage | inert | no attribute BurnDamage; its mechanic is not built |
-| CastSpeed | working | a spell's play rate: 1 without, 1.19 with a line of 0.19 on CastSpeed |
+| CastSpeed | working | a spell's play rate: 1 without, 1.09 with a line of 0.09 on CastSpeed |
 | ChanceToBleed | inert | no attribute BleedChance; its mechanic is not built |
 | ChanceToBlind | inert | no attribute BlindChance; its mechanic is not built |
 | ChanceToBurn | inert | no attribute BurnChance; its mechanic is not built |
@@ -53,12 +55,12 @@ Three working lines meet less in play than the test shows:
 | ChanceToSlow | inert | no attribute SlowChance; its mechanic is not built |
 | ChanceToStun | inert | no attribute StunChance; its mechanic is not built |
 | ChanceToWeaken | inert | no attribute WeakenChance; its mechanic is not built |
-| ColdPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on ColdPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
+| ColdPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 59 with a line of 0.09 on ColdPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
 | ColdResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on ColdResistance |
 | ColdResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
-| CooldownReduction | working | Acid Spit's cooldown: 4 without, 2.721 with a line of 0.47 on CooldownRecovery |
-| CriticalChance | working | crits in 2000 seeded hits: 85 without, 477 with a line of 0.19 on CritChance |
-| CriticalDamage | working | a crit's damage: 150 without, 197 with a line of 0.47 on CritDamage |
+| CooldownReduction | working | Acid Spit's cooldown: 4 without, 3.509 with a line of 0.14 on CooldownRecovery |
+| CriticalChance | working | crits in 2000 seeded hits: 85 without, 299 with a line of 0.095 on CritChance |
+| CriticalDamage | working | a crit's damage: 150 without, 188 with a line of 0.375 on CritDamage |
 | CriticalStrikeAvoidance | inert | no attribute CritAvoidance; its mechanic is not built |
 | CrowdControlResistance | working | seconds of a stun the user takes: 2 without, 1.78 with a line of 0.105 on CrowdControlResistance |
 | DamageOverTimeMultiplier | working | a poison instance's total: 100 without, 111 with a line of 0.105 on DamageOverTimeMore |
@@ -74,22 +76,22 @@ Three working lines meet less in play than the test shows:
 | DamageToSlowedEnemies | inert | no attribute Damage; its mechanic is not built |
 | DamageToStunnedEnemies | inert | no attribute Damage; its mechanic is not built |
 | DodgeEvasion | working | hits landed of 2000 seeded swings taken: 2000 without, 1720 with a line of 0.14 on Dodge (a hit lands unless dodged, the dodge rolled pseudo-randomly since E-3.13) |
-| FirePenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on FirePenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
+| FirePenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 59 with a line of 0.09 on FirePenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
 | FireResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on FireResistance |
 | FireResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
-| FlatColdDamage | working | a hit of its type: 100 without, 147 with a line of 47 on ColdDamageFlat |
-| FlatDamage | working | a physical hit's damage: 100 without, 147 with a line of 47 on DamageFlat |
+| FlatColdDamage | working | a hit of its type: 100 without, 101.9 with a line of 1.9 on ColdDamageFlat |
+| FlatDamage | working | a physical hit's damage: 100 without, 101.9 with a line of 1.9 on DamageFlat |
 | FlatArmour | working | a physical hit taken, with 50 flat Armour from elsewhere: 13.33 without, 11.05 with a line of 30.5 on Armour |
-| FlatFireDamage | working | a hit of its type: 100 without, 147 with a line of 47 on FireDamageFlat |
+| FlatFireDamage | working | a hit of its type: 100 without, 101.9 with a line of 1.9 on FireDamageFlat |
 | FlatHealth | working | maximum health: 1000 without, 1047 with a line of 47 on MaxHealth |
-| FlatLightningDamage | working | a hit of its type: 100 without, 147 with a line of 47 on LightningDamageFlat |
+| FlatLightningDamage | working | a hit of its type: 100 without, 101.9 with a line of 1.9 on LightningDamageFlat |
 | FlatMaximumMana | working | maximum mana: 100 without, 131 with a line of 30.5 on MaxMana |
-| FlatPhysicalDamage | working | a physical hit's damage: 100 without, 147 with a line of 47 on PhysicalDamageFlat |
-| FlatToxicDamage | working | a hit of its type: 100 without, 147 with a line of 47 on ToxicDamageFlat |
+| FlatPhysicalDamage | working | a physical hit's damage: 100 without, 101.9 with a line of 1.9 on PhysicalDamageFlat |
+| FlatToxicDamage | working | a hit of its type: 100 without, 101.9 with a line of 1.9 on ToxicDamageFlat |
 | FreezeMagnitude | inert | no attribute FreezeMagnitude; its mechanic is not built |
-| HealingReceived | working | health after a restore of 50 from 10: 60 without, 83.5 with a line of 0.47 on HealingReceived |
-| HealthOnHit | working | health after one hit from 10: 10 without, 57 with a line of 47 on HealthOnHit |
-| HealthOnKill | working | health after the web's kill handler from 10: 10 without, 57 with a line of 47 on HealthOnKill |
+| HealingReceived | working | health after a restore of 50 from 10: 60 without, 68.5 with a line of 0.165 on HealingReceived |
+| HealthOnHit | working | health after one hit from 10: 10 without, 15 with a line of 5 on HealthOnHit |
+| HealthOnKill | working | health after the web's kill handler from 10: 10 without, 29 with a line of 19 on HealthOnKill |
 | HealthRegeneration | working | health gained in 2 s: 10 without, 28 with a line of 8.5 on HealthRegen |
 | IncreasedColdDamage | working | a hit of its type: 100 without, 116 with a line of 0.16 on ColdDamageIncreased |
 | IncreasedDamage | working | a physical hit's damage: 100 without, 116 with a line of 0.16 on DamageIncreased |
@@ -100,18 +102,18 @@ Three working lines meet less in play than the test shows:
 | IncreasedMaximumMana | working | maximum mana: 100 without, 116 with a line of 0.16 on MaxMana |
 | IncreasedPhysicalDamage | working | a physical hit's damage: 100 without, 116 with a line of 0.16 on PhysicalDamageIncreased |
 | IncreasedToxicDamage | working | a hit of its type: 100 without, 116 with a line of 0.16 on ToxicDamageIncreased |
-| LifeLeech | working | health after one hit from 10: 10 without, 57 with a line of 0.47 on Leech |
-| LightningPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on LightningPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
+| LifeLeech | working | health after one hit from 10: 10 without, 15 with a line of 0.05 on Leech |
+| LightningPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 59 with a line of 0.09 on LightningPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
 | LightningResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on LightningResistance |
 | LightningResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
 | LowHealthDamageReduction | inert | no attribute DamageReduction; its mechanic is not built |
-| ManaCostReduction | working | Acid Spit's mana cost: 10 without, 5.3 with a line of 0.47 on ManaCostLess |
-| ManaOnHit | working | mana after one hit from 0: 0 without, 47 with a line of 47 on ManaOnHit |
-| ManaOnKill | working | mana after the web's kill handler from 0: 0 without, 47 with a line of 47 on ManaOnKill |
+| ManaCostReduction | working | Acid Spit's mana cost: 10 without, 8.6 with a line of 0.14 on ManaCostLess |
+| ManaOnHit | working | mana after one hit from 0: 0 without, 5 with a line of 5 on ManaOnHit |
+| ManaOnKill | working | mana after the web's kill handler from 0: 0 without, 14 with a line of 14 on ManaOnKill |
 | ManaRegeneration | working | mana gained in 2 s: 0 without, 18 with a line of 8.5 on ManaRegen |
 | MeleeDamage | inert | no attribute Damage; its mechanic is not built |
-| MinionDamage | working | a minion's outgoing damage scale: 1 without, 1.47 with a line of 0.47 on MinionDamageIncreased |
-| MinionHealth | working | a minion's spawn life (FKitMinions::EvaluateHealth on the owner's line, as AFieldMonster spawns it): 100 without, 147 with a line of 0.47 on MinionHealthIncreased |
+| MinionDamage | working | a minion's outgoing damage scale: 1 without, 1.19 with a line of 0.19 on MinionDamageIncreased |
+| MinionHealth | working | a minion's spawn life (FKitMinions::EvaluateHealth on the owner's line, as AFieldMonster spawns it): 100 without, 119 with a line of 0.19 on MinionHealthIncreased |
 | MoreDamage | working | a physical hit's damage: 100 without, 111 with a line of 0.105 on DamageMore |
 | MoreArmour | working | a physical hit taken, with 50 flat Armour from elsewhere: 13.33 without, 12.86 with a line of 0.105 on Armour; a player has no Armour of their own, so alone this line multiplies 0 |
 | MoreHealth | working | maximum health: 1000 without, 1110 with a line of 0.105 on MaxHealth |
@@ -125,18 +127,18 @@ Three working lines meet less in play than the test shows:
 | PhysicalToLightningConversion | inert | no attribute Conversion; its mechanic is not built |
 | PhysicalToToxicConversion | inert | no attribute Conversion; its mechanic is not built |
 | PoisonDamage | inert | no attribute PoisonDamage; its mechanic is not built |
-| ToxicPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on ToxicPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
+| ToxicPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 59 with a line of 0.09 on ToxicPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
 | ToxicResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on ToxicResistance |
 | ToxicResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
 | ProjectileSpeed | working | a projectile's launch speed: 1000 without, 1110 with a line of 0.115 on ProjectileSpeed (re-measured 2026-11-12; the attribute exists since #599) |
 | RangedDamage | inert | no attribute Damage; its mechanic is not built |
 | ReducedCriticalDamageTaken | inert | no attribute CritDamageTaken; its mechanic is not built |
 | ShockMagnitude | inert | no attribute ShockMagnitude; its mechanic is not built |
-| SkillEffectDuration | working | Festering Shroud's buff seconds: 6 without, 7.14 with a line of 0.19 on SkillDuration |
+| SkillEffectDuration | working | Festering Shroud's buff seconds: 6 without, 6.66 with a line of 0.115 on SkillDuration |
 | SlowMagnitude | inert | no attribute SlowMagnitude; its mechanic is not built |
 | SpellDamage | inert | no attribute Damage; its mechanic is not built |
-| StunDuration | working | seconds of a stun the user lands: 1 without, 1.19 with a line of 0.19 on StunDuration; a stun is cut by the hard-control clock (2 s here), so the line adds nothing to a stun already at it |
-| ThornsReflect | working | health the enemy loses to one melee hit on the user: 0 without, 47 with a line of 47 on Thorns |
+| StunDuration | working | seconds of a stun the user lands: 1 without, 1.11 with a line of 0.115 on StunDuration; a stun is cut by the hard-control clock (2 s here), so the line adds nothing to a stun already at it |
+| ThornsReflect | working | health the enemy loses to one melee hit on the user: 0 without, 19 with a line of 19 on Thorns |
 | WeakenMagnitude | inert | no attribute WeakenMagnitude; its mechanic is not built |
 
 ## Settled
@@ -153,4 +155,4 @@ Three working lines meet less in play than the test shows:
 
 ## For engineers
 
-`Source/SandboxARPG/Affixes/AffixRow.h` (`FAffixRow`, `EAffixCategory`, `EAffixOperation`). `Data/DT_Affixes.csv` is the import source, generated by `python scripts/gen_affix_tiers.py` from `Data/Authoring/AffixLines.csv` (106 lines since E-3.13: identity columns, `Group`, `Slot`, `T1Min`, `T1Max`, `Growth`, `Step`) and `Data/Authoring/AffixTiers.csv` (`Tier`, `WidthScale`), which also checks it (1070 rows, ten tiers per line, bands contiguous, ids unique, at least two families of each kind per colour; `--check` compares the file on disk with what the sheets generate); `Data/README.md` explains the columns and the import. The asset is `Content/Data/DT_Affixes`, imported by a human in the editor. Tags are plain names, not gameplay tags, which stay inside the ability wrapper.
+`Source/SandboxARPG/Affixes/AffixRow.h` (`FAffixRow`, `EAffixCategory`, `EAffixOperation`). `Data/DT_Affixes.csv` is the import source, generated by `python scripts/gen_affix_tiers.py` from `Data/Authoring/AffixLines.csv` (106 lines since E-3.13: identity columns, `Group`, `Slot`, `T1Min`, `T1Max`, `Growth`, `Step`) and `Data/Authoring/AffixTiers.csv` (`Tier`, `WidthScale`), which also checks it (1060 rows, ten tiers per line, bands contiguous, ids unique, at least two families of each kind per colour; `--check` compares the file on disk with what the sheets generate); `Data/README.md` explains the columns and the import. Since E-2.302 `DT_Affixes.csv` carries the sheet's `Step` as its last column (`FAffixRow::Step`; 0.1 on the six flat damage rows, read by `FCraftingRules::PointsPerUnit`), and the generator allows a step of 0.1 beside 1 and 0.01. The asset is `Content/Data/DT_Affixes`, imported by a human in the editor. Tags are plain names, not gameplay tags, which stay inside the ability wrapper.

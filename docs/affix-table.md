@@ -85,7 +85,7 @@ Three working lines meet less in play than the test shows:
 | FlatLightningDamage | working | a hit of its type: 100 without, 147 with a line of 47 on LightningDamageFlat |
 | FlatMaximumMana | working | maximum mana: 100 without, 131 with a line of 30.5 on MaxMana |
 | FlatPhysicalDamage | working | a physical hit's damage: 100 without, 147 with a line of 47 on PhysicalDamageFlat |
-| FlatPoisonDamage | working | a hit of its type: 100 without, 147 with a line of 47 on PoisonDamageFlat |
+| FlatToxicDamage | working | a hit of its type: 100 without, 147 with a line of 47 on ToxicDamageFlat |
 | FreezeMagnitude | inert | no attribute FreezeMagnitude; its mechanic is not built |
 | HealingReceived | working | health after a restore of 50 from 10: 60 without, 83.5 with a line of 0.47 on HealingReceived |
 | HealthOnHit | working | health after one hit from 10: 10 without, 57 with a line of 47 on HealthOnHit |
@@ -99,7 +99,7 @@ Three working lines meet less in play than the test shows:
 | IncreasedLightningDamage | working | a hit of its type: 100 without, 116 with a line of 0.16 on LightningDamageIncreased |
 | IncreasedMaximumMana | working | maximum mana: 100 without, 116 with a line of 0.16 on MaxMana |
 | IncreasedPhysicalDamage | working | a physical hit's damage: 100 without, 116 with a line of 0.16 on PhysicalDamageIncreased |
-| IncreasedPoisonDamage | working | a hit of its type: 100 without, 116 with a line of 0.16 on PoisonDamageIncreased |
+| IncreasedToxicDamage | working | a hit of its type: 100 without, 116 with a line of 0.16 on ToxicDamageIncreased |
 | LifeLeech | working | health after one hit from 10: 10 without, 57 with a line of 0.47 on Leech |
 | LightningPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on LightningPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
 | LightningResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on LightningResistance |
@@ -119,15 +119,15 @@ Three working lines meet less in play than the test shows:
 | PhysicalAsExtraCold | inert | no attribute ExtraDamage; its mechanic is not built |
 | PhysicalAsExtraFire | inert | no attribute ExtraDamage; its mechanic is not built |
 | PhysicalAsExtraLightning | inert | no attribute ExtraDamage; its mechanic is not built |
-| PhysicalAsExtraPoison | inert | no attribute ExtraDamage; its mechanic is not built |
+| PhysicalAsExtraToxic | inert | no attribute ExtraDamage; its mechanic is not built |
 | PhysicalToColdConversion | inert | no attribute Conversion; its mechanic is not built |
 | PhysicalToFireConversion | inert | no attribute Conversion; its mechanic is not built |
 | PhysicalToLightningConversion | inert | no attribute Conversion; its mechanic is not built |
-| PhysicalToPoisonConversion | inert | no attribute Conversion; its mechanic is not built |
+| PhysicalToToxicConversion | inert | no attribute Conversion; its mechanic is not built |
 | PoisonDamage | inert | no attribute PoisonDamage; its mechanic is not built |
-| PoisonPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on PoisonPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
-| PoisonResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on PoisonResistance |
-| PoisonResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
+| ToxicPenetration | working | a hit of its type on an enemy with 50% resistance: 50 without, 97 with a line of 0.47 on ToxicPenetration; in play it changes nothing yet: every monster's resistances are 0 in DT_MonsterStats |
+| ToxicResistance | working | a hit of its type taken: 20 without, 17.8 with a line of 0.105 on ToxicResistance |
+| ToxicResistanceShred | inert | no attribute ResistanceShred; its mechanic is not built |
 | ProjectileSpeed | working | a projectile's launch speed: 1000 without, 1110 with a line of 0.115 on ProjectileSpeed (re-measured 2026-11-12; the attribute exists since #599) |
 | RangedDamage | inert | no attribute Damage; its mechanic is not built |
 | ReducedCriticalDamageTaken | inert | no attribute CritDamageTaken; its mechanic is not built |

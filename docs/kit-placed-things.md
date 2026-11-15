@@ -173,7 +173,7 @@ On Jon's ruling after the playtest of 2026-10-13 ("all abilities that have aoes 
 
 ## Along a dash (2026-10-23)
 
-`Place` with `AlongDash` 1 lays one thing from where the user's last kit dash began to where the user stands, its `Length` the distance between them (a `Line` shape row). The Creepy's Trail of Rot lays `RotTrail` at each Pounce's end: the acid puddle's numbers (6 Poison a second, poisoning) on a line 1 m either side, 3 s, three at most. A Pounce cut short lays only what it ran.
+`Place` with `AlongDash` 1 lays one thing from where the user's last kit dash began to where the user stands, its `Length` the distance between them (a `Line` shape row). The Creepy's Trail of Rot lays `RotTrail` at each Pounce's end: the acid puddle's numbers (6 Toxic a second, poisoning) on a line 1 m either side, 3 s, three at most. A Pounce cut short lays only what it ran.
 
 ## Placed thing words of the partial nodes, passes 3 to 5 (2026-11-04 to 2026-11-06)
 

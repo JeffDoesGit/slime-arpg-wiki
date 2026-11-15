@@ -42,7 +42,7 @@ Memos on `main` propose the rules the first moves need:
 
 - **Skill trees:** each soul has a small tree, and every node changes what a move does, never just a percentage (D-8.2). The first tree is the Creepy kit above.
 - **Poison:** every hit that poisons adds a stack with its own timer (D-3.5). **Control effects** such as slow, freeze and stun: one instance at a time, the strongest wins (D-3.7).
-- **Damage types:** physical, fire, cold, lightning, poison (D-3.1).
+- **Damage types:** physical, fire, cold, lightning, toxic (D-3.1).
 - **How a hit resolves:** a chance to hit, a chance to crit, then defense shaves damage off by a ratio that never reaches zero; getting hit plays an animation but does not interrupt you (D-3.6).
 - **Monsters play by the same rules** as you (D-2.4).
 - **Counted states:** a named count on a pawn that a move can add to, read and reset, with each stack fading on its own timer. Marrow Rush's Splinter is the first user (D-2.6); the console commands still drive it for testing.

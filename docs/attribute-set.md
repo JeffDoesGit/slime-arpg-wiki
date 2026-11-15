@@ -12,7 +12,7 @@ Your monster has eight numbers:
 | Health Regen | Health recovered per second, once regeneration exists |
 | Mana, Max Mana | The resource abilities will spend, and its ceiling |
 | Mana Regen | Mana recovered per second, once regeneration exists |
-| Defense | The one number that will reduce physical damage |
+| Armour | The one number that will reduce physical damage |
 | Move Speed | How fast you move, once it is wired to movement |
 
 Health and mana can never go below zero or above their maximum; the other numbers can never go below zero, with one family apart. Those guards are built in, so no later system can push a value out of range by accident.
@@ -29,7 +29,7 @@ Where a monster's base numbers come from is still an open design question (GDD 2
 
 [Gems](gems.md) sit on top: an equipped gem's lines modify the current value of a stat without touching the base, so a level-up and a gem never fight over the same number.
 
-Defense, movement speed and regeneration start at zero on purpose. The memo gives them no base and no growth; they will come from accessories, gems and soul abilities. Nothing spends or regenerates yet either. Regeneration ticks, mana costs and movement speed all arrive with the systems that use them.
+Armour, movement speed and regeneration start at zero on purpose. The memo gives them no base and no growth; they will come from accessories, gems and soul abilities. Nothing spends or regenerates yet either. Regeneration ticks, mana costs and movement speed all arrive with the systems that use them.
 
 ## Where you see them
 

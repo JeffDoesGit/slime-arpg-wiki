@@ -12,7 +12,7 @@ Some moves no longer hit the instant you press. A wind-up holds the body on its 
 
 **Hold** (`MaxHold`, `HoldIncreasedPerSecond`). After the wind-up's own time, the wait stretches while the key stays down, up to `MaxHold` seconds; the swing gains `HoldIncreasedPerSecond` per second held, as a fraction. Letting the key go fires it. Only a player holds a key: a field monster's wind-up never stretches.
 
-**Poise** (`PoiseShare`, `PoiseMaxHits`). Each hit taken between the press and the move's first hit, landing or launch adds `PoiseShare` of the user's Defense as flat damage to the swing, for at most `PoiseMaxHits` hits (0: no limit). A row with no `WindUp` of its own (a leap) still gathers while it flies. Each such hit is told as `OnHitTakenInWindUp`.
+**Poise** (`PoiseShare`, `PoiseMaxHits`). Each hit taken between the press and the move's first hit, landing or launch adds `PoiseShare` of the user's Armour as flat damage to the swing, for at most `PoiseMaxHits` hits (0: no limit). A row with no `WindUp` of its own (a leap) still gathers while it flies. Each such hit is told as `OnHitTakenInWindUp`.
 
 **Charges** (`Charges`). A row with more than 1 stores that many uses (255 at most); 0 or 1 is a plain cooldown. A use takes one charge. Charges come back one at a time, each after the row's `Cooldown`, on one clock. The `GrantCharge` op gives charges back, never above the maximum. The maximum follows the ranks when a node changes it.
 
@@ -133,7 +133,7 @@ New columns on the move row (`Abilities/MoveStats.h`), each set by a node's over
 - **`bPressEndsBuffInCooldown`** (7.293). With `bPressEndsBuff`, the press that ends a stance is taken inside the ability's cooldown (`HandleKitPhasePress`). The Golem's Controlled Demolition: recasting Dig In ends it at once. The Ogre's Callus is unchanged.
 - **`bDashBouncesReturn` and `DashMaxHitsPerEnemy`** (7.318). A dash's bounces may return to enemies already hit, or rebound off a lone one, up to that many hits on one enemy. The Vetala's Pinball: 5 at most.
 - **`bKnockbackAside`** (7.328) and **`ProjectileHomingAilment`** (7.339). A knockback across the hit's line, and a homing projectile that curves only toward the nearest enemy in its cone carrying an instance of that ailment of its shooter's, straight when none (`AMoveProjectile::PickHomingTarget`). The Ogre's Bowling and the Vampire's Bloodhounds. A row with no ailment homes as before.
-- **A share of an ability's timed buff** (7.295). `TimedModifiers` `ShareOfBuff`: each modifier's value is a share of the named ability's resolved `BuffModifiers` line of the same attribute and operation. The Golem's Stand Behind Me: allies within 3.5 m gain 30 % (II: 50 %) of the Defense and block Dig In grants, and they follow Dig In's row as nodes change it (Bedrock Pulpit's halving, Load-Bearing's 60 % block).
+- **A share of an ability's timed buff** (7.295). `TimedModifiers` `ShareOfBuff`: each modifier's value is a share of the named ability's resolved `BuffModifiers` line of the same attribute and operation. The Golem's Stand Behind Me: allies within 3.5 m gain 30 % (II: 50 %) of the Armour and block Dig In grants, and they follow Dig In's row as nodes change it (Bedrock Pulpit's halving, Load-Bearing's 60 % block).
 
 ## Move columns of Jon's node answers (2026-11-07)
 

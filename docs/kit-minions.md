@@ -71,7 +71,7 @@ A field monster wearing a v2 soul fires the kit's moves through the same phases 
 
 `Data/DT_MonsterStats.csv` gains a Normal and an Elite row for each of the eight new souls and the two minion rows:
 
-| Monster | Life in the row | Defense | Level | Elite (life in the row, level, name) |
+| Monster | Life in the row | Armour | Level | Elite (life in the row, level, name) |
 |---|---|---|---|---|
 | Ogre | 153 | 20 | 6 | 555, 8, Ogre Brute |
 | Gargoyle | 97 | 40 | 6 | 351, 8, Gargoyle Sentinel |

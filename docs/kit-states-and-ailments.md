@@ -69,7 +69,7 @@ Rows of `Data/DT_CombatRules.csv` that hold whatever a node says. The caps and l
 | `BlockChanceCap` | 0.75 | Ceiling of `BlockChance` | same |
 | `BlockValueCap` | 0.6 | Most of a hit a block stops | same |
 | `DamageTakenLessCap` | 0.9 | Ceiling of `DamageTakenLess` | same |
-| `DefenseMitigationCap` | 0.8 | Defense never removes more than this share of a physical hit | same |
+| `ArmourMitigationCap` | 0.8 | Armour never removes more than this share of a physical hit | same |
 | `RootDuration` | 1.5 | A root's length when the row names none | same |
 | `PullDistance` | 300 | A pull's distance when the row names none | same |
 | `HealthPoolCap` | 0.5 | Ceiling of a `bAbsorbsHits` meter, of its holder's maximum health | `Abilities/MonsterAbilitySystemKit.cpp` |

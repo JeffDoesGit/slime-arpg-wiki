@@ -72,15 +72,15 @@ For engineers: `FHitShape` in `Abilities/HitShape.h` (`FromRow`, `Touches`, `Edg
 
 ## Chains of triggered effects (E-2.166)
 
-Some effects set off other effects: a hit plants a poison stack, a shatter throws Splinters onto neighbours, a kill by poison spreads the poison. Left alone, two of these can feed each other for ever. One rule stops that. Every hit, counted stack and placed area carries an **origin** and a **chain depth**.
+Some effects set off other effects: a hit plants a poison stack, a fracture throws Splinters onto neighbours, a kill by poison spreads the poison. Left alone, two of these can feed each other for ever. One rule stops that. Every hit, counted stack and placed area carries an **origin** and a **chain depth**.
 
-- **Direct**: what a player or monster did on purpose. A swing, a projectile, a dash crossing, a placed area, an aura, the shatter of Marrow Rush or Tear.
-- **Triggered**: what another effect set off. A poison tick, a Hive Heart debt payment, a Bone Choir shatter, the Splinters that Shrapnel and Ossuary plant.
-- **Expiry**: what happens when something runs out. Brittle Bone's shatter.
+- **Direct**: what a player or monster did on purpose. A swing, a projectile, a dash crossing, a placed area, an aura, the fracture of Marrow Rush or Tear.
+- **Triggered**: what another effect set off. A poison tick, a Hive Heart debt payment, a Bone Choir fracture, the Splinters that Shrapnel and Ossuary plant.
+- **Expiry**: what happens when something runs out. Brittle Bone's fracture.
 
-A reaction that makes a further hit, stack or area fires only when its cause is Direct and the chain is shorter than the bound (3). So a retaliation answers a swing and never a poison tick, and a choir shatter does not plant Shrapnel that could set off another shatter. Three reactions are held to the bound only, because the plain rule would break what they are for: Carrion's spread when a poison tick kills, Brittle Bone on a Splinter that Shrapnel planted, and Hive Heart deferring a triggered hit. Kill credit, experience, fragments, flask charges and the heal or mana a kill gives are never asked.
+A reaction that makes a further hit, stack or area fires only when its cause is Direct and the chain is shorter than the bound (3). So a retaliation answers a swing and never a poison tick, and a choir fracture does not plant Shrapnel that could set off another fracture. Three reactions are held to the bound only, because the plain rule would break what they are for: Carrion's spread when a poison tick kills, Brittle Bone on a Splinter that Shrapnel planted, and Hive Heart deferring a triggered hit. Kill credit, experience, fragments, flask charges and the heal or mana a kill gives are never asked.
 
-Two outcomes differ from before the rule: a Bone Choir shatter plants no Shrapnel, and Carrion's copies of copies stop at depth 3.
+Two outcomes differ from before the rule: a Bone Choir fracture plants no Shrapnel, and Carrion's copies of copies stop at depth 3.
 
 For testers: `Slime.TriggerOriginRule 0` turns the rule off and the game behaves as it did before; `Slime.MaxHitChainDepth` sets the bound. A reaction refused by the bound warns once per source pawn in the server log; a reaction refused because its cause was not Direct says nothing.
 
@@ -174,7 +174,7 @@ Provisional, on Jon's cards of 2026-11-15; every number is a placeholder.
 
 - **Chill.** Every Cold hit Chills what it hits: 30 % slower movement and 30 % slower attacks and casts, for 4 seconds. One Chill at a time; a new Cold hit starts it over. A Boss is Chilled half as much and its stagger meter does not fill from it. A slow and a Chill together multiply (30 % and 30 % leave 49 % of the speed). Monsters' Cold hits Chill players the same way. The status row shows a C.
 - **Freeze.** Moves and nodes Freeze as before. A Cold hit on an enemy that is already Chilled can also Freeze it: your "chance to Freeze" (0 to start; tree nodes and the gem line "#% chance to Freeze", which now rolls on gems) is rolled, and a Frozen enemy cannot move or act for 2 seconds. A Boss is never Frozen: a Freeze fills its stagger meter instead. Because every Cold hit Chills, the first Cold hit on a fresh enemy never Freezes it.
-- **Shatter.** An enemy that dies while Frozen shatters: its body is gone (no corpse and no Remains for the Vetala), and every enemy of whoever Froze it within 2.5 m takes a Cold hit for 10 % of the shattered enemy's maximum health. That hit is Cold, so it Chills too. Players never shatter. (The Corpse's own Shatter keyword is a different thing and is to be renamed Fracture.)
+- **Shatter.** An enemy that dies while Frozen shatters: its body is gone (no corpse and no Remains for the Vetala), and every enemy of whoever Froze it within 2.5 m takes a Cold hit for 10 % of the shattered enemy's maximum health. That hit is Cold, so it Chills too. Players never shatter. (The Corpse's Fracture, its Splinter spender, is a different thing; its engine name is still Shatter.)
 - **Ailment resistance.** "N % ailment resistance" makes Shock, Chill, Freeze, Burn, Bleed and Poison on you last N % shorter, up to 75 %. A Burn, Bleed or Poison that runs shorter deals its damage at the same rate, so it deals less in all. It works on players, monsters and minions alike, and it stacks with control resistance on Shock, Chill and Freeze. The character panel shows it, and your Freeze chance.
 
 For testers (host or single player): `Slime.Kit.Op Hit Target=HitTarget Name=Target Arg=Cold Flat=20` throws a Cold hit at the nearest enemy (the log says `gained chill`, then `refreshed chill`); `Slime.SetAttribute FreezeChance 1` makes the next Cold hit on a Chilled enemy Freeze it (`Cold: ... freezes it`); kill a Frozen enemy to see `Shatter: ... died Frozen and shatters`; `Slime.ApplyControl chill` Chills your own pawn (`Slime.ShowControls` lists it). Switches, all 1: `Slime.Damage.Chill`, `Slime.Damage.FreezeChance`, `Slime.Damage.FrozenShatter`, `Slime.Damage.AilmentResistance`.

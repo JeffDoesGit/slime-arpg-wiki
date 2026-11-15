@@ -33,7 +33,7 @@ Armour, movement speed and regeneration start at zero on purpose. The memo gives
 
 ## Where you see them
 
-The health and mana orbs on the [HUD](hud.md) show your current and maximum values. Everything else is visible only through the console commands below.
+The health and mana orbs on the [HUD](hud.md) show your current and maximum values. Since E-2.186 (2026-11-15) the character panel, on C, shows every number below that is not at its starting value, grouped as offence, defence and utility (see [The HUD](hud.md#the-character-panel-e-2186-2026-11-15)); the console commands below print them all.
 
 ## For testers
 
@@ -46,7 +46,7 @@ Two host-only console commands:
 
 - Base values and growth (D-2.2): built on the memo, provisional until decided.
 - Typed resistances, fire, cold, lightning, toxic (D-3.1 memo recommends those four).
-- Evasion (D-3.6 memo). The attacker-side numbers landed with E-3.9 on the memo's steps: flat, increased and more damage (untyped and per type), critical chance and damage, a penetration per resisted type (accuracy was one until E-3.13 removed it, 2026-10-27; Dodge, on the defender, is the one chance to avoid a hit, with Blind on the attacker); they are read on the server only and not replicated, and a negative value is clamped to zero like every other attribute.
+- Evasion (D-3.6 memo). The attacker-side numbers landed with E-3.9 on the memo's steps: flat, increased and more damage (untyped and per type), critical chance and damage, a penetration per resisted type (accuracy was one until E-3.13 removed it, 2026-10-27; Dodge, on the defender, is the one chance to avoid a hit, with Blind on the attacker); they are read on the server only, sent since E-2.186 to the owning player's machine alone for the character panel, and a negative value is clamped to zero like every other attribute.
 
 ## For engineers
 

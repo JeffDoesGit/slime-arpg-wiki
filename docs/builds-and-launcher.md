@@ -48,14 +48,16 @@ Three quick merges build once: the job cancels an older run in progress. A merge
 Packaged by hand, on a PC with Unreal Engine 5.8.2 built from source (the installed engine has no Server target, DS-0.10 sections 1 and 10):
 
 ```
-pwsh scripts/package_server.ps1 -EngineRoot <source engine> -OutDir <a folder outside the repository>
+powershell -File scripts/package_server.ps1 -EngineRoot <source engine> -OutDir <a folder outside the repository> [-Platform Linux]
 ```
 
 - The server lands in `<OutDir>/WindowsServer/SandboxARPGServer.exe`, the UAT log in `<OutDir>/package.log`.
+- `-Platform Linux` cross-compiles the Linux server on the same PC (the run host is a Linux box, DS-0.10 section 9). It needs Epic's Linux cross toolchain for the engine version, with `LINUX_MULTIARCH_ROOT` set. The server lands in `<OutDir>/LinuxServer/`: start it with `./SandboxARPGServer.sh /Game/Levels/Lvl_Slice_WP -log -port=7777`. The folder is about 2.4 GB, of which 1.3 GB is `SandboxARPGServer.debug`, which the server does not need to run. `SIGTERM` stops it through the engine's ordinary exit (exit code 143).
 - It is stamped `0.1.0+<sha7>` from the checkout's HEAD, the form `package-live` gives the client. A client and a server join only at the same stamp (DS-5.1), so the server is packaged from the commit the live client was built from.
 - `Config/DefaultGame.ini` is stamped for the build and put back when the script ends, on success or failure.
 - `-StopRunning` first stops a running server. The exe at the package root is a stub that starts the real server, so the whole tree is stopped.
 - Start it with the map and a port: `SandboxARPGServer.exe /Game/Levels/Lvl_Slice_WP -log -port=7777`. From Git Bash the map argument is rewritten into a Windows path; use PowerShell or cmd.
-- **Proven** (2026-11-16, Jeff's PC): three packaging runs; a packaged client joined the packaged server on 127.0.0.1 once #710 was in. That client was an older build let through by a version override, so a same-commit pair is still owed.
-- **Not built**: a workflow that packages the server on a push, a place the server is deployed to, a Linux server.
+- **Proven** (2026-11-16, Jeff's PC): three packaging runs; a packaged client joined the packaged server on 127.0.0.1 once #710 was in. That client was an older build let through by a version override. Later the same day the live client and a server packaged from the same commit (`81e1b42`) joined with no override.
+- **Proven** (2026-11-16, Jeff's PC): the Linux server, run inside WSL 2 (Ubuntu), alone: listening on 7777, 76 of 76 spawners on the navmesh, 118 of 118 monsters, no error line, about 500 MB of memory with nobody on. Then the live Windows client of the same commit (`live/2026-11-16-fee5595`, installed engine, MSVC) joined it by the WSL address: `Join succeeded`, `Welcomed by server`, no protocol mismatch, no error line on either side. So a Windows client and a Linux server of one commit agree on the version and on the Iris protocol. The client stood still; nothing was played.
+- **Not built**: a workflow that packages the server on a push, a place the server is deployed to.
 - **Server code and drawing parts**: a server cook leaves out every component of a class the engine lists under `ClassesExcludedOnDedicatedServer` in `BaseEngine.ini`, the text render component among them. Code that runs on the server checks such a pointer before using it (#710). A primitive component is otherwise left out only when its collision is off and `AlwaysLoadOnServer` is false; that flag is true by default (only a brush that is not a volume has it false), so meshes and triggers with collision off stay.

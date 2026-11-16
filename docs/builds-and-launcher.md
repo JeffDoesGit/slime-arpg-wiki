@@ -41,4 +41,21 @@ Three quick merges build once: the job cancels an older run in progress. A merge
 - **Proven** (2026-10-14, Jon's PC): the launcher against `playtest/2026-10-13` as a stand-in release, since no `live/*` release exists: 1.09 GB in 35 s, extracted, installed, the game started and read its record from `%LOCALAPPDATA%`. The GitHub CLI's token picked up with nothing pasted. `-NoUpdate` with nothing installed stops with code 3.
 - **Not run**: the workflow itself (no runner carries the `package` label; registering one needs repository admin, which is Jeff's), the smoke step inside a job, a split release, the launcher's self-update, a joiner through the launcher on another PC.
 - **Decided** (DS-0.11, Jeff, 2026-10-20): a pre-release per merge to `main`, a launcher per PC, saves in `%LOCALAPPDATA%`; a token is any personal access token that can read this repository, classic or fine-grained, the collaborator's pick (security is deferred to the external-playtest review, `CLAUDE.md` section 12 and `docs/security-deferred.md` SEC-1); the runner is registered by Jeff with the `package` label and stays advisory until the repository is public-safe (CLAUDE.md section 9). The CLAUDE.md 8.2 text is Jeff's own pull request.
-- **Not built**: delta updates (a code-only merge still downloads the whole build), a window instead of a console, a pad or Steam path, the dedicated server following the same tag.
+- **Not built**: delta updates (a code-only merge still downloads the whole build), a window instead of a console, a pad or Steam path, the dedicated server following the same tag on its own (it is packaged by hand, see below).
+
+## The dedicated server
+
+Packaged by hand, on a PC with Unreal Engine 5.8.2 built from source (the installed engine has no Server target, DS-0.10 sections 1 and 10):
+
+```
+pwsh scripts/package_server.ps1 -EngineRoot <source engine> -OutDir <a folder outside the repository>
+```
+
+- The server lands in `<OutDir>/WindowsServer/SandboxARPGServer.exe`, the UAT log in `<OutDir>/package.log`.
+- It is stamped `0.1.0+<sha7>` from the checkout's HEAD, the form `package-live` gives the client. A client and a server join only at the same stamp (DS-5.1), so the server is packaged from the commit the live client was built from.
+- `Config/DefaultGame.ini` is stamped for the build and put back when the script ends, on success or failure.
+- `-StopRunning` first stops a running server. The exe at the package root is a stub that starts the real server, so the whole tree is stopped.
+- Start it with the map and a port: `SandboxARPGServer.exe /Game/Levels/Lvl_Slice_WP -log -port=7777`. From Git Bash the map argument is rewritten into a Windows path; use PowerShell or cmd.
+- **Proven** (2026-11-16, Jeff's PC): three packaging runs; a packaged client joined the packaged server on 127.0.0.1 once #710 was in. That client was an older build let through by a version override, so a same-commit pair is still owed.
+- **Not built**: a workflow that packages the server on a push, a place the server is deployed to, a Linux server.
+- **Server code and drawing parts**: a server cook leaves out every text render component and every primitive with collision off that is not marked `AlwaysLoadOnServer`. Code that runs on the server checks such a pointer before using it (#710).

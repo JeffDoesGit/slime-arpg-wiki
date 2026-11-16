@@ -105,6 +105,8 @@ per CLAUDE.md 7.13).
 
 ## What a dedicated-server run must repeat
 
+**Done 2026-11-16** on a packaged dedicated server, Windows and Linux, with three joiners: `docs/scale-test-2026-11-16.md`. The text below is kept as it was written.
+
 Per DS-0.10 §2 and the run plan (§1, method note): every number on this page is a listen-host
 lower bound. When a real `SandboxARPGServer` binary exists (DS-0.10 §5.2, on the rented build
 host), S-2.6 repeats this exact method — `Slime.SpawnBots` and `Slime.ScaleStats` are already

@@ -90,6 +90,11 @@ directory at the temp path and confirms the live file still reads its prior cont
 - **On logout** (`AMonsterGameMode::Logout`, before `Super::Logout` tears the connection down).
 - **On engine shutdown** (`FCoreDelegates::OnEnginePreExit`), a backstop for a clean process exit
   that isn't a per-player logout.
+- **When the world is torn down** (`FWorldDelegates::OnWorldBeginTearDown`, since 2026-11-16): a
+  stopping host closes its net driver, and with it every joiner's controller, before the game
+  instance shuts down and before `OnEnginePreExit`, and no `Logout` runs for them. A dedicated
+  server stopped with a player on wrote nothing. The world announces its tear-down first, with
+  every player still in it, so this is where a stopping host's players are written.
 - **On demand**, `Slime.SaveAll` (compiled out of Shipping).
 
 `CharacterPersistenceEvents::OnDirty()` is a plain (non-dynamic) `TMulticastDelegate<void(AActor*)>`

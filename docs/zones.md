@@ -101,6 +101,18 @@ A new biome is one more instance with its own two texture sets (CT-2.18, waiting
 
 For testers: a floor that shows the grey grid material means an instance failed to compile; the log line starts `Failed to compile Material Instance with Base M_GroundTile`. A texture with sRGB on cannot feed the AORM slot (`Sampler type is Linear Color, should be Color`).
 
+## The town by hand (CT-2.86, first sitting, 2026-11-17)
+
+Jon's first hand pass in the editor, with small scripted pieces on his word:
+
+- A graveyard fills the south-east corner: low ruin walls, rows of wooden graves, a candle at each grave with a dim warm light, a headless statue. The soul-keeper stands in it now ([The soul-keeper](soul-keeper.md)).
+- A shrine stands north of the graveyard, with a lit candle.
+- On the east side a wicker pen closes round the fallen pillar, with one opening toward the East road, and soil lies round the pillar's foot.
+- The south gate's east pier no longer shows a black line: the wall filler boxes take their stone from world position, and the texture wrapped in the middle of one face. `M_WallStoneWorld` has a `UOffset` value for that, 0 everywhere except the instance `MI_WallStoneWorld_GateS` on that pier's two boxes.
+- The market's timber arch has a second beam and a third post, the start of a ring round the court.
+
+Not yet walked in a game. Sixteen of the new pieces are from the stylized pack and three are engine boxes; they stand as placeholders until the low-poly sweep (CT-2.88, `CLAUDE.md` 5.11, Jon's call of 2026-11-18).
+
 ## Teleport point markers
 
 A teleport point shows where it is and where it goes (CT-2.12). The `ATeleportPoint` actor carries two cosmetic components beside its trigger: a looping Niagara effect on the ground, picked per placed point in the editor (`NS_TeleportZone` from the RPGEnvironmentVFX pack, a ring of fire, is the one used so far), and a floating text label that reads the point's `DestinationTag` unless a `LabelText` override is typed in. The label's height, size, colour and rotation are properties on the point; the rotation defaults to face the ARPG camera (pitch 55, yaw 135 against the camera's -55, -45), so the text reads upright from the play view. Nothing here replicates or ticks: the actor is placed in the map, so every machine has the components, and the effect loops on its own.

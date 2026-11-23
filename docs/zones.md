@@ -109,6 +109,12 @@ How it works: each zone holds one post-process volume (`ZL_Look_<Zone>`) that se
 
 All of them are written from one table by a script kept outside the repository, so a rerun retunes them. Every value is an eye placeholder; there is no design rule for the look. Known: the Town reads almost the same as before; the Jungle may be too dark.
 
+## The Jungle's ground edge (CT-2.91, 2026-11-24)
+
+Where the lawn outside the south gate turns into the Jungle's floor, the change used to run as a straight line through the arrival well. It now wanders by several metres, so grass reaches into the Jungle in places and the dark floor reaches out in others. A patch of Beach ground that lay inside the Jungle's east side is Jungle floor now.
+
+How it works: each zone's ground is laid by a baked mask. The Jungle's mask was bent offline by a smooth noise field and imported again; the material is unchanged.
+
 ## Rock banks at the zone entries (CT-2.92, 2026-11-23)
 
 Where you step out of the town into the Beach, the Fields or the Pass, the pale castle walls that lined the way are gone. Rocks of the zone stand there now: a sandstone bank with boulders at the Beach, a row of mossy boulders at the Fields, tundra boulders at the Pass. They are for the eye only and do not stop you; what stops you is the same hidden wall as before, and the openings are as wide as they were. A second pass the same day took away the pale stone block that stood on the road by the Fields well and added a rear rank of larger boulders at the Fields and a rock group on the east side of the Pass entry.

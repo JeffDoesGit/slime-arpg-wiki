@@ -101,6 +101,14 @@ A new biome is one more instance with its own two texture sets (CT-2.18, waiting
 
 For testers: a floor that shows the grey grid material means an instance failed to compile; the log line starts `Failed to compile Material Instance with Base M_GroundTile`. A texture with sRGB on cannot feed the AORM slot (`Sampler type is Linear Color, should be Color`).
 
+## A look per zone (CT-2.91, 2026-11-23)
+
+Each zone now has its own light and colour, so you can tell where you are before you read a name. The Beach is warm and bright, the Fields golden, the Jungle dark and green, the Pass cold and grey with a thicker haze; the Pass lair is dimmer again. The change comes on over a short distance as you walk out of a town gate, not at a line.
+
+How it works: each zone holds one post-process volume (`ZL_Look_<Zone>`) that sets an exposure bias, saturation, contrast and a colour gain, and one low local fog volume (`ZL_Fog_<Zone>`) with its own tint. The Town keeps its own volume, `Town_PostProcess`. A zone's volume reaches from the town wall to the zone's far edge, so an arrival well stands inside it and not on its blend edge. The camera pins only the minimum and maximum brightness, so a volume's exposure bias still shows.
+
+All of them are written from one table by a script kept outside the repository, so a rerun retunes them. Every value is an eye placeholder; there is no design rule for the look. Known: the Town reads almost the same as before; the Jungle may be too dark.
+
 ## The town by hand (CT-2.86, first sitting, 2026-11-17)
 
 Jon's first hand pass in the editor, with small scripted pieces on his word:

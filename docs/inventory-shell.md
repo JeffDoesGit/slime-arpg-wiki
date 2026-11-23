@@ -11,7 +11,7 @@ Press `I`. The screen has three parts:
 2. **A row of nine gem slots**: two red, two green, two blue, two iridescent (only an iridescent gem, since E-3.6; they took any colour before), one for special gems. Drag a [gem](gems.md) from the bag onto a slot to equip it; the slot shows the gem's stone (a ruby for red, an emerald for green, a sapphire for blue, an onyx for the special class) and, on hover, its lines. Drag it back to the bag to take it off. A gem dropped on a slot of the wrong colour stays in the bag; the server refuses it.
 3. **A bag grid**, 4 rows by 10, showing the souls you own with their icons, one cell a soul with its copies counted (E-2.251), then the souls still being assembled as dimmed icons with their fragment count (E-2.7), then your gems as their stones with a tooltip of their lines (since E-2.61; a colour with no icon configured falls back to a flat colour swatch). Since E-3.8 a gem cell's frame, and an equipped gem's slot frame, is the colour of the gem's rarity, and the tooltip shows each line's value in its own format with the line's tier and roll band beside it (see [Gems](gems.md)).
 
-That is the whole screen. No stash yet (it needs a city), no sorting.
+That is the whole screen. No sorting. The town stash is a screen of its own that opens beside the inventory at the chest in the town; while it is open, Ctrl and a left click on a bag cell moves that cell's item into the stash (see [The stash](stash.md)). With the stash shut, Ctrl and a left click on a bag cell does what a plain click does.
 
 **The look since E-2.180 (2026-10-06).** The screen is one stone panel with a gold frame docked on the right edge of the view, 620 by 880 at 1080 lines, after the mockup's board 2: the three souls as discs with gold rings (the primary larger, its ring brighter; "WORN", "SOUL", "SECONDARY" beneath), the nine sockets as sunk wells rimmed in their colour (an empty socket shows only its rim and names itself on hover), the bag on a sunk well with one-pixel lines between its cells, a hint and the close button along the bottom. A gem's tooltip is a dark card in Diablo's manner: the stone's name and its rarity in the rarity's colour, one line per affix in blue with its tier, and "Socketed: Red" beneath an equipped one. Drag, right-click, Shift-right-click and every refusal are the same handlers as before; the theme only dresses the widgets. The old look and its switch were deleted by E-2.193. Provisional (register row `ui look`). Dev: `Slime.ToggleInventory` opens it with no keyboard, for a frame of a game rendered off screen.
 
@@ -31,7 +31,7 @@ A right-click on a bag cell sends the same request its drag would (E-2.86): a so
 
 - **Gem slots and colours** (D-3.2): count is provisional, meaning open.
 - **Accessory slots** and the items that go in them (Phase 3).
-- **Bag size** and **the stash** in cities.
+- **Bag size**. The stash is built ([The stash](stash.md), E-3.30); its 80 cells are a placeholder too.
 - **Fragment counts** next to each soul, once soul drops exist.
 
 ## For engineers

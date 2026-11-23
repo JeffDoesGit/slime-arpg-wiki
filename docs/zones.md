@@ -111,7 +111,7 @@ All of them are written from one table by a script kept outside the repository, 
 
 ## Rock banks at the zone entries (CT-2.92, 2026-11-23)
 
-Where you step out of the town into the Beach, the Fields or the Pass, the pale castle walls that lined the way are gone. Rocks of the zone stand there now: a sandstone bank with boulders at the Beach, a row of mossy boulders at the Fields, tundra boulders at the Pass. They are for the eye only and do not stop you; what stops you is the same hidden wall as before, and the openings are as wide as they were. Grey blocks still show by the Fields well and at the Pass passage; they are next.
+Where you step out of the town into the Beach, the Fields or the Pass, the pale castle walls that lined the way are gone. Rocks of the zone stand there now: a sandstone bank with boulders at the Beach, a row of mossy boulders at the Fields, tundra boulders at the Pass. They are for the eye only and do not stop you; what stops you is the same hidden wall as before, and the openings are as wide as they were. A second pass the same day took away the pale stone block that stood on the road by the Fields well and added a rear rank of larger boulders at the Fields and a rock group on the east side of the Pass entry.
 
 ## The town by hand (CT-2.86, first sitting, 2026-11-17)
 

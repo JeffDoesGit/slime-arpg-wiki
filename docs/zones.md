@@ -109,6 +109,10 @@ How it works: each zone holds one post-process volume (`ZL_Look_<Zone>`) that se
 
 All of them are written from one table by a script kept outside the repository, so a rerun retunes them. Every value is an eye placeholder; there is no design rule for the look. Known: the Town reads almost the same as before; the Jungle may be too dark.
 
+## Rock banks at the zone entries (CT-2.92, 2026-11-23)
+
+Where you step out of the town into the Beach, the Fields or the Pass, the pale castle walls that lined the way are gone. Rocks of the zone stand there now: a sandstone bank with boulders at the Beach, a row of mossy boulders at the Fields, tundra boulders at the Pass. They are for the eye only and do not stop you; what stops you is the same hidden wall as before, and the openings are as wide as they were. Grey blocks still show by the Fields well and at the Pass passage; they are next.
+
 ## The town by hand (CT-2.86, first sitting, 2026-11-17)
 
 Jon's first hand pass in the editor, with small scripted pieces on his word:

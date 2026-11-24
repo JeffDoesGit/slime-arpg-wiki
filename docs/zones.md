@@ -111,6 +111,8 @@ All of them are written from one table by a script kept outside the repository, 
 
 **Light inside the zones (2026-11-24).** The Town's own look now shows in full at every zoom: its volume was too low, so the camera sat in its fading edge and the town got about half of its grade, and none when zoomed out. The Jungle is brighter than its first pass, still the darkest of the four. A warm light now hangs over the arrival well and the lair arrival of each zone (seven in all; the Pass lair keeps its two braziers), so the place you arrive at reads as a place. The lights have no lamp or fire under them yet. Moving cloud shadow was tried and left off.
 
+**Loose cover in clusters, the Pass first (2026-11-24).** The Pass's dry grass, boulders and dead trees now stand in clusters: a large boulder with smaller stones at its foot, grass in clumps that thin toward their edge. Boulders gather along the feet of the cliffs and come in three shapes where there was one; dead trees in two. The ground is clear for six metres round every monster camp and every arrival well, and along the track, so a fight has room. Nothing stops you yet: rocks and trees can still be walked through. The other three zones keep their old scatter until their own sitting.
+
 ## The Jungle's ground edge (CT-2.91, 2026-11-24)
 
 Where the lawn outside the south gate turns into the Jungle's floor, the change used to run as a straight line through the arrival well. It now wanders by several metres, so grass reaches into the Jungle in places and the dark floor reaches out in others. A patch of Beach ground that lay inside the Jungle's east side is Jungle floor now.

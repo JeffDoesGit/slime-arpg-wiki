@@ -107,7 +107,9 @@ Each zone now has its own light and colour, so you can tell where you are before
 
 How it works: each zone holds one post-process volume (`ZL_Look_<Zone>`) that sets an exposure bias, saturation, contrast and a colour gain, and one low local fog volume (`ZL_Fog_<Zone>`) with its own tint. The Town keeps its own volume, `Town_PostProcess`. A zone's volume reaches from the town wall to the zone's far edge, so an arrival well stands inside it and not on its blend edge. The camera pins only the minimum and maximum brightness, so a volume's exposure bias still shows.
 
-All of them are written from one table by a script kept outside the repository, so a rerun retunes them. Every value is an eye placeholder; there is no design rule for the look. Known: the Town reads almost the same as before; the Jungle may be too dark.
+All of them are written from one table by a script kept outside the repository, so a rerun retunes them. Every value is an eye placeholder; there is no design rule for the look. Known after the first pass: the Town read almost the same as before; the Jungle was too dark.
+
+**Light inside the zones (2026-11-24).** The Town's own look now shows in full at every zoom: its volume was too low, so the camera sat in its fading edge and the town got about half of its grade, and none when zoomed out. The Jungle is brighter than its first pass, still the darkest of the four. A warm light now hangs over the arrival well and the lair arrival of each zone (seven in all; the Pass lair keeps its two braziers), so the place you arrive at reads as a place. The lights have no lamp or fire under them yet. Moving cloud shadow was tried and left off.
 
 ## The Jungle's ground edge (CT-2.91, 2026-11-24)
 

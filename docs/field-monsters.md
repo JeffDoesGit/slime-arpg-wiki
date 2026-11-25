@@ -257,6 +257,10 @@ For engineers: `AFieldMonster::Tick` (authority, alive, awake, standing) turns t
 
 ## A monster remembers its spawner (2026-11-01)
 
+## Monsters stand on the ground on slopes (E-2.320, 2026-11-25)
+
+A monster used to be put at a point near its camp whose height was read by looking down from just above the camp. On the Pass's steep ground that look began under the hillside, found nothing, and the monster was put inside the mountain and fell out of the world: most of the Pass was empty a few seconds into a session. Now the camp looks down from far above (`SlopeSearchAbove` on `AMonsterSpawner`, 1500 uu) and takes the ground nearest its own height, which also keeps a lair's roof from being mistaken for its floor. The setting `GroundTraceStartAbove` named above is gone.
+
 A field monster keeps a pointer to the spawner that made it, set before it finishes spawning (`AFieldMonster::SetHomeSpawner`, `HomeSpawner`), because once its AI controller possesses it its owner is the controller, not the spawner. Two things read it. A spawn row with `bFirstKillDropsGem` (the starter cave's first pack, `Cave_FirstPack`) owes one gem: the first of its monsters to die drops at least one gem whatever the drop roll says (`FGemDrops::RollDrop` takes a minimum count). And a monster a soul web takes over (`TakeOver`, [Kit minions](kit-minions.md)) frees its slot in its spawner through it, so the spawner refills that slot as if the monster had died. `Slime.KillSpawner <Spawner> [Count]` kills a spawner's monsters through the ordinary hit, so their drops run.
 
 ## Decoys, statues and thrown bodies (2026-11-05 to 2026-11-06)

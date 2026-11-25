@@ -117,6 +117,8 @@ All of them are written from one table by a script kept outside the repository, 
 
 **A fence at the Fields gate (2026-11-25).** Coming out of the West gate you now walk between farm fences, the same ones that ring the plots, instead of a bank of rocks. The fence runs along both sides of the opening and back to the ends of the Town's passage walls, and the rope fence along the road is two posts longer. It stops you like any farm fence. Known for now: near the opening an unseen wall still stops you a step or two before the fence does.
 
+**A ridge at the Beach gate (2026-11-25).** Out of the East gate the road now passes between two runs of red sandstone, taller than you by far, where a bank of dark rocks stood. On the south side a row of small rocks of the same stone lines the walk edge. The ridge stops you; the pebbles at its foot do not. It does not thin out when it covers you, so keep to the Beach side of it.
+
 Later the same day the unseen wall was cut back to the rope fence: you can now walk the whole width between the fences and it is the fence that stops you.
 
 ## The Jungle's ground edge (CT-2.91, 2026-11-24)

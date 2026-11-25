@@ -119,6 +119,8 @@ All of them are written from one table by a script kept outside the repository, 
 
 **A ridge at the Beach gate (2026-11-25).** Out of the East gate the road now passes between two runs of red sandstone, taller than you by far, where a bank of dark rocks stood. On the south side a row of small rocks of the same stone lines the walk edge. The ridge stops you; the pebbles at its foot do not. It does not thin out when it covers you, so keep to the Beach side of it.
 
+**Room at the Pass gate (2026-11-25).** Out of the North gate you used to be held on the road by walls you could not see, almost as far as the well. They now stop at the Town's own walls, so you can step off the road as soon as you are past the rocks at the gate.
+
 Later the same day the unseen wall was cut back to the rope fence: you can now walk the whole width between the fences and it is the fence that stops you.
 
 ## The Jungle's ground edge (CT-2.91, 2026-11-24)

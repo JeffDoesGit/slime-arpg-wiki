@@ -69,6 +69,8 @@ The left button is decided the moment you press it, in the pawn's own code; the 
 
 ## The market roofs lift off while you are under them (E-2.252, 2026-11-25)
 
+The four town gates do the same since the same day: walk under a gate and its arch and roof are gone until you are through.
+
 Walk under any roof of the Town market and all of the market's roofs vanish together, so you can see your monster and the stalls; step out and they are back a tenth of a second later. There is no fade: the roofs are either there or not. The posts, beams and racks stay where they are.
 
 Why a hide and not the usual fade: the market is built from Megascans pieces, and the material those pieces share cannot thin out the way the older town pieces do. That is a known fault, not a choice of look; until it is solved, nothing built from Megascans fades.

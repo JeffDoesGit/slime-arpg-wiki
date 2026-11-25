@@ -67,6 +67,14 @@ The left button is decided the moment you press it, in the pawn's own code; the 
 
 `Slime.LmbAttackMove 0` puts back the earlier behaviour (the Blueprint's click-to-move with an attack only over a monster's capsule). Settings: `ClickVolumeScale`, `ClickVolumeMinHalfWidth`, `ClickScreenPickPixels`, `LeftButtonApproachMargin`, `LeftButtonChaseLeash`, `WalkTapSeconds`, `ClickMarkerEffect` in `[/Script/SandboxARPG.HudLayoutSettings]`. Code: `AMonsterCharacter::PressLeftButton`, `ReleaseLeftButton`, `UpdateLeftButton` (run from the pawn's tick on the owning client, allocating nothing), `FindHostileUnderCursor`, `RefitClickVolume` (called by `USoulComponent::ApplyBody` on every body swap), the pure `ClickVolumeExtent` and `ShouldApproachForSwing` (tests `SandboxARPG.Player.LeftButton.*`). The research behind the rules: `Research Bank/2026-09-28-arpg-left-click-move-and-attack-research.md`.
 
+## The market roofs lift off while you are under them (E-2.252, 2026-11-25)
+
+Walk under any roof of the Town market and all of the market's roofs vanish together, so you can see your monster and the stalls; step out and they are back a tenth of a second later. There is no fade: the roofs are either there or not. The posts, beams and racks stay where they are.
+
+Why a hide and not the usual fade: the market is built from Megascans pieces, and the material those pieces share cannot thin out the way the older town pieces do. That is a known fault, not a choice of look; until it is solved, nothing built from Megascans fades.
+
+How it is built: an actor tagged `OcclusionGroup.<name>` belongs to a group; a group named in `OcclusionHideGroups` (`Config/DefaultGame.ini`, the HUD layout settings) is hidden outright while it is active, where other groups fade. The market's group is `OcclusionGroup.TownMarketRoof`, 126 pieces. Emptying the list turns the hide off.
+
 ## The occlusion fade takes only what hides the pawn (E-2.252, 2026-10-23)
 
 The camera's sweep toward the pawn only finds candidates. A mesh fades only when a thin line from the camera to the pawn's capsule centre, or to 0.8 of its half height above it (`OcclusionTopSightShare`), passes through that mesh (`bOcclusionNeedsBlockedLine`). A faded mesh stays faintly visible at `OcclusionFadeOpacity` 0.15. So a well beside the player stays solid; one that covers the player's middle or top fades; one that covers only the feet does not. A faded mesh casts no shadow while it is faded and casts again once it is back (Jon, 2026-11-12: the shrine pillar's own shadow read as a black block under the faded column); `bOcclusionFadedCastsNoShadow` (on) in `[/Script/SandboxARPG.HudLayoutSettings]` turns this off, and the first fade of each mesh logs `OcclusionFade: <actor> fades, shadow off`.

@@ -117,6 +117,8 @@ All of them are written from one table by a script kept outside the repository, 
 
 **A fence at the Fields gate (2026-11-25).** Coming out of the West gate you now walk between farm fences, the same ones that ring the plots, instead of a bank of rocks. The fence runs along both sides of the opening and back to the ends of the Town's passage walls, and the rope fence along the road is two posts longer. It stops you like any farm fence. Known for now: near the opening an unseen wall still stops you a step or two before the fence does.
 
+Later the same day the unseen wall was cut back to the rope fence: you can now walk the whole width between the fences and it is the fence that stops you.
+
 ## The Jungle's ground edge (CT-2.91, 2026-11-24)
 
 Where the lawn outside the south gate turns into the Jungle's floor, the change used to run as a straight line through the arrival well. It now wanders by several metres, so grass reaches into the Jungle in places and the dark floor reaches out in others. A patch of Beach ground that lay inside the Jungle's east side is Jungle floor now.
